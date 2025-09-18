@@ -1,0 +1,72 @@
+
+/* ---------- Theme Tokens ---------- */
+:root {
+  --bg:        #f8f9fa;
+  --bg-hover:  #eef1f3;
+  --card:      #ffffff;
+  --border:    #e5e7eb;
+  --text:      #0f0f0f;
+  --muted:     rgba(15, 15, 15, 0.64);
+  --chip:      #f1f1f1;
+  --chip-text: #0f0f0f;
+  --chip-border:#e6e6e6;
+  --shadow:    0 1px 2px rgba(0,0,0,.06), 0 2px 8px rgba(0,0,0,.06);
+}
+
+:root.dark {
+  --bg:        #0b0b0b;
+  --bg-hover:  #171717;
+  --card:      #0f0f0f;
+  --border:    #2a2a2a;
+  --text:      #ffffff;
+  --muted:     rgba(255,255,255,0.60);
+  --chip:      #1b1b1b;
+  --chip-text: #ffffff;
+  --chip-border:#2a2a2a;
+  --shadow:    0 1px 2px rgba(0,0,0,.30);
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Global surface + text */
+html, body { background: var(--bg); color: var(--text); }
+
+/* ---------- Token utilities ---------- */
+@layer utilities {
+  .bg-ytbg       { background-color: var(--bg) !important; }
+  .bg-ytbg-hover { background-color: var(--bg-hover) !important; }
+  .bg-card       { background-color: var(--card) !important; }
+  .border-yt     { border-color: var(--border) !important; }
+  .text-yt       { color: var(--text) !important; }
+  .text-yt-muted { color: var(--muted) !important; }
+  .placeholder-yt-muted::placeholder { color: var(--muted); }
+  .shadow-yt     { box-shadow: var(--shadow) !important; }
+
+  /* icon button like YouTube */
+  .btn-icon { @apply p-2 rounded-full hover:bg-ytbg-hover text-yt; }
+
+  /* chips */
+  .chip {
+    background: var(--chip);
+    color: var(--chip-text);
+    border: 1px solid var(--chip-border);
+  }
+  .chip-active {
+    background: var(--card);
+    color: var(--text);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+  }
+}
+@layer utilities {
+  .chips-scroll {
+    mask-image: linear-gradient(to right,
+      transparent 0, black 24px, black calc(100% - 24px), transparent 100%);
+    -webkit-mask-image: linear-gradient(to right,
+      transparent 0, black 24px, black calc(100% - 24px), transparent 100%);
+    scrollbar-width: none; /* hide FF scrollbars */
+  }
+  .chips-scroll::-webkit-scrollbar { display: none; }
+}
