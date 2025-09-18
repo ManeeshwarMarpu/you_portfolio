@@ -1,5 +1,5 @@
 
-import React, { useMemo, useState, useEffect } from "react";
+import  { useMemo, useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import VideoGrid from "../components/VideoGrid";
 import { videos } from "../data/videos";
