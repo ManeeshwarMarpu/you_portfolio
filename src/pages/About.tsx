@@ -2,8 +2,7 @@ import { Briefcase, Download, MapPin, Rocket, Star, Wrench } from "lucide-react"
 import { experiences as data } from "../data/experiences";
 
 const RESUME_URL =
- "https://firebasestorage.googleapis.com/v0/b/portfolio-84f15.firebasestorage.app/o/MANEESHWAR_MARPU.pdf?alt=media&token=afd7e2b5-3e3c-4ebb-9405-5794d48e3ac2";
-
+ "https://firebasestorage.googleapis.com/v0/b/portfolio-84f15.firebasestorage.app/o/Maneeshwar_Marpu_CE.pdf?alt=media&token=c46134a1-4aa6-427b-880d-d83273250f26";
 const stack = [
   "Python", "Java", "React", "TypeScript", "Spring Boot", "Django",
   "AWS", "Docker", "Kubernetes", "GitHub Actions", "Grafana", "Prometheus"
