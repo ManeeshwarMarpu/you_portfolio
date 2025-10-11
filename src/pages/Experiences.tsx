@@ -66,7 +66,7 @@ bullets: [
 const allChips = ["All", ...Array.from(new Set(data.flatMap((x) => x.tags)))];
 
 const RESUME_URL =
-  "https://firebasestorage.googleapis.com/v0/b/portfolio-84f15.firebasestorage.app/o/Maneeshwar_Marpu_latest.pdf?alt=media&token=f4db5369-6a92-42d8-a23c-5c8dfc2fb536";
+ "https://firebasestorage.googleapis.com/v0/b/portfolio-84f15.firebasestorage.app/o/Maneeshwar_Marpu_CE.pdf?alt=media&token=c46134a1-4aa6-427b-880d-d83273250f26";
 
 export default function Experiences() {
   const [chip, setChip] = useState("All");
