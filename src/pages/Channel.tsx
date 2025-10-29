@@ -5,7 +5,7 @@ import { videos } from "../data/videos";
 import VideoGrid from "../components/VideoGrid";
 import FilterChips from "../components/FilterChips";
 
-const RESUME_URL = "https://firebasestorage.googleapis.com/v0/b/portfolio-84f15.firebasestorage.app/o/Maneeshwar_Marpu_CE.pdf?alt=media&token=c46134a1-4aa6-427b-880d-d83273250f26";
+const RESUME_URL =  "https://firebasestorage.googleapis.com/v0/b/portfolio-84f15.firebasestorage.app/o/Maneeshwar_Marpu_CE.pdf?alt=media&token=f61c3d4f-55ce-4a51-bd14-927187dccd21";
 const GITHUB_URL = "https://github.com/ManeeshwarMarpu";
 const LINKEDIN_URL = "https://linkedin.com/in/maneeshwermarpu";
 
