@@ -13,11 +13,13 @@ export default function VideoGrid({ items }: { items: Video[] }) {
   return (
     <div
       className="
-        grid gap-6
-        sm:grid-cols-1
-        md:grid-cols-2
-        xl:grid-cols-2
-        2xl:grid-cols-3
+        grid
+        gap-6
+        grid-cols-1
+        sm:grid-cols-2
+        lg:grid-cols-2
+        xl:grid-cols-3
+        w-full min-w-0 overflow-hidden
       "
     >
       {items.map((v) => (
@@ -26,4 +28,3 @@ export default function VideoGrid({ items }: { items: Video[] }) {
     </div>
   );
 }
-

@@ -9,9 +9,11 @@ export default function SectionRow({
   items: Video[];
 }) {
   return (
-    <section className="mb-8">
+    <section className="mb-8 w-full min-w-0 overflow-hidden">
       <h2 className="text-xl font-semibold mb-3 text-yt">{title}</h2>
-      <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+
+      {/* FIX: prevent grid overflow */}
+      <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 w-full min-w-0">
         {items.map((v) => (
           <VideoCard key={v.id} v={v} />
         ))}

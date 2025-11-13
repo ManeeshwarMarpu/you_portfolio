@@ -26,6 +26,9 @@
     transform: rotate(360deg);
   }
 }
+.content {
+  padding-bottom: 70px;
+}
 
 @media (prefers-reduced-motion: no-preference) {
   a:nth-of-type(2) .logo {

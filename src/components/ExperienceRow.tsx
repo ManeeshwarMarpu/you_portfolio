@@ -30,10 +30,21 @@ export default function ExperienceRow({
           onOpen?.(x);
         }
       }}
-      className="group grid grid-cols-[minmax(220px,360px),1fr,40px] gap-4 rounded-2xl p-2 bg-card border border-yt hover:bg-ytbg-hover/60 cursor-pointer focus:outline-none focus:ring-2 focus:ring-yt transition"
+      className="
+        group
+        w-full min-w-0 overflow-hidden
+        rounded-2xl p-3
+        bg-card border border-yt
+        hover:bg-ytbg-hover/60 
+        cursor-pointer
+        focus:outline-none focus:ring-2 focus:ring-yt 
+        transition
+        flex flex-col sm:flex-row
+        gap-4
+      "
     >
       {/* Thumbnail (16:9) */}
-      <div className="relative rounded-xl overflow-hidden bg-ytbg-hover">
+      <div className="relative rounded-xl overflow-hidden bg-ytbg-hover w-full sm:w-[280px] shrink-0">
         {x.thumb ? (
           <img
             src={x.thumb}
@@ -49,19 +60,19 @@ export default function ExperienceRow({
       </div>
 
       {/* Text column */}
-      <div className="min-w-0">
-        <h3 className="text-lg font-semibold leading-tight text-yt">
+      <div className="min-w-0 flex-grow">
+        <h3 className="text-lg font-semibold leading-tight text-yt min-w-0 overflow-hidden">
           {x.role}
           <CheckCircle2 className="inline-block w-4 h-4 text-yt-muted align-text-top ml-1" />
         </h3>
 
-        <div className="text-sm text-yt-muted mt-0.5 flex items-center gap-2">
+        <div className="text-sm text-yt-muted mt-0.5 flex items-center gap-2 min-w-0 overflow-hidden">
           <span className="truncate">{x.org}</span>
           <span className="text-yt-muted">•</span>
           <span className="whitespace-nowrap">{x.period}</span>
         </div>
 
-        <ul className="mt-2 text-yt space-y-1">
+        <ul className="mt-2 text-yt space-y-1 min-w-0 overflow-hidden">
           {x.bullets.slice(0, 2).map((b, i) => (
             <li key={i} className="line-clamp-1 text-yt-muted">
               {b}
@@ -69,15 +80,15 @@ export default function ExperienceRow({
           ))}
         </ul>
 
-        {x.tags?.length ? (
-          <div className="mt-2 flex flex-wrap gap-2">
+        {x.tags?.length > 0 && (
+          <div className="mt-2 flex flex-wrap gap-2 min-w-0 overflow-hidden">
             {x.tags.map((t) => (
-              <span key={t} className="text-xs px-2 py-1 rounded-full chip">
+              <span key={t} className="text-xs px-2 py-1 rounded-full chip shrink-0">
                 #{t}
               </span>
             ))}
           </div>
-        ) : null}
+        )}
       </div>
 
       {/* Kebab menu */}
@@ -86,7 +97,11 @@ export default function ExperienceRow({
         onClick={(e) => {
           e.stopPropagation();
         }}
-        className="self-start opacity-0 group-hover:opacity-100 transition-opacity p-2 rounded-full hover:bg-ytbg-hover text-yt"
+        className="
+          opacity-0 group-hover:opacity-100 transition-opacity
+          p-2 rounded-full hover:bg-ytbg-hover text-yt
+          self-end sm:self-start
+        "
       >
         <MoreVertical className="w-5 h-5" />
       </button>

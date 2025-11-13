@@ -12,7 +12,16 @@ export default function FilterChips({
   const [active, setActive] = useState(initial);
 
   return (
-    <div className="chips-scroll flex gap-2 overflow-x-auto pb-3 -mx-1 px-1">
+    <div
+      className="
+        chips-scroll
+        flex gap-2
+        overflow-x-auto
+        w-full min-w-0
+        pb-3
+        no-scrollbar
+      "
+    >
       {items.map((name) => {
         const isActive = active === name;
         return (
@@ -22,8 +31,10 @@ export default function FilterChips({
               setActive(name);
               onChange(name);
             }}
-            className={`shrink-0 h-9 px-3 rounded-full border text-sm transition
-              ${isActive ? "chip-active" : "chip hover:bg-ytbg-hover"}`}
+            className={`
+              shrink-0 h-9 px-3 rounded-full border text-sm transition
+              ${isActive ? "chip-active" : "chip hover:bg-ytbg-hover"}
+            `}
           >
             {name}
           </button>
