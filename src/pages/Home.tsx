@@ -10,68 +10,58 @@ import experiences from "./Experiences";
 import LoadingScreen from "../components/LoadingScreen";
 
 export default function Home() {
-const [showIntro, setShowIntro] = useState(true);
-
-useEffect(() => {
-  const timer = setTimeout(() => setShowIntro(false), 2000); 
-  return () => clearTimeout(timer);
-}, []);
-
+  const [showIntro, setShowIntro] = useState(true);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 1200);
-    return () => clearTimeout(timer);
+    const introTimer = setTimeout(() => setShowIntro(false), 2000);
+    const loadTimer = setTimeout(() => setLoading(false), 1200);
+    return () => {
+      clearTimeout(introTimer);
+      clearTimeout(loadTimer);
+    };
   }, []);
-
 
   const [sp, setSp] = useSearchParams();
   const q = (sp.get("q") ?? "").trim();
   const urlTag = sp.get("tag") ?? "All";
-
   const [cat, setCat] = useState(urlTag);
 
   useEffect(() => {
     if (urlTag !== cat) setCat(urlTag);
-  }, [urlTag]);
+  }, [urlTag, cat]);
 
   const allCategories = Array.from(
-    new Set(["All", ...videos.flatMap((v) => v.tags ?? [])])
+    new Set(["All", ...videos.flatMap(v => v.tags ?? [])])
   );
 
-  function shuffle<T>(arr: T[]): T[] {
-    const a = [...arr];
-    for (let i = a.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [a[i], a[j]] = [a[j], a[i]];
-    }
-    return a;
-  }
+  const shuffle = <T,>(arr: T[]) => [...arr].sort(() => 0.5 - Math.random());
 
-  const pickRandom = <T,>(arr: T[]) => arr[Math.floor(Math.random() * arr.length)];
+  const pickRandom = <T,>(arr: T[]) =>
+    arr[Math.floor(Math.random() * arr.length)];
 
   const [hero, setHero] = useState<Video>(() => pickRandom(videos));
+
   useEffect(() => {
     if (!q) setHero(pickRandom(videos));
   }, [q, cat]);
 
-  const rest = videos.filter((v) => v.id !== hero.id);
+  const rest = videos.filter(v => v.id !== hero.id);
 
   const tagFiltered = useMemo(() => {
     if (cat === "All") return rest;
-    return rest.filter((v) => (v.tags ?? []).includes(cat));
+    return rest.filter(v => v.tags?.includes(cat));
   }, [cat, rest]);
 
   const filteredByQuery = useMemo(() => {
     if (!q) return tagFiltered;
     const needle = q.toLowerCase();
-    return tagFiltered.filter((v) => {
-      const haystack = [v.title, v.description, ...(v.tags ?? [])]
-        .filter(Boolean)
+    return tagFiltered.filter(v =>
+      [v.title, v.description, ...(v.tags ?? [])]
         .join(" ")
-        .toLowerCase();
-      return haystack.includes(needle);
-    });
+        .toLowerCase()
+        .includes(needle)
+    );
   }, [q, tagFiltered]);
 
   const randomProjects = useMemo(() => {
@@ -80,29 +70,29 @@ useEffect(() => {
   }, [q, filteredByQuery, tagFiltered]);
 
   const randomExperiences = useMemo(() => {
-    return Array.isArray(experiences) ? shuffle(experiences).slice(0, 4) : [];
+    return Array.isArray(experiences)
+      ? shuffle(experiences).slice(0, 4)
+      : [];
   }, []);
 
   const handleChipChange = (t: string) => {
     setCat(t);
     const next = new URLSearchParams(sp);
-    if (t && t !== "All") next.set("tag", t);
-    else next.delete("tag");
+    t !== "All" ? next.set("tag", t) : next.delete("tag");
     setSp(next, { replace: true });
   };
-{showIntro && <LoadingScreen />}
 
   return (
     <div className="space-y-6 w-full px-4 md:px-6 lg:px-8">
-      
+      {showIntro && <LoadingScreen />}
+
       <FilterChips
         items={allCategories}
         onChange={handleChipChange}
-        initial={urlTag ?? "All"}
+        initial={urlTag}
       />
 
       {!q && <HeroAd />}
-
 
       {loading ? (
         <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -112,15 +102,12 @@ useEffect(() => {
         </div>
       ) : (
         <SectionRow
-          title={
-            q ? `Results for “${q}”` : cat === "All" ? "Recommended" : cat
-          }
+          title={q ? `Results for “${q}”` : cat === "All" ? "Recommended" : cat}
           items={randomProjects}
         />
       )}
 
-      {/* Continue with experiences */}
-      {!q && randomExperiences.length > 0 && !loading && (
+      {!q && !loading && randomExperiences.length > 0 && (
         <SectionRow title="Experiences" items={randomExperiences} />
       )}
 

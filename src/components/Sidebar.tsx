@@ -12,7 +12,7 @@ export default function Sidebar() {
   return (
     // Sidebar only for desktop (md+)
     <aside className="hidden md:flex sticky top-[56px] h-[calc(100dvh-56px)] w-64 lg:w-72 shrink-0 border-r border-yt bg-card flex-col">
-      
+
       <nav className="flex-1 p-3 space-y-4 flex flex-col">
 
         {/* Primary Navigation */}
@@ -32,6 +32,14 @@ export default function Sidebar() {
           <NavLink to="/certifications" className={({ isActive }) => `${link} ${isActive ? active : ""}`}>
             <Award className="size-5" /> <span className="hidden md:inline">Certifications</span>
           </NavLink>
+          <NavLink
+            to="/skills"
+            className={({ isActive }) => `${link} ${isActive ? active : ""}`}
+          >
+            <Brain className="size-5" />
+            <span className="hidden md:inline">Skills</span>
+          </NavLink>
+
 
           <NavLink to="/about" className={({ isActive }) => `${link} ${isActive ? active : ""}`}>
             <Info className="size-5" /> <span className="hidden md:inline">About</span>

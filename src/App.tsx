@@ -18,6 +18,8 @@ import Certifications from "./pages/Certifications";
 import TicTacToe from "./pages/play/tictactoe";
 import Snake from "./pages/play/snake";
 import Memory from "./pages/play/Memory";
+import Skills from "./pages/Skills";
+
 
 export default function App() {
   // Play intro only once per browser
@@ -66,6 +68,8 @@ export default function App() {
               <Route path="/play/tictactoe" element={<TicTacToe />} />
               <Route path="/play/snake" element={<Snake />} />
               <Route path="/play/memory" element={<Memory />} />
+              <Route path="/skills" element={<Skills />} />
+
               <Route path="*" element={<div className="p-6">Not found</div>} />
             </Routes>
           </main>
