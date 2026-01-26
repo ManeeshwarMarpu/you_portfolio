@@ -16,12 +16,12 @@ export const coreSkills: SkillGroup[] = [
       { 
         id: "aws", 
         name: "AWS (EC2, S3, RDS, EKS, IAM, CloudWatch)", 
-        description: "Provisioned production-grade infrastructure including EKS clusters and RDS instances using Terraform with zero unplanned downtime[cite: 15]. Integrated CloudWatch for real-time incident triaging within defined SLAs[cite: 18]." 
+        description: "Provisioned and updated production-grade infrastructure on AWS and Kubernetes using Terraform, ensuring changes were executed safely with zero unplanned downtime[cite: 15]. Triaged alerts from CloudWatch to ensure timely incident resolution within SLAs[cite: 18]." 
       },
       { 
         id: "azure", 
         name: "Azure (VMs, Azure Monitor)", 
-        description: "Managed mission-critical VMs and non-production monitoring setups to enable earlier detection of reliability issues[cite: 25, 62]. Migrated high-volume CI/CD pipelines from Azure DevOps to GitHub Actions[cite: 24]." 
+        description: "Supported monitoring setup and validation across Azure-based non-production environments to enable earlier detection of reliability issues[cite: 25]. Managed Azure VMs and migrated legacy CI/CD pipelines to GitHub Actions[cite: 24, 62]." 
       },
     ],
   },
@@ -31,12 +31,12 @@ export const coreSkills: SkillGroup[] = [
       { 
         id: "terraform", 
         name: "Terraform", 
-        description: "Designed and maintained complex infrastructure state for AWS and Kubernetes environments, ensuring 99%+ service availability[cite: 12, 15]." 
+        description: "Owned end-to-end infrastructure provisioning across development, staging, and production environments[cite: 12, 15]. Used Terraform to maintain 99%+ availability for mission-critical services[cite: 12]." 
       },
       { 
-        id: "ansible", 
-        name: "Ansible", 
-        description: "Automated system setup and dependency resolution across Linux-based development and lab environments[cite: 35, 63]." 
+        id: "iac-suite", 
+        name: "AWS CDK, CloudFormation, Ansible", 
+        description: "Utilized AWS CDK and CloudFormation for programmatic resource definition[cite: 63]. Leveraged Ansible and Shell scripting for system setup, configuration validation, and dependency resolution in Linux-based lab environments[cite: 35, 63, 67]." 
       },
     ],
   },
@@ -46,27 +46,67 @@ export const coreSkills: SkillGroup[] = [
       { 
         id: "k8s", 
         name: "Kubernetes", 
-        description: "Optimized workloads through CPU/memory right-sizing and autoscaling, reducing cloud infrastructure costs by 15%[cite: 17]. Validated system resiliency using failure-injected microservices[cite: 52]." 
+        description: "Optimized workloads through CPU/memory right-sizing and autoscaling strategies, achieving a 15% reduction in infrastructure costs. Deployed failure-injected microservices on Kubernetes to validate alerting accuracy[cite: 52]." 
       },
       { 
-        id: "docker", 
-        name: "Docker / Helm", 
-        description: "Containerized SRE platforms and managed deployments using Helm charts for scalable, failure-tolerant microservices[cite: 52, 64]." 
+        id: "docker-helm", 
+        name: "Docker & Helm", 
+        description: "Containerized applications and managed complex deployments using Helm charts[cite: 64]. Debugged container-related issues and environment-level errors across academic and production projects[cite: 36]." 
       },
     ],
   },
   {
-    title: "Observability & SRE",
+    title: "CI / CD",
     skills: [
       { 
-        id: "prometheus", 
-        name: "Prometheus & Grafana", 
-        description: "Developed 20+ dashboards monitoring latency and error rates, reducing Mean Time to Detection (MTTD) by 25%. Set up Grafana Loki for AI-driven semantic drift detection in log streams[cite: 49, 50]." 
+        id: "gh-actions", 
+        name: "GitHub Actions & Jenkins", 
+        description: "Migrated CI/CD pipelines to GitHub Actions, improving consistency and reducing build failures by 25%[cite: 24]. Managed automated testing and deployment workflows using Jenkins and Maven[cite: 43, 65]." 
       },
       { 
-        id: "chaos", 
-        name: "Chaos Engineering (Litmus)", 
-        description: "Executed 10+ chaos experiments to validate fault tolerance and system recovery workflows under failure conditions[cite: 13]." 
+        id: "aws-cicd", 
+        name: "AWS CodePipeline", 
+        description: "Implemented CI/CD automation for frontend deployments on AWS, enabling faster release cycles and consistent production updates[cite: 59, 65]." 
+      },
+    ],
+  },
+  {
+    title: "Observability & Reliability",
+    skills: [
+      { 
+        id: "prom-grafana", 
+        name: "Prometheus & Grafana", 
+        description: "Developed 20+ Grafana dashboards integrated with Prometheus to monitor service health, reducing MTTD by 25%. Tracked SLOs and error budgets to guide release decisions[cite: 16]." 
+      },
+      { 
+        id: "elk-loki", 
+        name: "ELK Stack & Grafana Loki", 
+        description: "Ingested 100K+ unstructured log entries using Grafana Loki to detect semantic drift and early degradation signals[cite: 50, 51]. Leveraged ELK stack for centralized logging and observability[cite: 66]." 
+      },
+    ],
+  },
+  {
+    title: "Security & Networking",
+    skills: [
+      { 
+        id: "sec-net", 
+        name: "IAM, VPC, Secrets & TLS", 
+        description: "Enforced least-privilege IAM policies and secured web applications using AWS Certificate Manager (TLS/SSL)[cite: 58, 66]. Reviewed container security scans and reduced false positives by 20%[cite: 26]." 
+      },
+    ],
+  },
+  {
+    title: "Development & Systems",
+    skills: [
+      { 
+        id: "languages", 
+        name: "Go, Python, Java, JS, SQL", 
+        description: "Developed Python scripts for log processing and incident detection[cite: 36, 49]. Built responsive React-based portfolios and integrated LLMs (Llama 3) for automated RCA reporting[cite: 53, 56, 68]." 
+      },
+      { 
+        id: "linux-os", 
+        name: "Linux (Ubuntu, RHEL)", 
+        description: "Supported Linux-based environments through system setup, configuration validation, and shell scripting for automation[cite: 35, 67]." 
       },
     ],
   },
