@@ -28,16 +28,16 @@ export default function Sidebar() {
           <NavLink to="/experiences" className={({ isActive }) => `${link} ${isActive ? active : ""}`}>
             <Briefcase className="size-5" /> <span className="hidden md:inline">Experiences</span>
           </NavLink>
-
-          <NavLink to="/certifications" className={({ isActive }) => `${link} ${isActive ? active : ""}`}>
-            <Award className="size-5" /> <span className="hidden md:inline">Certifications</span>
-          </NavLink>
           <NavLink
             to="/skills"
             className={({ isActive }) => `${link} ${isActive ? active : ""}`}
           >
             <Brain className="size-5" />
             <span className="hidden md:inline">Skills</span>
+          </NavLink>
+
+          <NavLink to="/certifications" className={({ isActive }) => `${link} ${isActive ? active : ""}`}>
+            <Award className="size-5" /> <span className="hidden md:inline">Certifications</span>
           </NavLink>
 
 
