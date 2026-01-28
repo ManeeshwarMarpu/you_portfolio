@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 import MobileBottomNav from "./components/MobileBottomNav";
-import YouTubeIntro from "./components/YouTubeIntro";
-
+// import YouTubeIntro from "./components/YouTubeIntro";
+import CinematicIntro from "./components/LoadingScreen";
 import Home from "./pages/Home";
 import Watch from "./pages/Watch";
 import Channel from "./pages/Channel";
@@ -42,7 +42,17 @@ export default function App() {
   return (
     <>
       {/* INTRO OVERLAY */}
-      {showIntro && <YouTubeIntro />}
+     {showIntro && (
+  <CinematicIntro
+    onFinish={() => {
+      setShowIntro(false);
+      localStorage.setItem("introShown", "true");
+    }}
+    brand="MANEESHWAR"
+    subtitle="Original Production"
+  />
+)}
+
 
       {/* MAIN APP UI */}
       <div className="min-h-dvh bg-ytbg text-white flex flex-col relative overflow-x-hidden">

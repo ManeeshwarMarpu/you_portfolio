@@ -144,3 +144,17 @@ export default function Header() {
     </header>
   );
 }
+
+export function Navbar() {
+  return (
+    <nav className="h-16 flex items-center px-6">
+      <h1
+        id="navbar-logo"
+        className="text-white font-black italic text-xl"
+      >
+        M
+      </h1>
+    </nav>
+  );
+}
+
