@@ -158,6 +158,10 @@ html, body {
     filter: blur(0);
   }
 }
+.overflow-anchor-none {
+  overflow-anchor: none;
+}
+
 
 @tailwind base;
 @tailwind components;

@@ -97,4 +97,85 @@ export const projects = [
     category: "web app",
     github: "https://github.com/ManeeshwarMarpu/sdpproj3",
   },
+  {
+  id: 10,
+  title: "AI-Powered Excel Assistant",
+  date: "Mar 2025",
+  description:
+    "Built a ChatGPT-style AI assistant embedded inside Microsoft Excel that understands spreadsheets, PDFs, and user intent. Supports dynamic workbook analysis, streaming responses, persistent chat per workbook, formula generation, chart creation, and regression-based predictions with confidence scores. Designed with robust fallback logic, local embeddings, FAISS-based RAG, and portable deployment across machines.",
+  image:
+    "https://firebasestorage.googleapis.com/v0/b/portfolio-84f15.firebasestorage.app/o/excel-ai.png?alt=media",
+  tags: [
+    "LLM",
+    "RAG",
+    "Excel Automation",
+    "FastAPI",
+    "FAISS",
+    "Python",
+    "AI Systems Design"
+  ],
+  category: "AI Engineering",
+  github: "https://github.com/your-username/ai-excel-assistant",
+},
+{
+  id: 11,
+  title: "AI-Powered Log Drift Detection for SRE",
+  date: "Apr 2025",
+  description:
+    "Developed an AI-driven SRE system that detects semantic drift in application logs as a pre-incident signal. Ingests logs via Grafana Loki, converts logs into embeddings, correlates drift with error rates and HTTP 5xx metrics, auto-clusters incidents, and generates LLM-based incident summaries with severity classification (P0/P1/P2). Fully local and cloud-free.",
+  image:
+    "https://firebasestorage.googleapis.com/v0/b/portfolio-84f15.firebasestorage.app/o/log-drift.png?alt=media",
+  tags: [
+    "SRE",
+    "AIOps",
+    "Grafana",
+    "Loki",
+    "Machine Learning",
+    "Embeddings",
+    "Observability"
+  ],
+  category: "DevOps",
+  github: "https://github.com/your-username/ai-log-drift-sre",
+}
+,{
+  id: 12,
+  title: "AI-Powered Kubernetes SRE Incident Response System",
+  date: "May 2025",
+  description:
+    "Built a local, production-grade AI-assisted SRE platform for Kubernetes that detects real incidents, performs automated root-cause analysis, classifies severity, and safely triggers auto-remediation. Uses Kubernetes native signals (logs, events, deployment state) and a local LLM (Llama 3 via Ollama) with deterministic guardrails to ensure structured, safe, and reliable automation.",
+  image:
+    "https://firebasestorage.googleapis.com/v0/b/portfolio-84f15.firebasestorage.app/o/k8s-sre-ai.png?alt=media",
+  tags: [
+    "Kubernetes",
+    "SRE",
+    "LLM",
+    "Ollama",
+    "Python",
+    "Platform Engineering",
+    "Reliability Engineering"
+  ],
+  category: "DevOps",
+  github: "https://github.com/your-username/k8s-ai-sre",
+}
+,
+{
+  id: 13,
+  title: "Real-Time Stock Market Dashboard",
+  date: "Feb 2025",
+  description:
+    "Developed a real-time stock market dashboard with a modern React frontend and containerized cloud deployment. Supports live data visualization, responsive UI, Docker-based builds, and scalable frontend architecture using Tailwind CSS. Designed for extensibility and real-time financial analytics use cases.",
+  image:
+    "https://firebasestorage.googleapis.com/v0/b/portfolio-84f15.firebasestorage.app/o/stock-dashboard.png?alt=media",
+  tags: [
+    "React",
+    "Docker",
+    "Cloud Computing",
+    "Tailwind CSS",
+    "Frontend Engineering",
+    "Real-Time Data"
+  ],
+  category: "web app",
+  github: "https://github.com/ManeeshwarMarpu/cloud-projects/tree/main/real-time-stock-dashboard",
+}
+
 ]

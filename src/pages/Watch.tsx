@@ -78,7 +78,7 @@ export default function Watch() {
   const displayDate = video.uploadedAt ?? video.date;
 
   return (
-    <div className="px-4 md:px-6 lg:px-8 py-4">
+     <div className="px-4 md:px-6 lg:px-8 py-4 overflow-anchor-none">
       {/* Back button */}
       <div className="mb-4">
         <Link

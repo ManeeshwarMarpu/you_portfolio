@@ -1,6 +1,7 @@
 export type Video = {
   id: string | number
   title: string
+  image?: string
   thumbnail: string
   duration?: string
   views?: number
@@ -24,7 +25,9 @@ export const videos: Video[] = [
     title: 'Polyglot Compiler Workbench (C/Java/Python/JS)',
     thumbnail:
       'https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1200&auto=format&fit=crop',
-    duration: '6:45',
+    sources: { mp4: "https://firebasestorage.googleapis.com/v0/b/portfolio-84f15.firebasestorage.app/o/Compiler_Workbench_Video_Generation.mp4?alt=media&token=8da0d33f-51b4-4a89-8073-45b30beb0ba1" },
+
+      duration: '6:45',
     views: 15200,
     uploadedAt: '2025-05-20',
     category: 'Tools',
@@ -48,7 +51,8 @@ export const videos: Video[] = [
     title: 'Project Management System (Django + AWS)',
     thumbnail:
       'https://firebasestorage.googleapis.com/v0/b/portfolio-84f15.firebasestorage.app/o/mac-management.png?alt=media&token=71be2320-1e51-473a-bf42-aa3c090daeb1',
-    duration: '8:33',
+    sources: { mp4: "https://firebasestorage.googleapis.com/v0/b/portfolio-84f15.firebasestorage.app/o/Project_Management_App_Video_Generated.mp4?alt=media&token=0d8969d5-5bd2-46b9-9d22-196547d194e8" },
+      duration: '8:33',
     views: 9800,
     uploadedAt: '2025-06-10',
     category: 'web app',
@@ -211,7 +215,9 @@ export const videos: Video[] = [
     title: 'Construction Material Quality Inspection AI',
     thumbnail:
       'https://firebasestorage.googleapis.com/v0/b/portfolio-84f15.firebasestorage.app/o/cnst.png?alt=media&token=80d5b321-23c5-4cf0-bf6a-08686cf86e66',
-    duration: '9:10',
+sources: { mp4: "https://firebasestorage.googleapis.com/v0/b/portfolio-84f15.firebasestorage.app/o/AI_Generates_Construction_Inspection_Video.mp4?alt=media&token=cf3f86f2-b0a6-4866-9c91-414d0c7b72d2" }
+,
+      duration: '9:10',
     views: 4800,
     uploadedAt: '2025-04-08',
     category: 'Data Science',
@@ -228,4 +234,100 @@ export const videos: Video[] = [
 ],
 
     },
+    {
+  id: 'excel-ai-assistant',
+  title: 'AI-Powered Excel Assistant',
+  thumbnail: "https://firebasestorage.googleapis.com/v0/b/portfolio-84f15.firebasestorage.app/o/ChatGPT%20Image%20Jan%2027%2C%202026%2C%2003_58_16%20PM.png?alt=media&token=021e300b-b63a-466e-bae6-35480c369d89",
+sources: { mp4: "https://firebasestorage.googleapis.com/v0/b/portfolio-84f15.firebasestorage.app/o/Chatbot_Performs_Excel_Operations_Video.mp4?alt=media&token=7f5dc52e-04d8-4aef-9d26-8225487cc49c" }
+
+  // thumbnail:
+    ,  duration: '11:30',
+  views: 9200,
+  uploadedAt: '2025-03-28',
+  category: 'AI Engineering',
+  channel: { name: 'Maneeshwar Marpu', handle: 'maneesh', avatar: 'https://i.pravatar.cc/100?img=11' },
+  tags: ['llm', 'rag', 'excel', 'faiss', 'fastapi', 'ai-systems'],
+  description:
+    'Built a ChatGPT-style AI assistant embedded directly inside Microsoft Excel that understands spreadsheets, PDFs, and user intent. The system dynamically analyzes Excel workbooks without relying on hard-coded ranges, allowing it to adapt to changing data structures. It supports persistent, file-level chat history so context is preserved across sessions. Responses are streamed token-by-token to provide an interactive, real-time experience similar to ChatGPT. The assistant can automatically generate formulas, create charts, modify sheets programmatically, and perform regression-based predictions with confidence scores. Document understanding is powered by local embeddings and FAISS-based retrieval to ensure accurate context grounding. Robust fallback logic and error handling were implemented to handle LLM failures gracefully. The entire system is designed to be portable across machines, cloud-optional, and production-ready.',
+  highlights: [
+    'Dynamic Excel workbook understanding (no hard-coded ranges)',
+    'PDF ingestion with local embeddings + FAISS',
+    'Streaming LLM responses with structured + human-readable output',
+    'Regression-based predictions with confidence scores',
+    'Portable, cloud-optional architecture with fallback logic'
+  ],
+  github: 'https://github.com/ManeeshwarMarpu/ai-excel-assistant',
+},
+
+{
+  id: 'sre-log-drift',
+  title: 'AI-Powered Log Drift Detection for SRE',
+  thumbnail:
+    'https://firebasestorage.googleapis.com/v0/b/portfolio-84f15.firebasestorage.app/o/log-drift.png?alt=media',
+  duration: '9:45',
+  views: 7800,
+  uploadedAt: '2025-04-12',
+  category: 'DevOps',
+  channel: { name: 'Maneeshwar Marpu', handle: 'maneesh', avatar: 'https://i.pravatar.cc/100?img=11' },
+  tags: ['sre', 'aiops', 'grafana', 'loki', 'embeddings', 'observability'],
+  description:
+    'Developed an AI-driven SRE system focused on detecting semantic drift in application logs as an early pre-incident signal. The platform continuously ingests real application logs through Grafana Loki and converts them into vector embeddings for semantic analysis. By monitoring changes in log behavior over time, the system identifies abnormal drift patterns before failures surface. Drift signals are correlated with error rates and HTTP 5xx metrics to improve confidence and reduce false positives. Related anomalies are automatically clustered into incidents for clearer analysis. An LLM generates concise incident summaries and assigns severity levels (P0/P1/P2) to guide response prioritization. The system is fully local and cloud-free, mirroring modern AIOps platforms while maintaining strong SRE guardrails.',
+  highlights: [
+    'Semantic log drift detection before incidents occur',
+    'Grafana Loki log ingestion and embedding pipeline',
+    'Incident clustering with severity classification',
+    'Correlation with error rates and HTTP 5xx signals',
+    'Fully local, cloud-free AIOps design'
+  ],
+  github: 'https://github.com/ManeeshwarMarpu/ai-log-drift-sre',
+},
+
+{
+  id: 'k8s-ai-sre',
+  title: 'AI-Powered Kubernetes SRE Incident Response',
+  thumbnail: 'https://firebasestorage.googleapis.com/v0/b/portfolio-84f15.firebasestorage.app/o/ChatGPT%20Image%20Jan%2027%2C%202026%2C%2004_16_18%20PM.png?alt=media&token=68e72c53-1026-4407-971f-469f1dec5db9',
+      sources: { mp4: "https://firebasestorage.googleapis.com/v0/b/portfolio-84f15.firebasestorage.app/o/AI_Powered_Kubernetes_Incident_Response.mp4?alt=media&token=832b1255-1810-45b8-9c6b-a193a55cd2f0" }
+,
+    duration: '12:05',
+  views: 8400,
+  uploadedAt: '2025-05-06',
+  category: 'DevOps',
+  channel: { name: 'Maneeshwar Marpu', handle: 'maneesh', avatar: 'https://i.pravatar.cc/100?img=11' },
+  tags: ['kubernetes', 'sre', 'llm', 'ollama', 'platform-engineering'],
+  description:
+    'Built a production-grade, AI-assisted SRE incident response platform for Kubernetes environments. The system continuously monitors Kubernetes workloads and intentionally failure-prone services to detect real operational incidents. It collects native Kubernetes signals including pod logs, events, and deployment state for holistic diagnosis. A local LLM (Llama 3 via Ollama) performs automated root-cause analysis and generates structured incident reports. Incidents are classified by severity to guide response urgency. Deterministic guardrails ensure outputs remain valid, safe, and machine-executable. For high-severity incidents, the platform can trigger guarded auto-remediation actions such as rolling restarts. The design mirrors real-world SRE workflows, balancing AI reasoning with operational safety and reproducibility.',
+  highlights: [
+    'Real Kubernetes incident detection using native signals',
+    'LLM-based root cause analysis with structured JSON output',
+    'Severity classification and guarded auto-remediation',
+    'Local LLM (Ollama + Llama 3), zero cloud cost',
+    'Interview-defensible SRE architecture'
+  ],
+  github: 'https://github.com/ManeeshwarMarpu/k8s-ai-sre',
+},
+
+{
+  id: 'real-time-stock-dashboard',
+  title: 'Real-Time Stock Market Dashboard',
+  thumbnail:
+    'https://firebasestorage.googleapis.com/v0/b/portfolio-84f15.firebasestorage.app/o/ChatGPT%20Image%20Jan%2027%2C%202026%2C%2008_02_45%20PM.png?alt=media&token=31b9bf57-fa70-4aee-b992-f30690575243',  duration: '7:50',
+  sources: { mp4: "https://firebasestorage.googleapis.com/v0/b/portfolio-84f15.firebasestorage.app/o/Real_Time_Stock_Market_Dashboard_Video.mp4?alt=media&token=b392ec0d-9ae1-4a3a-94b0-c85ee0ecfb88" }
+,
+    views: 6900,
+  uploadedAt: '2025-02-22',
+  category: 'web app',
+  channel: { name: 'Maneeshwar Marpu', handle: 'maneesh', avatar: 'https://i.pravatar.cc/100?img=11' },
+  tags: ['react', 'docker', 'cloud', 'realtime-data', 'frontend'],
+  description:
+    'Developed a real-time stock market dashboard focused on live data visualization and responsive user experience. The application features a modern React-based frontend designed for clarity and performance. It supports dynamic rendering of financial data, enabling users to observe trends and changes in near real time. The UI is built with Tailwind CSS to ensure a clean, scalable, and mobile-friendly design. Docker is used to containerize the frontend for consistent builds and deployment. The architecture is designed to be extensible, allowing additional analytics and data sources to be integrated easily. Emphasis was placed on maintainability, performance, and real-time usability for financial analytics use cases.',
+  highlights: [
+    'Live data visualization with responsive UI',
+    'Dockerized frontend deployment',
+    'Tailwind CSS for modern, scalable design',
+    'Built for extensibility and real-time analytics'
+  ],
+  github:
+    'https://github.com/ManeeshwarMarpu/cloud-projects/tree/main/real-time-stock-dashboard',
+},
+
 ]

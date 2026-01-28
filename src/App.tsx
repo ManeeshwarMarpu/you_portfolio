@@ -19,6 +19,7 @@ import TicTacToe from "./pages/play/tictactoe";
 import Snake from "./pages/play/snake";
 import Memory from "./pages/play/Memory";
 import Skills from "./pages/Skills";
+import ScrollToTop from "./pages/ScrollToTop";
 
 
 export default function App() {
@@ -54,6 +55,7 @@ export default function App() {
           </aside>
 
           <main className="min-w-0 grow px-3 sm:px-4 md:px-6 xl:px-8 py-4 pb-20">
+              <ScrollToTop />
             <Routes>
               <Route path="/" element={<Navigate to="/home" replace />} />
               <Route path="/home" element={<Home />} />
