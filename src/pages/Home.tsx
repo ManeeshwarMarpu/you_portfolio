@@ -1,6 +1,7 @@
 import { useMemo, useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
+
 import SectionRow from "../components/SectionRow";
 import FilterChips from "../components/FilterChips";
 import HeroAd from "../components/HeroAd";
@@ -8,13 +9,11 @@ import SkeletonVideoCard from "../components/SkeletonVideoCard";
 import { videos } from "../data/videos";
 import type { Video } from "../data/videos";
 import experiences from "./Experiences";
-import CinematicIntro from "../components/LoadingScreen";
 
 export default function Home() {
-  const [showIntro, setShowIntro] = useState(true);
   const [loading, setLoading] = useState(true);
 
-  // Search/Filter Logic
+  // Search / Filter
   const [sp, setSp] = useSearchParams();
   const q = (sp.get("q") ?? "").trim();
   const urlTag = sp.get("tag") ?? "All";
@@ -25,14 +24,14 @@ export default function Home() {
   }, [urlTag, cat]);
 
   useEffect(() => {
-    // Skeletons show briefly after the intro
     const loadTimer = setTimeout(() => setLoading(false), 3000);
     return () => clearTimeout(loadTimer);
   }, []);
 
-  const allCategories = useMemo(() => 
-    Array.from(new Set(["All", ...videos.flatMap(v => v.tags ?? [])])), 
-  []);
+  const allCategories = useMemo(
+    () => Array.from(new Set(["All", ...videos.flatMap(v => v.tags ?? [])])),
+    []
+  );
 
   const shuffle = <T,>(arr: T[]) => [...arr].sort(() => 0.5 - Math.random());
   const pickRandom = <T,>(arr: T[]) => arr[Math.floor(Math.random() * arr.length)];
@@ -48,12 +47,22 @@ export default function Home() {
     if (!q) return tagFiltered;
     const needle = q.toLowerCase();
     return tagFiltered.filter(v =>
-      [v.title, v.description, ...(v.tags ?? [])].join(" ").toLowerCase().includes(needle)
+      [v.title, v.description, ...(v.tags ?? [])]
+        .join(" ")
+        .toLowerCase()
+        .includes(needle)
     );
   }, [q, tagFiltered]);
 
-  const randomProjects = useMemo(() => q ? filteredByQuery : shuffle(tagFiltered).slice(0, 4), [q, filteredByQuery, tagFiltered]);
-  const randomExperiences = useMemo(() => Array.isArray(experiences) ? shuffle(experiences).slice(0, 4) : [], []);
+  const randomProjects = useMemo(
+    () => (q ? filteredByQuery : shuffle(tagFiltered).slice(0, 4)),
+    [q, filteredByQuery, tagFiltered]
+  );
+
+  const randomExperiences = useMemo(
+    () => (Array.isArray(experiences) ? shuffle(experiences).slice(0, 4) : []),
+    []
+  );
 
   const handleChipChange = (t: string) => {
     setCat(t);
@@ -63,35 +72,32 @@ export default function Home() {
   };
 
   return (
-    <>
-      <AnimatePresence mode="wait">
-        {showIntro && (
-          <CinematicIntro key="intro" onFinish={() => setShowIntro(false)} />
-        )}
-      </AnimatePresence>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.6 }}
+      className="space-y-6 w-full px-4 md:px-6 lg:px-8"
+    >
+      <FilterChips items={allCategories} onChange={handleChipChange} initial={urlTag} />
 
-      {/* Main Content Reveal */}
-      {!showIntro && (
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.9, filter: "blur(20px)" }}
-          animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-          transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-          className="space-y-6 w-full px-4 md:px-6 lg:px-8"
-        >
-          <FilterChips items={allCategories} onChange={handleChipChange} initial={urlTag} />
-          {!q && <HeroAd />}
-          {loading ? (
-            <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {Array.from({ length: 8 }).map((_, i) => <SkeletonVideoCard key={i} />)}
-            </div>
-          ) : (
-            <SectionRow title={q ? `Results for “${q}”` : cat === "All" ? "Recommended" : cat} items={randomProjects} />
-          )}
-          {!q && !loading && randomExperiences.length > 0 && (
-            <SectionRow title="Experiences" items={randomExperiences} />
-          )}
-        </motion.div>
+      {!q && <HeroAd />}
+
+      {loading ? (
+        <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {Array.from({ length: 8 }).map((_, i) => (
+            <SkeletonVideoCard key={i} />
+          ))}
+        </div>
+      ) : (
+        <SectionRow
+          title={q ? `Results for “${q}”` : cat === "All" ? "Recommended" : cat}
+          items={randomProjects}
+        />
       )}
-    </>
+
+      {!q && !loading && randomExperiences.length > 0 && (
+        <SectionRow title="Experiences" items={randomExperiences} />
+      )}
+    </motion.div>
   );
 }

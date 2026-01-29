@@ -20,7 +20,6 @@ function useTheme() {
     localStorage.setItem("theme", theme);
   }, [theme]);
 
-  // Only auto-follow system if the user hasn't explicitly chosen a theme yet
   React.useEffect(() => {
     const media = window.matchMedia("(prefers-color-scheme: dark)");
     const onChange = () => {
@@ -48,6 +47,15 @@ export default function Header() {
     else nav("/home", { replace: true });
   };
 
+  // Custom function to trigger intro on logo click
+  const handleLogoClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    // 1. Dispatch custom event to App.tsx
+    window.dispatchEvent(new Event("play-intro"));
+    // 2. Navigate home
+    nav("/home");
+  };
+
   React.useEffect(() => {
     const onDoc = (e: MouseEvent) => {
       if (!qrRef.current?.contains(e.target as Node)) setQrOpen(false);
@@ -63,8 +71,11 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-40 bg-card/95 backdrop-blur border-b border-yt shadow-yt">
       <div className="flex items-center justify-between px-3 md:px-5 py-2 gap-3">
-        {/* Left: brand (menu removed) */}
-        <Link to="/home" className="flex items-center gap-2 group">
+        {/* Left: brand - Changed to button for intro trigger */}
+        <button 
+          onClick={handleLogoClick}
+          className="flex items-center gap-2 group cursor-pointer border-none bg-transparent p-0 outline-none"
+        >
           <img
             src={LogoIcon}
             alt="YouPortfolio logo"
@@ -74,7 +85,7 @@ export default function Header() {
           <span className="font-semibold text-xl tracking-tight text-yt whitespace-nowrap">
             You<span className="text-red-500">Portfolio</span>
           </span>
-        </Link>
+        </button>
 
         {/* Center: search (desktop) */}
         <div className="flex-1 max-w-2xl hidden md:block">
@@ -157,4 +168,3 @@ export function Navbar() {
     </nav>
   );
 }
-

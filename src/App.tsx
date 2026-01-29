@@ -1,11 +1,12 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
+import { AnimatePresence } from "framer-motion";
 
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 import MobileBottomNav from "./components/MobileBottomNav";
-// import YouTubeIntro from "./components/YouTubeIntro";
 import CinematicIntro from "./components/LoadingScreen";
+
 import Home from "./pages/Home";
 import Watch from "./pages/Watch";
 import Channel from "./pages/Channel";
@@ -21,42 +22,51 @@ import Memory from "./pages/play/Memory";
 import Skills from "./pages/Skills";
 import ScrollToTop from "./pages/ScrollToTop";
 
-
 export default function App() {
-  // Play intro only once per browser
-  const [showIntro, setShowIntro] = useState(() => {
-    return localStorage.getItem("introShown") !== "true";
-  });
+  const [showIntro, setShowIntro] = useState(false);
+  const introPlayingRef = useRef(false);
 
+  // ✅ First visit only
   useEffect(() => {
-    if (showIntro) {
-      const timer = setTimeout(() => {
-        setShowIntro(false);
-        localStorage.setItem("introShown", "true");
-      }, 1500);
-
-      return () => clearTimeout(timer);
+    if (sessionStorage.getItem("introShown") !== "true") {
+      introPlayingRef.current = true;
+      setShowIntro(true);
     }
-  }, [showIntro]);
+  }, []);
+
+  // ✅ Logo-triggered intro (once per click)
+  useEffect(() => {
+    const handlePlayIntro = () => {
+      if (introPlayingRef.current) return;
+      introPlayingRef.current = true;
+      setShowIntro(true);
+    };
+
+    window.addEventListener("play-intro", handlePlayIntro);
+    return () => window.removeEventListener("play-intro", handlePlayIntro);
+  }, []);
+
+  const onIntroFinish = () => {
+    sessionStorage.setItem("introShown", "true");
+    introPlayingRef.current = false;
+    setShowIntro(false);
+  };
 
   return (
     <>
-      {/* INTRO OVERLAY */}
-     {showIntro && (
-  <CinematicIntro
-    onFinish={() => {
-      setShowIntro(false);
-      localStorage.setItem("introShown", "true");
-    }}
-    brand="MANEESHWAR"
-    subtitle="Original Production"
-  />
-)}
+      {/* ✅ INTRO OVERLAY (does NOT remount app) */}
+      <AnimatePresence>
+        {showIntro && (
+          <CinematicIntro
+            onFinish={onIntroFinish}
+            brand="MANEESHWAR"
+            subtitle="Original Production"
+          />
+        )}
+      </AnimatePresence>
 
-
-      {/* MAIN APP UI */}
+      {/* ✅ APP LAYOUT (never unmounts) */}
       <div className="min-h-dvh bg-ytbg text-white flex flex-col relative overflow-x-hidden">
-
         <Header />
 
         <div className="flex grow w-full">
@@ -65,7 +75,7 @@ export default function App() {
           </aside>
 
           <main className="min-w-0 grow px-3 sm:px-4 md:px-6 xl:px-8 py-4 pb-20">
-              <ScrollToTop />
+            <ScrollToTop />
             <Routes>
               <Route path="/" element={<Navigate to="/home" replace />} />
               <Route path="/home" element={<Home />} />
@@ -81,7 +91,6 @@ export default function App() {
               <Route path="/play/snake" element={<Snake />} />
               <Route path="/play/memory" element={<Memory />} />
               <Route path="/skills" element={<Skills />} />
-
               <Route path="*" element={<div className="p-6">Not found</div>} />
             </Routes>
           </main>
