@@ -110,4 +110,59 @@ export const coreSkills: SkillGroup[] = [
       },
     ],
   },
+  {
+  title: "AI & Machine Learning",
+  skills: [
+    {
+      id: "ml-anomaly",
+      name: "Machine Learning & Anomaly Detection",
+      description:
+        "Designed and evaluated ML pipelines for anomaly and fraud detection using Isolation Forests and Autoencoders. Performed EDA, handled extreme class imbalance, and validated models using confusion matrices and classification reports. Applied these techniques in fraud detection and material defect identification projects."
+    },
+    {
+      id: "llm-rag-systems",
+      name: "LLMs, RAG & AI Systems",
+      description:
+        "Built production-grade AI systems using LLMs (Llama 3 via Ollama) and Retrieval-Augmented Generation (FAISS). Developed AI-powered Excel assistants and SRE platforms that generate structured insights, RCA reports, and predictions from unstructured data such as logs, spreadsheets, and PDFs."
+    },
+    {
+      id: "aiops-ml",
+      name: "AIOps & Intelligent Monitoring",
+      description:
+        "Developed AI-driven SRE systems that detect semantic log drift as pre-incident signals. Correlated embeddings with metrics (HTTP 5xx, error rates), auto-clustered incidents, and generated severity-classified summaries (P0–P2) using LLMs."
+    }
+  ]
+},
+// Add these to your coreSkills array
+  {
+    title: "Backend & Systems",
+    skills: [
+      {
+        id: "backend-frameworks",
+        name: "Spring Boot, Django, FastAPI",
+        description: "Architected scalable microservices and REST APIs with robust error handling and middleware. Integrated Spring Security and JWT for secure authentication flows."
+      },
+      {
+        id: "db-systems",
+        name: "PostgreSQL, MongoDB, Redis, Firestore",
+        description: "Designed optimized schemas and complex queries. Implemented Redis caching to reduce database load and Firestore for real-time application features."
+      }
+    ]
+  },
+  {
+    title: "Frontend & Full Stack",
+    skills: [
+      {
+        id: "frontend-stack",
+        name: "React, Next.js, TypeScript, Tailwind",
+        description: "Built cinematic, high-performance UIs using Framer Motion and modern CSS. Managed complex state using Redux and React Query."
+      },
+      {
+        id: "mobile-dev",
+        name: "React Native & Expo",
+        description: "Developed cross-platform mobile applications with custom UI themes (Spider-Verse) and integrated device-level features."
+      }
+    ]
+  },
+
 ];

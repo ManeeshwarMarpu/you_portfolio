@@ -180,7 +180,56 @@ html, body {
   pointer-events: none;
   animation: grain 8s steps(10) infinite;
 }
+/* Custom Scrollbar for the Cinematic Modal */
+.overflow-y-auto::-webkit-scrollbar {
+  width: 4px;
+}
+.overflow-y-auto::-webkit-scrollbar-track {
+  background: transparent;
+}
+.overflow-y-auto::-webkit-scrollbar-thumb {
+  background: rgba(220, 38, 38, 0.2);
+  border-radius: 10px;
+}
 
+.terminal-screen::before {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), 
+              linear-gradient(90deg, rgba(255, 0, 0, 0.02), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.02));
+  z-index: 2;
+  background-size: 100% 2px, 3px 100%;
+  pointer-events: none;
+}
+@keyframes border-flow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+.active-module {
+  border: 1px solid transparent;
+  background: linear-gradient(90deg, #dc2626, #450a0a, #dc2626);
+  background-size: 200% auto;
+  animation: border-flow 3s linear infinite;
+  background-clip: border-box;
+}
+@layer utilities {
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(220, 38, 38, 0.2);
+    border-radius: 10px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(220, 38, 38, 0.5);
+  }
+}
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
