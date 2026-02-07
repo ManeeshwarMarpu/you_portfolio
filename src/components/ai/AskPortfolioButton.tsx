@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MessageSquareText, Sparkles, X } from "lucide-react";
+import { MessageSquareText, Sparkles } from "lucide-react";
 import AskPortfolioChat from "./AskPortfolioChat";
 
 export default function AskPortfolioButton() {

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ExternalLink, Github } from "lucide-react";
+import { Github } from "lucide-react";
 
 type Project = {
   id: number;

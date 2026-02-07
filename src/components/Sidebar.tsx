@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import {
   Home, LayoutGrid, Briefcase, Award, Info, Mail,
-  Github, Linkedin, Joystick, Grid3X3, Brain, Turtle, Sparkles
+  Github, Linkedin, Joystick, Grid3X3, Brain, Turtle
 } from "lucide-react";
 
 const link =
