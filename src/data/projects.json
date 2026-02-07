@@ -1,0 +1,177 @@
+[
+  {
+    "id": 5,
+    "title": "Anomaly_Detection_for_Fraud",
+    "date": "Mar 2025",
+    "category": "Data Science",
+    "tags": [
+      "Pandas & NumPy",
+      "Matplotlib & Seaborn",
+      "Scikit-learn",
+      "Exploratory Data Analysis (EDA)",
+      "Anomaly Detection Models",
+      "Version Control & Collaboration"
+    ],
+    "description": "This project focuses on detecting anomalies in a highly imbalanced fraud dataset using unsupervised techniques. It involves thorough exploratory data analysis and visualization to understand data distributions and identify outlier behavior. Models such as Isolation Forest and Autoencoders are employed to flag potential fraudulent activities. Evaluation metrics like confusion matrices and classification reports are used to assess detection performance. The project demonstrates a complete pipeline from data preprocessing to model training and insightful visualization.",
+    "github": "https://github.com/ManeeshwarMarpu/Data-Science-Projects/tree/main/Anomaly_Detection_for_Fraud"
+  },
+  {
+    "id": 6,
+    "title": "Weather Analysis",
+    "date": "Feb 2025",
+    "category": "Data Science",
+    "tags": [
+      "Pandas & NumPy",
+      "Matplotlib & Seaborn",
+      "Scikit-learn",
+      "Exploratory Data Analysis (EDA)",
+      "ARIMA Model",
+      "Version Control & Collaboration"
+    ],
+    "description": "This project integrates data preprocessing, ARIMA model fitting, comprehensive diagnostic checks, and forecast evaluation to deliver a robust time series analysis framework. It serves as a practical example for anyone interested in learning time series forecasting, weather analysis, and model validation techniques.",
+    "github": "https://github.com/ManeeshwarMarpu/sdpproj3"
+  },
+  {
+    "id": 3,
+    "title": "Video Manager",
+    "date": "Aug 2023 - Dec 2023",
+    "category": "DevOps",
+    "tags": [
+      "Docker",
+      "AWS",
+      "GitHub",
+      "GitHub Actions",
+      "CI/CD"
+    ],
+    "description": "Developed during an internship, this project focuses on storing body-cam video recordings securely in the cloud. Responsibilities included deploying code using GitHub Actions and automating AWS infrastructure tasks via CI/CD pipelines.",
+    "github": ""
+  },
+  {
+    "id": 4,
+    "title": "My Portfolio",
+    "date": "Jan 2025",
+    "category": "Web App",
+    "tags": [
+      "React",
+      "JavaScript",
+      "HTML",
+      "CSS",
+      "Tailwind CSS",
+      "Framer Motion"
+    ],
+    "description": "A YouTube-style cinematic portfolio showcasing projects with interactive UI elements, smooth animations, dark/light mode support, and responsive design. Includes an AI-powered assistant and RAG-based portfolio querying system.",
+    "github": "https://github.com/ManeeshwarMarpu/sdpproj3"
+  },
+  {
+    "id": 0,
+    "title": "Construction Material Quality Inspection Using AI",
+    "date": "Feb 2025 - Present",
+    "category": "Data Science",
+    "tags": [
+      "Data Science",
+      "Data Analysis",
+      "Jupyter",
+      "Image Classification",
+      "Anomaly Detection"
+    ],
+    "description": "Developing an AI-based system to inspect and classify construction materials such as bricks, cement, and steel, with automated defect detection and categorization using computer vision techniques.",
+    "github": ""
+  },
+  {
+    "id": 2,
+    "title": "MAC Management",
+    "date": "Oct 2022 - Present",
+    "category": "Web App",
+    "tags": [
+      "Python",
+      "Django",
+      "MySQL",
+      "HTML",
+      "CSS"
+    ],
+    "description": "A web-based project management system built with Django to manage projects, tasks, user roles, permissions, reporting, and progress tracking in a collaborative environment.",
+    "github": "https://github.com/ManeeshwarMarpu/Project-management-system"
+  },
+  {
+    "id": 1,
+    "title": "Loan Tracking System",
+    "date": "Jul 2022 - Dec 2022",
+    "category": "Web App",
+    "tags": [
+      "Java",
+      "Spring",
+      "Spring Boot",
+      "Hibernate",
+      "JSP"
+    ],
+    "description": "A loan application tracking system allowing users to apply for loans online, repay via EMIs, and enabling managers to monitor application statuses, repayments, and loan categories.",
+    "github": "https://github.com/ManeeshwarMarpu/sdpproj3"
+  },
+  {
+    "id": 10,
+    "title": "AI-Powered Excel Assistant",
+    "date": "Mar 2025",
+    "category": "AI Engineering",
+    "tags": [
+      "LLM",
+      "RAG",
+      "Excel Automation",
+      "FastAPI",
+      "FAISS",
+      "Python",
+      "AI Systems Design"
+    ],
+    "description": "Built a ChatGPT-style AI assistant embedded inside Microsoft Excel capable of understanding spreadsheets, PDFs, and user intent. Supports dynamic workbook analysis, streaming responses, formula generation, chart creation, regression-based predictions with confidence scoring, and FAISS-based RAG.",
+    "github": "https://github.com/your-username/ai-excel-assistant"
+  },
+  {
+    "id": 11,
+    "title": "AI-Powered Log Drift Detection for SRE",
+    "date": "Apr 2025",
+    "category": "DevOps",
+    "tags": [
+      "SRE",
+      "AIOps",
+      "Grafana",
+      "Loki",
+      "Machine Learning",
+      "Embeddings",
+      "Observability"
+    ],
+    "description": "An AI-driven SRE system that detects semantic drift in application logs as an early indicator of incidents. Integrates Grafana Loki, embeddings-based drift detection, incident clustering, and LLM-generated incident summaries with severity classification.",
+    "github": "https://github.com/your-username/ai-log-drift-sre"
+  },
+  {
+    "id": 12,
+    "title": "AI-Powered Kubernetes SRE Incident Response System",
+    "date": "May 2025",
+    "category": "DevOps",
+    "tags": [
+      "Kubernetes",
+      "SRE",
+      "LLM",
+      "Ollama",
+      "Python",
+      "Platform Engineering",
+      "Reliability Engineering"
+    ],
+    "description": "A production-grade AI-assisted SRE platform for Kubernetes that detects real incidents, performs automated root-cause analysis, classifies severity, and safely triggers auto-remediation using Kubernetes-native signals and a local LLM.",
+    "github": "https://github.com/your-username/k8s-ai-sre"
+  },
+  {
+    "id": 13,
+    "title": "Real-Time Stock Market Dashboard",
+    "date": "Feb 2025",
+    "category": "Web App",
+    "tags": [
+      "React",
+      "Docker",
+      "Cloud Computing",
+      "Tailwind CSS",
+      "Frontend Engineering",
+      "Real-Time Data"
+    ],
+    "description": "A real-time stock market dashboard built with a modern React frontend, containerized deployment using Docker, responsive UI design, and scalable architecture for financial analytics.",
+    "github": "https://github.com/ManeeshwarMarpu/cloud-projects/tree/main/real-time-stock-dashboard"
+  }
+]

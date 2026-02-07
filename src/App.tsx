@@ -22,6 +22,9 @@ import Memory from "./pages/play/Memory";
 import Skills from "./pages/Skills";
 import ScrollToTop from "./pages/ScrollToTop";
 
+
+import AskPortfolioButton from "./components/ai/AskPortfolioButton";
+
 export default function App() {
   const [showIntro, setShowIntro] = useState(false);
   const introPlayingRef = useRef(false);
@@ -54,7 +57,7 @@ export default function App() {
 
   return (
     <>
-      {/* ✅ INTRO OVERLAY (does NOT remount app) */}
+      {/* ✅ INTRO OVERLAY */}
       <AnimatePresence>
         {showIntro && (
           <CinematicIntro
@@ -65,7 +68,7 @@ export default function App() {
         )}
       </AnimatePresence>
 
-      {/* ✅ APP LAYOUT (never unmounts) */}
+      {/* ✅ APP LAYOUT */}
       <div className="min-h-dvh bg-ytbg text-white flex flex-col relative overflow-x-hidden">
         <Header />
 
@@ -87,14 +90,22 @@ export default function App() {
               <Route path="/about" element={<About />} />
               <Route path="/resume" element={<Resume />} />
               <Route path="/contact" element={<Contact />} />
+              <Route path="/skills" element={<Skills />} />
+
+
+
+              {/* 🎮 Games */}
               <Route path="/play/tictactoe" element={<TicTacToe />} />
               <Route path="/play/snake" element={<Snake />} />
               <Route path="/play/memory" element={<Memory />} />
-              <Route path="/skills" element={<Skills />} />
+
               <Route path="*" element={<div className="p-6">Not found</div>} />
             </Routes>
           </main>
         </div>
+
+        {/* ✅ GLOBAL AI ASSISTANT */}
+        <AskPortfolioButton />
 
         <div className="md:hidden">
           <MobileBottomNav />

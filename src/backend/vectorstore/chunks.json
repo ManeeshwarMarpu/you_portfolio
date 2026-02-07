@@ -1,0 +1,154 @@
+[
+  {
+    "text": "\nProject Title: Anomaly_Detection_for_Fraud\nDate: Mar 2025\nCategory: Data Science\nTech Stack: Pandas & NumPy, Matplotlib & Seaborn, Scikit-learn, Exploratory Data Analysis (EDA), Anomaly Detection Models, Version Control & Collaboration\nDescription: This project focuses on detecting anomalies in a h",
+    "meta": {
+      "source": "projects.md",
+      "start": 0,
+      "end": 300
+    }
+  },
+  {
+    "text": "ighly imbalanced fraud dataset using unsupervised techniques. It involves thorough exploratory data analysis and visualization to understand data distributions and identify outlier behavior. Models such as Isolation Forest and Autoencoders are employed to flag potential fraudulent activities. Evalua",
+    "meta": {
+      "source": "projects.md",
+      "start": 300,
+      "end": 600
+    }
+  },
+  {
+    "text": "tion metrics like confusion matrices and classification reports are used to assess detection performance. The project demonstrates a complete pipeline from data preprocessing to model training and insightful visualization.\n\n---\n\nProject Title: Weather Analysis\nDate: Feb 2025\nCategory: Data Science\nT",
+    "meta": {
+      "source": "projects.md",
+      "start": 600,
+      "end": 900
+    }
+  },
+  {
+    "text": "ech Stack: Pandas & NumPy, Matplotlib & Seaborn, Scikit-learn, Exploratory Data Analysis (EDA), ARIMA Model, Version Control & Collaboration\nDescription: This project integrates data preprocessing, ARIMA model fitting, comprehensive diagnostic checks, and forecast evaluation to deliver a robust time",
+    "meta": {
+      "source": "projects.md",
+      "start": 900,
+      "end": 1200
+    }
+  },
+  {
+    "text": " series analysis framework. It serves as a practical example for anyone interested in learning time series forecasting, weather analysis, and model validation techniques.\n\n---\n\nProject Title: Video Manager\nDate: Aug 2023 - Dec 2023\nCategory: DevOps\nTech Stack: Docker, AWS, GitHub, GitHub Actions, CI",
+    "meta": {
+      "source": "projects.md",
+      "start": 1200,
+      "end": 1500
+    }
+  },
+  {
+    "text": "/CD\nDescription: Developed during an internship, this project focuses on storing body-cam video recordings securely in the cloud. Responsibilities included deploying code using GitHub Actions and automating AWS infrastructure tasks via CI/CD pipelines.\n\n---\n\nProject Title: My Portfolio\nDate: Jan 202",
+    "meta": {
+      "source": "projects.md",
+      "start": 1500,
+      "end": 1800
+    }
+  },
+  {
+    "text": "5\nCategory: Web App\nTech Stack: React, JavaScript, HTML, CSS, Tailwind CSS, Framer Motion\nDescription: A YouTube-style cinematic portfolio showcasing projects with interactive UI elements, smooth animations, dark/light mode support, and responsive design. Includes an AI-powered assistant and RAG-bas",
+    "meta": {
+      "source": "projects.md",
+      "start": 1800,
+      "end": 2100
+    }
+  },
+  {
+    "text": "ed portfolio querying system.\n\n---\n\nProject Title: Construction Material Quality Inspection Using AI\nDate: Feb 2025 - Present\nCategory: Data Science\nTech Stack: Data Science, Data Analysis, Jupyter, Image Classification, Anomaly Detection\nDescription: Developing an AI-based system to inspect and cla",
+    "meta": {
+      "source": "projects.md",
+      "start": 2100,
+      "end": 2400
+    }
+  },
+  {
+    "text": "ssify construction materials such as bricks, cement, and steel, with automated defect detection and categorization using computer vision techniques.\n\n---\n\nProject Title: MAC Management\nDate: Oct 2022 - Present\nCategory: Web App\nTech Stack: Python, Django, MySQL, HTML, CSS\nDescription: A web-based pr",
+    "meta": {
+      "source": "projects.md",
+      "start": 2400,
+      "end": 2700
+    }
+  },
+  {
+    "text": "oject management system built with Django to manage projects, tasks, user roles, permissions, reporting, and progress tracking in a collaborative environment.\n\n---\n\nProject Title: Loan Tracking System\nDate: Jul 2022 - Dec 2022\nCategory: Web App\nTech Stack: Java, Spring, Spring Boot, Hibernate, JSP\nD",
+    "meta": {
+      "source": "projects.md",
+      "start": 2700,
+      "end": 3000
+    }
+  },
+  {
+    "text": "escription: A loan application tracking system allowing users to apply for loans online, repay via EMIs, and enabling managers to monitor application statuses, repayments, and loan categories.\n\n---\n\nProject Title: AI-Powered Excel Assistant\nDate: Mar 2025\nCategory: AI Engineering\nTech Stack: LLM, RA",
+    "meta": {
+      "source": "projects.md",
+      "start": 3000,
+      "end": 3300
+    }
+  },
+  {
+    "text": "G, Excel Automation, FastAPI, FAISS, Python, AI Systems Design\nDescription: Built a ChatGPT-style AI assistant embedded inside Microsoft Excel capable of understanding spreadsheets, PDFs, and user intent. Supports dynamic workbook analysis, streaming responses, formula generation, chart creation, re",
+    "meta": {
+      "source": "projects.md",
+      "start": 3300,
+      "end": 3600
+    }
+  },
+  {
+    "text": "gression-based predictions with confidence scoring, and FAISS-based RAG.\n\n---\n\nProject Title: AI-Powered Log Drift Detection for SRE\nDate: Apr 2025\nCategory: DevOps\nTech Stack: SRE, AIOps, Grafana, Loki, Machine Learning, Embeddings, Observability\nDescription: An AI-driven SRE system that detects se",
+    "meta": {
+      "source": "projects.md",
+      "start": 3600,
+      "end": 3900
+    }
+  },
+  {
+    "text": "mantic drift in application logs as an early indicator of incidents. Integrates Grafana Loki, embeddings-based drift detection, incident clustering, and LLM-generated incident summaries with severity classification.\n\n---\n\nProject Title: AI-Powered Kubernetes SRE Incident Response System\nDate: May 20",
+    "meta": {
+      "source": "projects.md",
+      "start": 3900,
+      "end": 4200
+    }
+  },
+  {
+    "text": "25\nCategory: DevOps\nTech Stack: Kubernetes, SRE, LLM, Ollama, Python, Platform Engineering, Reliability Engineering\nDescription: A production-grade AI-assisted SRE platform for Kubernetes that detects real incidents, performs automated root-cause analysis, classifies severity, and safely triggers au",
+    "meta": {
+      "source": "projects.md",
+      "start": 4200,
+      "end": 4500
+    }
+  },
+  {
+    "text": "to-remediation using Kubernetes-native signals and a local LLM.\n\n---\n\nProject Title: Real-Time Stock Market Dashboard\nDate: Feb 2025\nCategory: Web App\nTech Stack: React, Docker, Cloud Computing, Tailwind CSS, Frontend Engineering, Real-Time Data\nDescription: A real-time stock market dashboard built ",
+    "meta": {
+      "source": "projects.md",
+      "start": 4500,
+      "end": 4800
+    }
+  },
+  {
+    "text": "with a modern React frontend, containerized deployment using Docker, responsive UI design, and scalable architecture for financial analytics.\n",
+    "meta": {
+      "source": "projects.md",
+      "start": 4800,
+      "end": 5100
+    }
+  },
+  {
+    "text": "Maneeshwar is a Data Scientist and Software Engineer with experience in AI, cloud, and full-stack systems.\n",
+    "meta": {
+      "source": "resume.md",
+      "start": 0,
+      "end": 300
+    }
+  },
+  {
+    "text": "Skills include Python, Machine Learning, NLP, RAG systems, FastAPI, React, AWS, Docker, and Kubernetes.\n",
+    "meta": {
+      "source": "skills.md",
+      "start": 0,
+      "end": 300
+    }
+  }
+]
