@@ -32,11 +32,29 @@ model = SentenceTransformer("all-MiniLM-L6-v2")
 # =====================================================
 # Load FAISS index + chunks (FAIL FAST)
 # =====================================================
-INDEX_PATH = Path("vectorstore/index.faiss")
-CHUNKS_PATH = Path("vectorstore/chunks.json")
+BASE_PATH = Path("/app")
 
-if not INDEX_PATH.exists():
-    raise RuntimeError("FAISS index not found")
+INDEX_PATH = BASE_PATH / "vectorstore" / "index.faiss"
+CHUNKS_PATH = BASE_PATH / "vectorstore" / "chunks.json"
+PROJECTS_PATH = BASE_PATH / "data" / "projects.json"
+
+def load_vectorstore():
+    if not INDEX_PATH.exists() or not CHUNKS_PATH.exists():
+        return None, []
+
+    index = faiss.read_index(str(INDEX_PATH))
+    chunks = json.loads(CHUNKS_PATH.read_text(encoding="utf-8"))
+    return index, chunks
+
+
+def load_projects():
+    if not PROJECTS_PATH.exists():
+        return []
+    return json.loads(PROJECTS_PATH.read_text(encoding="utf-8"))
+
+
+FAISS_INDEX, CHUNKS = load_vectorstore()
+PROJECTS = load_projects()
 
 if not CHUNKS_PATH.exists():
     raise RuntimeError("chunks.json not found")
@@ -237,3 +255,9 @@ def ask(req: AskRequest):
 @app.get("/health")
 def health():
     return {"status": "ok"}
+
+def ask_portfolio(question: str):
+    if FAISS_INDEX is None or not CHUNKS:
+        return {
+            "answer": "Vector store not initialized yet. Please ingest data first."
+        }
