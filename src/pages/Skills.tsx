@@ -1,92 +1,146 @@
+// import { useState } from "react";
+// import { motion, AnimatePresence } from "framer-motion";
+// import { coreSkills } from "../data/skills";
+// import CinematicSkillSection from "../components/CinematicSkillSection";
+// import { Cloud, ShieldCheck, Brain, Code2, Layout, Activity, Cpu, Boxes, Terminal } from "lucide-react";
+
+// export default function Skills() {
+//   const [activeTab, setActiveTab] = useState(coreSkills[0].title);
+
+//   const getIcon = (title: string) => {
+//     const t = title.toLowerCase();
+//     if (t.includes("cloud")) return <Cloud size={16} />;
+//     if (t.includes("security")) return <ShieldCheck size={16} />;
+//     if (t.includes("ai")) return <Brain size={16} />;
+//     if (t.includes("frontend")) return <Layout size={16} />;
+//     if (t.includes("backend")) return <Code2 size={16} />;
+//     return <Terminal size={16} />;
+//   };
+
+//   const activeGroup = coreSkills.find((g) => g.title === activeTab) || coreSkills[0];
+
+//   return (
+//     <div className="relative min-h-screen bg-zinc-50 dark:bg-[#080808] overflow-x-hidden selection:bg-red-500/30">
+//       <div className="relative z-10 px-4 md:px-8 py-8 md:py-20 max-w-7xl mx-auto">
+//         <header className="mb-8 md:mb-16">
+//           <div className="flex items-center gap-2 mb-2 md:mb-4">
+//             <Activity className="w-3 h-3 md:w-4 md:h-4 text-red-600 animate-pulse" />
+//             <span className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.4em] text-red-600">Module_Selector</span>
+//           </div>
+//           <h1 className="text-4xl md:text-8xl font-black italic tracking-tighter text-zinc-900 dark:text-white uppercase leading-[0.9]">
+//             System <span className="text-red-600 drop-shadow-sm">Modules</span>
+//           </h1>
+//         </header>
+
+//         <div className="flex flex-col lg:grid lg:grid-cols-[280px_1fr] gap-6 md:gap-12">
+//           {/* Mobile-Friendly Sidebar: Horizontal scroll on small screens */}
+//           <aside className="sticky top-4 z-30 lg:top-24 lg:h-fit">
+//             <div className="flex lg:flex-col gap-2 p-1.5 md:p-2 rounded-[1.5rem] md:rounded-[2rem] bg-white/80 dark:bg-zinc-900/80 border border-zinc-200 dark:border-white/5 backdrop-blur-xl overflow-x-auto scrollbar-hide">
+//               {coreSkills.map((group) => (
+//                 <button
+//                   key={group.title}
+//                   onClick={() => setActiveTab(group.title)}
+//                   className={`flex items-center gap-2.5 px-4 py-3 md:py-4 rounded-[1.2rem] md:rounded-[1.8rem] transition-all whitespace-nowrap lg:w-full ${
+//                     activeTab === group.title
+//                       ? "bg-red-600 text-white shadow-lg shadow-red-600/20"
+//                       : "text-zinc-500 hover:bg-zinc-100 dark:hover:bg-white/5"
+//                   }`}
+//                 >
+//                   <span className={activeTab === group.title ? "text-white" : "text-red-600"}>{getIcon(group.title)}</span>
+//                   <span className="text-[9px] md:text-[10px] font-bold uppercase tracking-widest leading-none">{group.title}</span>
+//                 </button>
+//               ))}
+//             </div>
+//           </aside>
+
+//           <main className="min-h-[400px]">
+//             <AnimatePresence mode="wait">
+//               <motion.div
+//                 key={activeTab}
+//                 initial={{ opacity: 0, y: 10 }}
+//                 animate={{ opacity: 1, y: 0 }}
+//                 exit={{ opacity: 0, y: -10 }}
+//                 transition={{ duration: 0.2 }}
+//               >
+//                 <CinematicSkillSection group={activeGroup} />
+//               </motion.div>
+//             </AnimatePresence>
+//           </main>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
+
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { coreSkills } from "../data/skills";
+import { coreSkills } from "../data/skills"; // Ensure your data path is correct
 import CinematicSkillSection from "../components/CinematicSkillSection";
-import { 
-  Cloud, ShieldCheck, Brain, Code2, 
-  Terminal, Layout, Activity, Cpu, Boxes 
-} from "lucide-react";
+import { Cloud, ShieldCheck, Brain, Code2, Layout,  Terminal } from "lucide-react";
 
 export default function Skills() {
   const [activeTab, setActiveTab] = useState(coreSkills[0].title);
 
   const getIcon = (title: string) => {
     const t = title.toLowerCase();
-    if (t.includes("cloud")) return <Cloud size={18} />;
-    if (t.includes("security") || t.includes("net")) return <ShieldCheck size={18} />;
-    if (t.includes("ai") || t.includes("machine")) return <Brain size={18} />;
-    if (t.includes("full stack") || t.includes("frontend")) return <Layout size={18} />;
-    if (t.includes("backend") || t.includes("development")) return <Code2 size={18} />;
-    if (t.includes("iac") || t.includes("automation")) return <Cpu size={18} />;
-    if (t.includes("containers")) return <Boxes size={18} />;
-    return <Terminal size={18} />;
+    if (t.includes("cloud")) return <Cloud size={14} />;
+    if (t.includes("security")) return <ShieldCheck size={14} />;
+    if (t.includes("ai")) return <Brain size={14} />;
+    if (t.includes("frontend")) return <Layout size={14} />;
+    if (t.includes("backend")) return <Code2 size={14} />;
+    return <Terminal size={14} />;
   };
 
   const activeGroup = coreSkills.find((g) => g.title === activeTab) || coreSkills[0];
 
   return (
-    <div className="relative min-h-screen bg-zinc-50 dark:bg-[#080808] transition-colors duration-500 overflow-x-hidden selection:bg-red-500/30">
-      {/* Dynamic Background Glow */}
-      <div className="pointer-events-none fixed inset-0 -z-10">
-        <div className="absolute top-0 left-1/4 h-[500px] w-[500px] rounded-full bg-red-500/10 blur-[120px]" />
-        <div className="absolute bottom-0 right-1/4 h-[500px] w-[500px] rounded-full bg-zinc-500/5 blur-[120px]" />
-      </div>
-
-      <div className="relative z-10 px-6 py-12 md:py-20 max-w-7xl mx-auto">
-        <header className="mb-16 space-y-4">
-          <motion.div 
-            initial={{ opacity: 0, x: -20 }} 
-            animate={{ opacity: 1, x: 0 }} 
-            className="flex items-center gap-3"
-          >
-            <Activity className="w-4 h-4 text-red-600 animate-pulse" />
-            <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-red-600">
-              Technical Capability
-            </h2>
-          </motion.div>
-          <h1 className="text-5xl md:text-8xl font-black italic tracking-tighter text-zinc-900 dark:text-white leading-[0.8] uppercase">
-            System <span className="text-red-600 drop-shadow-[0_0_20px_rgba(220,38,38,0.3)]">Modules</span>
+    <div className="relative min-h-screen bg-zinc-50 dark:bg-[#050505] selection:bg-red-500/30 transition-colors duration-500">
+      <div className="relative z-10 px-6 py-12 max-w-7xl mx-auto">
+        
+        {/* Header: Scaled down for better screen fit */}
+        <header className="mb-12">
+          <div className="flex items-center gap-3 mb-3">
+            <div className="h-[1px] w-8 bg-red-600" />
+            <span className="text-[10px] font-bold uppercase tracking-[0.5em] text-red-600/80">Module_Selector</span>
+          </div>
+          <h1 className="text-4xl md:text-6xl font-black italic tracking-tighter text-zinc-900 dark:text-white uppercase leading-none">
+            System <span className="text-red-600 drop-shadow-[0_0_15px_rgba(220,38,38,0.3)]">Modules</span>
           </h1>
         </header>
 
-        {/* Updated Grid: Prevent squishing with minmax */}
-        <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-12 items-start">
-          <aside className="sticky top-24 z-20">
-            <div className="p-2 rounded-[2.5rem] bg-white dark:bg-zinc-900/50 border border-zinc-200 dark:border-white/5 backdrop-blur-md">
+        <div className="flex flex-col lg:grid lg:grid-cols-[260px_1fr] gap-10">
+          
+          {/* Sidebar: Refined container */}
+          <aside className="lg:sticky lg:top-12 h-fit">
+            <nav className="flex lg:flex-col gap-1.5 p-2 rounded-2xl bg-white dark:bg-zinc-900/50 border border-zinc-200 dark:border-white/5 backdrop-blur-md overflow-x-auto scrollbar-hide">
               {coreSkills.map((group) => (
                 <button
                   key={group.title}
                   onClick={() => setActiveTab(group.title)}
-                  className={`w-full flex items-center justify-between px-5 py-4 rounded-[2rem] transition-all duration-300 group mb-1 ${
+                  className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 whitespace-nowrap lg:w-full group ${
                     activeTab === group.title
-                      ? "bg-red-600 text-white shadow-lg shadow-red-600/20 scale-[1.02]"
-                      : "text-zinc-500 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-white/5"
+                      ? "bg-red-600 text-white shadow-lg shadow-red-600/20"
+                      : "text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-white/5"
                   }`}
                 >
-                  <div className="flex items-center gap-3">
-                    <span className={activeTab === group.title ? "text-white" : "text-red-600"}>
-                      {getIcon(group.title)}
-                    </span>
-                    <span className="text-[10px] font-bold uppercase tracking-widest text-left leading-none">
-                      {group.title}
-                    </span>
-                  </div>
-                  {activeTab === group.title && (
-                    <motion.div layoutId="activeDot" className="w-1 h-1 bg-white rounded-full" />
-                  )}
+                  <span className={`${activeTab === group.title ? "text-white" : "text-red-600 group-hover:scale-110 transition-transform"}`}>
+                    {getIcon(group.title)}
+                  </span>
+                  <span className="text-[10px] font-bold uppercase tracking-wider">{group.title}</span>
                 </button>
               ))}
-            </div>
+            </nav>
           </aside>
 
-          <main className="min-h-[600px] w-full">
+          {/* Main Content Area */}
+          <main className="min-h-[500px]">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeTab}
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
-                transition={{ duration: 0.4, ease: "circOut" }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
               >
                 <CinematicSkillSection group={activeGroup} />
               </motion.div>

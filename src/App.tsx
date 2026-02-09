@@ -19,8 +19,9 @@ import Certifications from "./pages/Certifications";
 import TicTacToe from "./pages/play/tictactoe";
 import Snake from "./pages/play/snake";
 import Memory from "./pages/play/Memory";
-import Skills from "./pages/Skills";
+import SkillCard from "./pages/Skills";
 import ScrollToTop from "./pages/ScrollToTop";
+// import CinematicSkillSection from "./components/CinematicSkillSection";
 
 
 import AskPortfolioButton from "./components/ai/AskPortfolioButton";
@@ -90,7 +91,7 @@ export default function App() {
               <Route path="/about" element={<About />} />
               <Route path="/resume" element={<Resume />} />
               <Route path="/contact" element={<Contact />} />
-              <Route path="/skills" element={<Skills />} />
+              <Route path="/skills" element={<SkillCard />} />
 
 
 

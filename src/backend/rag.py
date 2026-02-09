@@ -4,6 +4,7 @@ import requests
 import os
 from pathlib import Path
 from collections import defaultdict
+from fastapi.middleware.cors import CORSMiddleware
 from sentence_transformers import SentenceTransformer
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
@@ -14,7 +15,17 @@ from pydantic import BaseModel
 # =====================================================
 app = FastAPI(title="Portfolio AI")
 
-
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "https://maneeshwar.com",  # Your production domain
+        "http://localhost",         # Your local dev (Nginx port 80)
+        "http://localhost:5173",    # Vite's default port if bypassing Nginx
+    ],  
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 # =====================================================
 # Config
 # =====================================================
@@ -24,13 +35,7 @@ if not OLLAMA_URL:
 
 
 # =====================================================
-# Load embedding model (once)
-# =====================================================
-model = SentenceTransformer("all-MiniLM-L6-v2")
-
-
-# =====================================================
-# Load FAISS index + chunks (FAIL FAST)
+# Paths (Docker-safe)
 # =====================================================
 BASE_PATH = Path("/app")
 
@@ -38,6 +43,16 @@ INDEX_PATH = BASE_PATH / "vectorstore" / "index.faiss"
 CHUNKS_PATH = BASE_PATH / "vectorstore" / "chunks.json"
 PROJECTS_PATH = BASE_PATH / "data" / "projects.json"
 
+
+# =====================================================
+# Load embedding model (once)
+# =====================================================
+model = SentenceTransformer("all-MiniLM-L6-v2")
+
+
+# =====================================================
+# Load vectorstore (SAFE)
+# =====================================================
 def load_vectorstore():
     if not INDEX_PATH.exists() or not CHUNKS_PATH.exists():
         return None, []
@@ -55,30 +70,16 @@ def load_projects():
 
 FAISS_INDEX, CHUNKS = load_vectorstore()
 PROJECTS = load_projects()
-
-if not CHUNKS_PATH.exists():
-    raise RuntimeError("chunks.json not found")
-
-index = faiss.read_index(str(INDEX_PATH))
-
-with open(CHUNKS_PATH, "r", encoding="utf-8") as f:
-    chunks = json.load(f)
-
-
-# =====================================================
-# Portfolio metadata
-# =====================================================
-PROJECTS_PATH = Path("data/projects.json")
-if not PROJECTS_PATH.exists():
-    raise RuntimeError("projects.json not found")
-
-PROJECTS = json.loads(PROJECTS_PATH.read_text(encoding="utf-8"))
 PROJECT_TITLES = [p["title"] for p in PROJECTS]
 
+
+# =====================================================
+# Metadata
+# =====================================================
 EXPERIENCE_ENTITIES = [
     "Motorola Solutions",
     "University of Houston",
-    "Society of Health and Medical Technology"
+    "Society of Health and Medical Technology",
 ]
 
 SKILL_ENTITIES = [
@@ -88,43 +89,40 @@ SKILL_ENTITIES = [
     "python", "go", "java", "react",
     "llm", "rag", "machine learning",
     "anomaly detection", "computer vision",
-    "cloud", "devops", "sre"
+    "cloud", "devops", "sre",
 ]
 
 
-# =====================================================
-# Curated Skill → Project mapping
-# =====================================================
 SKILL_TO_PROJECTS = {
     "ai": [
         "AI-Powered Excel Assistant",
         "Construction Material Quality Inspection Using AI",
-        "AI-Powered Kubernetes SRE Incident Response System"
+        "AI-Powered Kubernetes SRE Incident Response System",
     ],
     "machine learning": [
         "Construction Material Quality Inspection Using AI",
-        "AI-Powered Log Drift Detection for SRE"
+        "AI-Powered Log Drift Detection for SRE",
     ],
     "kubernetes": [
         "AI-Powered Kubernetes SRE Incident Response System",
-        "AI-Powered Log Drift Detection for SRE"
+        "AI-Powered Log Drift Detection for SRE",
     ],
     "aws": [
         "AI-Powered Log Drift Detection for SRE",
-        "Real-Time Stock Market Dashboard"
+        "Real-Time Stock Market Dashboard",
     ],
     "react": [
         "My Portfolio",
-        "Real-Time Stock Market Dashboard"
+        "Real-Time Stock Market Dashboard",
     ],
     "rag": [
         "AI-Powered Excel Assistant",
-        "My Portfolio"
+        "My Portfolio",
     ],
     "sre": [
         "AI-Powered Kubernetes SRE Incident Response System",
-        "AI-Powered Log Drift Detection for SRE"
-    ]
+        "AI-Powered Log Drift Detection for SRE",
+    ],
 }
 
 
@@ -134,24 +132,6 @@ SKILL_TO_PROJECTS = {
 def detect_mentions(text: str, candidates: list[str]):
     t = text.lower()
     return [c for c in candidates if c.lower() in t]
-
-
-def rank_projects_from_faiss(scores, idxs, top_n=2):
-    project_scores = defaultdict(float)
-
-    for score, idx in zip(scores[0], idxs[0]):
-        meta = chunks[idx].get("meta", {})
-        project_title = meta.get("project_title")
-        if project_title:
-            project_scores[project_title] += float(score)
-
-    ranked = sorted(
-        project_scores.items(),
-        key=lambda x: x[1],
-        reverse=True
-    )
-
-    return [p[0] for p in ranked[:top_n]]
 
 
 def detect_intent(question: str):
@@ -170,16 +150,35 @@ def detect_intent(question: str):
     return "GENERAL", None
 
 
+def rank_projects_from_faiss(scores, idxs, top_n=2):
+    project_scores = defaultdict(float)
+
+    for score, idx in zip(scores[0], idxs[0]):
+        meta = CHUNKS[idx].get("meta", {})
+        title = meta.get("project_title")
+        if title:
+            project_scores[title] += float(score)
+
+    ranked = sorted(project_scores.items(), key=lambda x: x[1], reverse=True)
+    return [p[0] for p in ranked[:top_n]]
+
+
 # =====================================================
-# Core logic
+# Core Logic
 # =====================================================
 def ask_portfolio(question: str, top_k: int = 4):
+    if FAISS_INDEX is None or not CHUNKS:
+        return {
+            "answer": "Portfolio knowledge base is still initializing.",
+            "entities": {},
+        }
+
     intent, skill = detect_intent(question)
 
     q_emb = model.encode([question], normalize_embeddings=True)
-    scores, idxs = index.search(q_emb, top_k)
+    scores, idxs = FAISS_INDEX.search(q_emb, top_k)
 
-    context = "\n\n".join(chunks[idx]["text"] for idx in idxs[0])
+    context = "\n\n".join(CHUNKS[idx]["text"] for idx in idxs[0])
 
     if intent == "PROJECT":
         top_projects = rank_projects_from_faiss(scores, idxs)
@@ -215,11 +214,11 @@ Answer:
         res = requests.post(
             f"{OLLAMA_URL}/api/generate",
             json={
-                "model": "mistral",
+                "model": "mistral:latest",
                 "prompt": prompt,
-                "stream": False
+                "stream": False,
             },
-            timeout=120
+            timeout=120,
         )
         res.raise_for_status()
         answer = res.json()["response"].strip()
@@ -232,8 +231,8 @@ Answer:
             "projects": top_projects,
             "skills": detect_mentions(question, SKILL_ENTITIES),
             "experience": detect_mentions(question, EXPERIENCE_ENTITIES),
-            "intent": intent
-        }
+            "intent": intent,
+        },
     }
 
 
@@ -251,13 +250,20 @@ def ask(req: AskRequest):
     except Exception as e:
         raise HTTPException(status_code=503, detail=str(e))
 
-
 @app.get("/health")
 def health():
-    return {"status": "ok"}
+    return {
+        "status": "ok",
+        "faiss_loaded": FAISS_INDEX is not None,
+        "chunks_count": len(CHUNKS),
+        "projects_count": len(PROJECTS),
+        "ollama_config": OLLAMA_URL
+    }
 
-def ask_portfolio(question: str):
-    if FAISS_INDEX is None or not CHUNKS:
-        return {
-            "answer": "Vector store not initialized yet. Please ingest data first."
-        }
+@app.get("/health/ollama")
+def check_ollama():
+    try:
+        res = requests.get(f"{OLLAMA_URL}/api/tags", timeout=5)
+        return {"ollama_status": "connected", "models": res.json()}
+    except Exception as e:
+        return {"ollama_status": "offline", "error": str(e)}

@@ -1,179 +1,134 @@
 // import { useEffect, useRef, useState } from "react";
 // import { motion, AnimatePresence, useMotionValue, useSpring } from "framer-motion";
-// import { Zap, X, Terminal, ShieldCheck, Activity, Cpu, HardDrive, Network } from "lucide-react";
-// import type { Skill, SkillGroup } from "../data/skills";
+// import { Zap, X, ShieldCheck, Activity, Network, Cpu } from "lucide-react";
+
+// interface Skill { id: string | number; name: string; description: string; }
+// interface SkillGroup { title: string; skills: Skill[]; }
 
 // export default function CinematicSkillSection({ group }: { group: SkillGroup }) {
 //   return (
-//     <section className="w-full">
-//       <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
-//         {group.skills.map((skill, i) => (
-//           <SkillCard key={skill.id} skill={skill} index={i} />
-//         ))}
-//       </div>
-//     </section>
+//     <motion.div 
+//       initial="hidden"
+//       animate="show"
+//       variants={{
+//         hidden: { opacity: 0 },
+//         show: { opacity: 1, transition: { staggerChildren: 0.05 } }
+//       }}
+//       // Reduced gap for mobile, increased for desktop
+//       className="grid gap-3 md:gap-6 grid-cols-1 sm:grid-cols-2 xl:grid-cols-3"
+//     >
+//       {group.skills.map((skill, i) => (
+//         <SkillCard key={skill.id} skill={skill} index={i} />
+//       ))}
+//     </motion.div>
 //   );
 // }
 
 // function SkillCard({ skill, index }: { skill: Skill; index: number }) {
 //   const cardRef = useRef<HTMLDivElement>(null);
 //   const [isOpen, setIsOpen] = useState(false);
-  
 //   const rotateX = useSpring(useMotionValue(0), { stiffness: 100, damping: 30 });
 //   const rotateY = useSpring(useMotionValue(0), { stiffness: 100, damping: 30 });
 
 //   useEffect(() => {
-//     document.body.style.overflow = isOpen ? "hidden" : "unset";
+//     if (isOpen) document.body.style.overflow = "hidden";
+//     else document.body.style.overflow = "unset";
 //   }, [isOpen]);
 
 //   function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
-//     if (!cardRef.current || isOpen) return;
+//     if (!cardRef.current || isOpen || window.innerWidth < 1024) return;
 //     const rect = cardRef.current.getBoundingClientRect();
-//     const centerX = rect.left + rect.width / 2;
-//     const centerY = rect.top + rect.height / 2;
-//     rotateX.set((e.clientY - centerY) / -12);
-//     rotateY.set((e.clientX - centerX) / 12);
+//     rotateX.set((e.clientY - (rect.top + rect.height / 2)) / -12);
+//     rotateY.set((e.clientX - (rect.left + rect.width / 2)) / 12);
 //   }
 
 //   return (
 //     <>
 //       <motion.div
 //         ref={cardRef}
-//         initial={{ opacity: 0, y: 20 }}
-//         animate={{ opacity: 1, y: 0 }}
-//         transition={{ delay: index * 0.05 }}
+//         variants={{ hidden: { opacity: 0, y: 15 }, show: { opacity: 1, y: 0 } }}
 //         onMouseMove={handleMouseMove}
 //         onMouseLeave={() => { rotateX.set(0); rotateY.set(0); }}
 //         onClick={() => setIsOpen(true)}
 //         style={{ rotateX, rotateY, perspective: 1000 }}
-//         className="relative group cursor-pointer h-full"
+//         className="relative group cursor-pointer"
 //       >
-//         <div className="absolute -inset-[1px] bg-gradient-to-br from-red-600/50 to-transparent rounded-[2.2rem] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-        
-//         <div className="relative h-full bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-white/5 rounded-[2.1rem] p-8 overflow-hidden flex flex-col justify-between">
-//           <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.07] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]" />
-
-//           <div className="relative z-10 space-y-6">
-//             <div className="flex justify-between items-start gap-4">
+//         {/* Adjusted padding: p-5 for mobile, p-6 for desktop */}
+//         <div className="relative h-full bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-white/5 rounded-[1.5rem] md:rounded-[2rem] p-5 md:p-6 flex flex-col justify-between overflow-hidden shadow-sm transition-all duration-500 active:scale-[0.98] md:active:scale-100">
+//           <div className="relative z-10 space-y-3 md:space-y-4">
+//             <div className="flex justify-between items-start">
 //               <div className="min-w-0">
-//                 <span className="text-[9px] font-black text-red-600 uppercase tracking-[0.4em]">Node_{index + 1}</span>
-//                 <h3 className="text-xl md:text-2xl font-black italic tracking-tighter text-zinc-900 dark:text-white uppercase truncate">
-//                   {skill.name}
-//                 </h3>
+//                 <span className="text-[7px] md:text-[8px] font-black text-red-600 uppercase tracking-[0.3em] block mb-1">Node_0{index + 1}</span>
+//                 <h3 className="text-lg md:text-xl font-black italic tracking-tighter text-zinc-900 dark:text-white uppercase truncate">{skill.name}</h3>
 //               </div>
-//               <div className="shrink-0 p-3 rounded-2xl bg-zinc-100 dark:bg-white/5 text-zinc-400 group-hover:text-red-500 group-hover:bg-red-500/10 transition-all">
-//                 <Zap size={18} />
+//               <div className="shrink-0 p-1.5 md:p-2 rounded-lg bg-zinc-100 dark:bg-white/5 text-zinc-400 group-hover:text-red-500">
+//                 <Zap size={12} className="md:w-3.5 md:h-3.5" />
 //               </div>
 //             </div>
-
-//             <p className="text-xs text-zinc-500 dark:text-zinc-400 line-clamp-2 leading-relaxed">
-//               {skill.description}
-//             </p>
+//             <p className="text-[10px] md:text-[11px] text-zinc-500 dark:text-zinc-400 line-clamp-2 leading-relaxed">{skill.description}</p>
 //           </div>
-
-//           <div className="relative z-10 pt-6 flex items-center gap-4">
-//             <div className="flex-1 h-[2px] bg-zinc-100 dark:bg-white/10 rounded-full overflow-hidden">
-//               <motion.div 
-//                 initial={{ x: "-100%" }}
-//                 whileInView={{ x: "0%" }}
-//                 transition={{ duration: 1, delay: 0.2 }}
-//                 className="h-full w-full bg-red-600"
-//               />
+//           <div className="pt-4 md:pt-6 flex items-center gap-3">
+//             <div className="flex-1 h-[1px] bg-zinc-100 dark:bg-white/10 rounded-full overflow-hidden">
+//               <motion.div initial={{ x: "-100%" }} animate={{ x: "0%" }} className="h-full w-full bg-red-600" />
 //             </div>
-//             <span className="text-[8px] font-mono text-zinc-500 uppercase tracking-widest">Running</span>
+//             <span className="text-[6px] font-mono text-red-600 uppercase animate-pulse">Live</span>
 //           </div>
 //         </div>
 //       </motion.div>
 
 //       <AnimatePresence>
 //         {isOpen && (
-//           <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8">
-//             <motion.div 
-//               initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-//               className="absolute inset-0 bg-zinc-950/95 backdrop-blur-xl" 
-//               onClick={() => setIsOpen(false)} 
-//             />
+//           <div className="fixed inset-0 z-[100] flex items-end md:items-center justify-center p-0 md:p-4">
+//             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 bg-zinc-950/90 backdrop-blur-md" onClick={() => setIsOpen(false)} />
             
 //             <motion.div 
-//               layoutId={`card-${skill.id}`}
-//               className="relative z-10 w-full max-w-5xl bg-white dark:bg-[#0c0c0c] border border-white/10 rounded-[2.5rem] overflow-hidden grid lg:grid-cols-[1fr_350px] shadow-2xl"
+//               layoutId={`card-${skill.id}`} 
+//               className="relative z-10 w-full max-w-6xl h-[92vh] md:h-auto md:max-h-[90vh] bg-white dark:bg-[#080808] border-t md:border border-white/10 rounded-t-[2rem] md:rounded-[2.5rem] overflow-hidden flex flex-col lg:grid lg:grid-cols-[1fr_350px]"
 //             >
-//               <div className="p-8 md:p-16 overflow-y-auto max-h-[80vh] lg:max-h-none">
-//                 <div className="space-y-2 mb-10">
-//                   <div className="flex items-center gap-3 text-red-600">
-//                     <div className="h-px w-8 bg-current" />
-//                     <span className="text-[10px] font-black uppercase tracking-[0.5em]">Live_System_Trace</span>
-//                   </div>
-//                   <h2 className="text-5xl md:text-7xl font-black italic tracking-tighter text-zinc-900 dark:text-white uppercase leading-none">
-//                     {skill.name}
-//                   </h2>
+//               {/* Main Content: Scrollable */}
+//               <div className="flex-1 p-6 md:p-14 overflow-y-auto custom-scrollbar">
+//                 <div className="flex justify-between items-center mb-6 md:mb-8 lg:hidden">
+//                    <span className="text-[9px] font-black text-red-600 tracking-[0.3em]">SYSTEM_TRACE</span>
+//                    <button onClick={() => setIsOpen(false)} className="p-2 rounded-full bg-zinc-100 dark:bg-white/5"><X size={18} /></button>
 //                 </div>
-
-//                 <div className="bg-zinc-900 rounded-[2rem] p-8 border border-white/5 relative overflow-hidden mb-8">
-//                   <Terminal className="absolute top-6 right-8 w-5 h-5 text-zinc-700" />
-//                   <div className="absolute inset-0 opacity-20 pointer-events-none bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.1)_50%),linear-gradient(90deg,rgba(255,0,0,0.03),rgba(0,255,0,0.01),rgba(0,0,255,0.03))]" />
-//                   <p className="relative z-10 font-mono text-sm md:text-lg leading-relaxed text-zinc-300">
-//                     <span className="text-red-500 mr-2">root@system:~$</span>{skill.description}
+                
+//                 <h2 className="text-3xl md:text-7xl font-black italic tracking-tighter text-zinc-900 dark:text-white uppercase leading-tight mb-6 md:mb-8">{skill.name}</h2>
+                
+//                 <div className="bg-zinc-900 rounded-[1.2rem] md:rounded-[1.5rem] p-5 md:p-8 border border-white/5 mb-6 md:mb-8">
+//                   <p className="font-mono text-xs md:text-lg text-zinc-300 leading-relaxed">
+//                     <span className="text-red-500 mr-2 font-bold">{">"}</span>{skill.description}
 //                   </p>
 //                 </div>
 
-//                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-//                   <StatBox icon={<ShieldCheck size={18}/>} label="Security" value="Encrypted" />
-//                   <StatBox icon={<Activity size={18}/>} label="Status" value="99.9% Up" />
-//                   <StatBox icon={<Network size={18}/>} label="Protocol" value="TCP/IP" />
+//                 <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
+//                   <StatBox icon={<ShieldCheck size={14}/>} label="Security" value="Encrypted" />
+//                   <StatBox icon={<Activity size={14}/>} label="Status" value="99.9% Up" />
+//                   <StatBox icon={<Network size={14}/>} label="Protocol" value="TCP/IP" className="col-span-2 md:col-span-1" />
 //                 </div>
 //               </div>
 
-//               {/* ACTION SIDEBAR WITH DIAGNOSTICS */}
-//               <div className="bg-zinc-100 dark:bg-white/[0.03] border-l border-white/5 p-8 flex flex-col">
-//                 <button onClick={() => setIsOpen(false)} className="self-end p-4 mb-8 rounded-full bg-zinc-900 dark:bg-white text-white dark:text-black hover:bg-red-600 dark:hover:bg-red-600 dark:hover:text-white transition-all shadow-xl">
-//                   <X size={20} />
-//                 </button>
-                
-//                 {/* NEW DIAGNOSTIC HUB SECTION */}
-//                 <div className="flex-1 space-y-8 overflow-y-auto pr-2 custom-scrollbar">
-//                   <div className="space-y-4">
-//                     <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-400">System Checklist</h4>
-//                     <ul className="space-y-3">
-//                       {['Integrity Check', 'Latency Sync', 'Neural Weights', 'Access Control'].map((item, i) => (
-//                         <motion.li 
-//                           initial={{ opacity: 0, x: 10 }}
-//                           animate={{ opacity: 1, x: 0 }}
-//                           transition={{ delay: 0.1 * i }}
-//                           key={item} 
-//                           className="flex items-center gap-3 group/item"
-//                         >
-//                           <div className="h-1 w-1 bg-red-600 group-hover/item:w-3 transition-all" />
-//                           <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider">{item}</span>
-//                           <span className="ml-auto text-[9px] font-mono text-emerald-500/80">PASS</span>
-//                         </motion.li>
-//                       ))}
-//                     </ul>
+//               {/* Sidebar: Bottom on mobile, Side on desktop */}
+//               <div className="bg-zinc-50 dark:bg-white/[0.02] border-t lg:border-t-0 lg:border-l border-white/5 p-6 md:p-8 shrink-0">
+//                 <div className="relative z-20 space-y-6 md:space-y-8">
+//                   <div className="hidden lg:block">
+//                     <button onClick={() => setIsOpen(false)} className="p-4 rounded-full bg-black dark:bg-white text-white dark:text-black hover:bg-red-600 hover:text-white transition-all ml-auto block">
+//                       <X size={20} />
+//                     </button>
+//                   </div>
+                  
+//                   <div className="space-y-3">
+//                     <h4 className="text-[9px] font-black uppercase text-zinc-400">Diagnostic</h4>
+//                     {['Integrity', 'Latency'].map((item) => (
+//                       <div key={item} className="flex items-center justify-between">
+//                         <span className="text-[9px] font-bold text-zinc-500 uppercase tracking-widest">{item}</span>
+//                         <span className="text-[8px] font-mono text-emerald-500">OK</span>
+//                       </div>
+//                     ))}
 //                   </div>
 
-//                   <div className="p-4 rounded-2xl bg-black/20 border border-white/5 space-y-3">
-//                     <h4 className="text-[9px] font-black uppercase tracking-widest text-zinc-500">Telemetry Feed</h4>
-//                     <div className="space-y-2 font-mono text-[9px]">
-//                       <div className="flex justify-between text-zinc-500">
-//                         <span>LATENCY</span>
-//                         <span className="text-emerald-500">24ms</span>
-//                       </div>
-//                       <div className="flex justify-between text-zinc-500">
-//                         <span>NODE_ID</span>
-//                         <span className="text-red-500/70">0x-FD82</span>
-//                       </div>
-//                       <div className="flex justify-between text-zinc-500">
-//                         <span>LOAD_AVG</span>
-//                         <span>0.42 / 0.12</span>
-//                       </div>
-//                     </div>
-//                   </div>
-//                 </div>
-
-//                 <div className="mt-8">
-//                   <div className="p-6 rounded-3xl bg-red-600 text-white shadow-[0_20px_40px_-15px_rgba(220,38,38,0.5)]">
-//                     <p className="text-[9px] font-black uppercase tracking-widest mb-1 opacity-80">Deployment State</p>
-//                     <p className="text-2xl font-black italic uppercase">Operational</p>
+//                   <div className="p-4 rounded-xl bg-red-600 text-white flex justify-between items-center lg:block lg:space-y-1">
+//                     <p className="text-[8px] font-black uppercase opacity-70">Power_State</p>
+//                     <p className="text-sm md:text-xl font-black italic uppercase">Operational</p>
 //                   </div>
 //                 </div>
 //               </div>
@@ -184,60 +139,41 @@
 //     </>
 //   );
 // }
-// function StatBox({ icon, label, value }: { icon: any; label: string; value: string }) {
+
+// function StatBox({ icon, label, value, className = "" }: { icon: any; label: string; value: string, className?: string }) {
 //   return (
-//     <div className="p-6 rounded-[2rem] border border-zinc-200 dark:border-white/5 bg-white dark:bg-zinc-900/50 space-y-2 group/stat hover:border-red-600/30 transition-all">
-//       <div className="flex items-center gap-2 text-red-600">
+//     <div className={`p-3 md:p-4 rounded-xl md:rounded-2xl border border-zinc-200 dark:border-white/5 bg-white dark:bg-zinc-900/40 ${className}`}>
+//       <div className="flex items-center gap-2 text-red-600 mb-1">
 //         {icon}
-//         <span className="text-[8px] font-black uppercase tracking-[0.2em] text-zinc-500">{label}</span>
+//         <span className="text-[7px] md:text-[8px] font-black uppercase text-zinc-500">{label}</span>
 //       </div>
-//       <div className="text-xs font-bold text-zinc-900 dark:text-zinc-200 uppercase tracking-widest">{value}</div>
+//       <div className="text-[9px] md:text-[10px] font-black text-zinc-900 dark:text-zinc-200 uppercase truncate">{value}</div>
 //     </div>
 //   );
 // }
 
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence, useMotionValue, useSpring } from "framer-motion";
-import { Zap, X, Terminal, ShieldCheck, Activity, Network } from "lucide-react";
+import { Zap, X, ShieldCheck, Activity} from "lucide-react";
 
-// --- ADD THESE INTERFACES TO FIX TYPE ERRORS ---
-interface Skill {
-  id: string | number;
-  name: string;
-  description: string;
-}
-
-interface SkillGroup {
-  title: string;
-  skills: Skill[];
-}
-
-// Helper component for the live heartbeat animation
-const HeartbeatLine = () => (
-  <div className="absolute inset-0 opacity-30 overflow-hidden">
-    <svg className="h-full w-full" viewBox="0 0 100 20" preserveAspectRatio="none">
-      <motion.path
-        d="M0 10 L10 10 L12 2 L15 18 L18 10 L30 10 L32 2 L35 18 L38 10 L100 10"
-        fill="transparent"
-        stroke="#dc2626"
-        strokeWidth="0.5"
-        initial={{ pathLength: 0 }}
-        animate={{ pathLength: 1 }}
-        transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-      />
-    </svg>
-  </div>
-);
+interface Skill { id: string | number; name: string; description: string; }
+interface SkillGroup { title: string; skills: Skill[]; }
 
 export default function CinematicSkillSection({ group }: { group: SkillGroup }) {
   return (
-    <section className="w-full">
-      <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
-        {group.skills.map((skill, i) => (
-          <SkillCard key={skill.id} skill={skill} index={i} />
-        ))}
-      </div>
-    </section>
+    <motion.div 
+      initial="hidden"
+      animate="show"
+      variants={{
+        hidden: { opacity: 0 },
+        show: { opacity: 1, transition: { staggerChildren: 0.05 } }
+      }}
+      className="grid gap-4 md:gap-5 grid-cols-1 sm:grid-cols-2 xl:grid-cols-3"
+    >
+      {group.skills.map((skill, i) => (
+        <SkillCard key={skill.id} skill={skill} index={i} />
+      ))}
+    </motion.div>
   );
 }
 
@@ -249,199 +185,142 @@ function SkillCard({ skill, index }: { skill: Skill; index: number }) {
   const rotateY = useSpring(useMotionValue(0), { stiffness: 100, damping: 30 });
 
   useEffect(() => {
-    // Prevent scrolling when modal is open
     if (isOpen) {
-        document.body.style.overflow = "hidden";
+      document.body.style.overflow = "hidden";
     } else {
-        document.body.style.overflow = "unset";
+      document.body.style.overflow = "unset";
     }
   }, [isOpen]);
 
   function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
-    if (!cardRef.current || isOpen) return;
+    if (!cardRef.current || isOpen || window.innerWidth < 1024) return;
     const rect = cardRef.current.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-    rotateX.set((e.clientY - centerY) / -12);
-    rotateY.set((e.clientX - centerX) / 12);
+    rotateX.set((e.clientY - (rect.top + rect.height / 2)) / -15);
+    rotateY.set((e.clientX - (rect.left + rect.width / 2)) / 15);
   }
 
   return (
     <>
       <motion.div
         ref={cardRef}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: index * 0.05 }}
+        variants={{ hidden: { opacity: 0, y: 15 }, show: { opacity: 1, y: 0 } }}
         onMouseMove={handleMouseMove}
         onMouseLeave={() => { rotateX.set(0); rotateY.set(0); }}
         onClick={() => setIsOpen(true)}
         style={{ rotateX, rotateY, perspective: 1000 }}
-        className="relative group cursor-pointer h-full"
+        className="relative group cursor-pointer"
       >
-        {/* Hardware Corner Accents */}
-        <div className="absolute top-0 left-0 w-4 h-4 border-t border-l border-red-600/0 group-hover:border-red-600/100 transition-all duration-500 rounded-tl-lg z-20" />
-        <div className="absolute bottom-0 right-0 w-4 h-4 border-b border-r border-red-600/0 group-hover:border-red-600/100 transition-all duration-500 rounded-br-lg z-20" />
-
-        <div className="absolute -inset-[1px] bg-gradient-to-br from-red-600/50 to-transparent rounded-[2.2rem] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-        
-        <div className="relative h-full bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-white/5 rounded-[2.1rem] p-8 overflow-hidden flex flex-col justify-between">
-          <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05] pointer-events-none bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_2px,2px_100%]" />
-
-          <div className="relative z-10 space-y-6">
-            <div className="flex justify-between items-start gap-4">
-              <div className="min-w-0">
-                <span className="text-[9px] font-black text-red-600 uppercase tracking-[0.4em] block mb-1">Node_0{index + 1}</span>
-                <h3 className="text-xl md:text-2xl font-black italic tracking-tighter text-zinc-900 dark:text-white uppercase truncate group-hover:skew-x-[-2deg] transition-transform">
+        <div className="relative h-full bg-white dark:bg-zinc-900/40 border border-zinc-200 dark:border-white/5 rounded-2xl p-5 flex flex-col justify-between transition-all duration-300 hover:border-red-500/40 hover:shadow-[0_0_20px_rgba(220,38,38,0.05)]">
+          <div className="space-y-3">
+            <div className="flex justify-between items-start">
+              <div>
+                <span className="text-[8px] font-black text-red-600 uppercase tracking-widest block mb-1">Node_0{index + 1}</span>
+                <h3 className="text-lg font-black italic tracking-tight text-zinc-900 dark:text-zinc-100 uppercase group-hover:text-red-500 transition-colors">
                   {skill.name}
                 </h3>
               </div>
-              <motion.div 
-                whileHover={{ scale: 1.1, rotate: 15 }}
-                className="shrink-0 p-3 rounded-2xl bg-zinc-100 dark:bg-white/5 text-zinc-400 group-hover:text-red-500 group-hover:bg-red-500/10 transition-all"
-              >
-                <Zap size={18} />
-              </motion.div>
+              <Zap size={14} className="text-zinc-400 group-hover:text-red-500 transition-colors" />
             </div>
-
-            <p className="text-xs text-zinc-500 dark:text-zinc-400 line-clamp-2 leading-relaxed font-medium">
+            <p className="text-[11px] text-zinc-500 dark:text-zinc-400 leading-relaxed line-clamp-2">
               {skill.description}
             </p>
           </div>
-
-          <div className="relative z-10 pt-6 flex items-center gap-4">
-            <div className="flex-1 h-[2px] bg-zinc-100 dark:bg-white/10 rounded-full overflow-hidden">
-              <motion.div 
-                initial={{ x: "-100%" }}
-                whileInView={{ x: "0%" }}
-                transition={{ duration: 1, delay: 0.2, ease: "circOut" }}
-                className="h-full w-full bg-gradient-to-r from-red-900 via-red-600 to-red-400"
-              />
+          <div className="mt-4 pt-4 border-t border-zinc-100 dark:border-white/5 flex items-center justify-between">
+            <div className="h-1 w-16 bg-red-600/20 rounded-full overflow-hidden">
+               <div className="h-full w-2/3 bg-red-600" />
             </div>
-            <span className="text-[8px] font-mono text-red-600/80 animate-pulse uppercase tracking-[0.2em]">Running</span>
+            <span className="text-[7px] font-mono text-zinc-500 uppercase">Active_Session</span>
           </div>
         </div>
       </motion.div>
 
-      <AnimatePresence>
-        {isOpen && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8">
-            <motion.div 
-              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-              className="absolute inset-0 bg-zinc-950/98 backdrop-blur-2xl" 
-              onClick={() => setIsOpen(false)} 
-            />
-            
-            <motion.div 
-              layoutId={`card-${skill.id}`}
-              className="relative z-10 w-full max-w-6xl bg-white dark:bg-[#080808] border border-white/10 rounded-[2.5rem] overflow-hidden grid lg:grid-cols-[1fr_380px] shadow-[0_0_100px_-20px_rgba(220,38,38,0.3)]"
-            >
-              <div className="p-8 md:p-16 overflow-y-auto max-h-[85vh] lg:max-h-none">
-                <div className="space-y-4 mb-12">
-                  <div className="flex items-center gap-3 text-red-600">
-                    <motion.div animate={{ scaleX: [1, 1.5, 1] }} transition={{ repeat: Infinity, duration: 2 }} className="h-[2px] w-12 bg-current" />
-                    <span className="text-[10px] font-black uppercase tracking-[0.6em] animate-pulse">Live_System_Trace</span>
-                  </div>
-                  <h2 className="text-6xl md:text-8xl font-black italic tracking-tighter text-zinc-900 dark:text-white uppercase leading-[0.85] py-2">
-                    {skill.name}
-                  </h2>
-                </div>
-
-                <div className="bg-zinc-900/80 backdrop-blur-md rounded-[2.5rem] p-10 border border-white/5 relative overflow-hidden mb-10 group/terminal">
-                  <Terminal className="absolute top-8 right-10 w-6 h-6 text-zinc-700 group-hover/terminal:text-red-600/50 transition-colors" />
-                  <div className="absolute inset-0 opacity-10 pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]" />
-                  <p className="relative z-10 font-mono text-sm md:text-xl leading-relaxed text-zinc-300">
-                    <span className="text-red-500 font-bold mr-3 inline-block animate-bounce"> {">"} </span>
-                    {skill.description}
-                  </p>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  <StatBox icon={<ShieldCheck size={20}/>} label="Security" value="Encrypted" />
-                  <StatBox icon={<Activity size={20}/>} label="Status" value="99.9% Up" />
-                  <StatBox icon={<Network size={20}/>} label="Protocol" value="TCP/IP" />
-                </div>
-              </div>
-
-              <div className="bg-zinc-100 dark:bg-white/[0.02] border-l border-white/5 p-10 flex flex-col relative overflow-hidden">
-                <HeartbeatLine />
-
-                <button 
-                  onClick={() => setIsOpen(false)} 
-                  className="relative z-20 self-end p-5 mb-12 rounded-full bg-zinc-900 dark:bg-white text-white dark:text-black hover:bg-red-600 dark:hover:bg-red-600 dark:hover:text-white transition-all transform hover:rotate-90 active:scale-90"
-                >
-                  <X size={24} />
-                </button>
-                
-                <div className="relative z-20 flex-1 space-y-10 overflow-y-auto pr-2">
-                  <div className="space-y-6">
-                    <h4 className="text-[11px] font-black uppercase tracking-[0.4em] text-zinc-500">System Checklist</h4>
-                    <ul className="space-y-4">
-                      {['Integrity Check', 'Latency Sync', 'Neural Weights', 'Access Control'].map((item, i) => (
-                        <motion.li 
-                          initial={{ opacity: 0, x: 20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: 0.1 * i + 0.3 }}
-                          key={item} 
-                          className="flex items-center gap-4 group/item"
-                        >
-                          <div className="h-1 w-1 bg-red-600 rounded-full group-hover/item:scale-[3] transition-transform" />
-                          <span className="text-[11px] font-bold text-zinc-500 uppercase tracking-widest">{item}</span>
-                          <span className="ml-auto text-[10px] font-mono text-emerald-500 bg-emerald-500/10 px-2 py-0.5 rounded">PASS</span>
-                        </motion.li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div className="p-6 rounded-[2rem] bg-black/40 border border-white/5 space-y-4 backdrop-blur-sm">
-                    <h4 className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Telemetry Feed</h4>
-                    <div className="space-y-3 font-mono text-[10px]">
-                      <div className="flex justify-between items-center text-zinc-500">
-                        <span>LATENCY</span>
-                        <span className="text-emerald-500">24ms</span>
-                      </div>
-                      <div className="flex justify-between items-center text-zinc-500">
-                        <span>NODE_ID</span>
-                        <span className="text-red-500 font-bold select-all cursor-copy">0x-FD82</span>
-                      </div>
-                      <div className="flex justify-between items-center text-zinc-500">
-                        <span>LOAD_AVG</span>
-                        <span className="bg-zinc-800 px-2 rounded">0.42 / 0.12</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <motion.div 
-                  initial={{ y: 20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.8 }}
-                  className="mt-12 relative z-20"
-                >
-                  <div className="p-7 rounded-[2.5rem] bg-red-600 text-white shadow-[0_25px_50px_-12px_rgba(220,38,38,0.5)] group/btn cursor-pointer overflow-hidden relative">
-                    <div className="absolute inset-0 bg-white/10 translate-y-full group-hover/btn:translate-y-0 transition-transform duration-500" />
-                    <p className="text-[10px] font-black uppercase tracking-[0.3em] mb-1 relative z-10">Deployment State</p>
-                    <p className="text-3xl font-black italic uppercase tracking-tighter relative z-10">Operational</p>
-                  </div>
-                </motion.div>
-              </div>
-            </motion.div>
+<AnimatePresence>
+  {isOpen && (
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-6">
+      {/* Backdrop: Slightly more transparent for a lighter feel */}
+      <motion.div 
+        initial={{ opacity: 0 }} 
+        animate={{ opacity: 1 }} 
+        exit={{ opacity: 0 }} 
+        className="absolute inset-0 bg-zinc-950/80 backdrop-blur-md" 
+        onClick={() => setIsOpen(false)} 
+      />
+      
+      {/* Dialog Box: Constrained to 3xl (approx 768px) and auto-height */}
+      <motion.div 
+        layoutId={`card-${skill.id}`} 
+        className="relative z-10 w-full max-w-3xl bg-white dark:bg-[#0c0c0c] border border-zinc-200 dark:border-white/10 rounded-[1.5rem] overflow-hidden shadow-2xl flex flex-col md:grid md:grid-cols-[1fr_240px]"
+      >
+        {/* Main Content Area */}
+        <div className="p-8 md:p-10">
+          <header className="mb-6">
+            <div className="flex items-center gap-2 mb-2">
+              <div className="w-1.5 h-1.5 rounded-full bg-red-600" />
+              <span className="text-[9px] font-bold text-red-600 uppercase tracking-widest">Active_Module</span>
+            </div>
+            {/* Smaller, cleaner heading */}
+            <h2 className="text-2xl md:text-3xl font-black italic tracking-tight text-zinc-900 dark:text-white uppercase leading-tight">
+              {skill.name}
+            </h2>
+          </header>
+          
+          <div className="bg-zinc-100 dark:bg-zinc-900/50 rounded-xl p-5 border border-zinc-200 dark:border-white/5">
+            <p className="font-mono text-xs md:text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed">
+              <span className="text-red-500 mr-2 font-bold">{"//"}</span>
+              {skill.description}
+            </p>
           </div>
-        )}
-      </AnimatePresence>
+
+          <div className="grid grid-cols-2 gap-3 mt-6">
+            <StatBox icon={<ShieldCheck size={12}/>} label="Security" value="Verified" />
+            <StatBox icon={<Activity size={12}/>} label="Status" value="Optimal" />
+          </div>
+        </div>
+
+        {/* Sidebar: Narrower and more integrated */}
+        <div className="bg-zinc-50 dark:bg-white/[0.02] border-t md:border-t-0 md:border-l border-zinc-200 dark:border-white/5 p-6 flex flex-col justify-between">
+          <div className="space-y-6">
+            <div className="hidden md:block text-right">
+              <button 
+                onClick={() => setIsOpen(false)} 
+                className="inline-flex p-2 rounded-full bg-zinc-200 dark:bg-white/5 hover:bg-red-600 hover:text-white transition-all"
+              >
+                <X size={16} />
+              </button>
+            </div>
+            
+            <div className="space-y-3">
+              <h4 className="text-[8px] font-black uppercase text-zinc-400 tracking-widest">Properties</h4>
+              {['Latency', 'Uptime'].map((item) => (
+                <div key={item} className="flex justify-between items-center text-[8px] font-mono border-b border-zinc-200 dark:border-white/5 pb-1">
+                  <span className="text-zinc-500 uppercase">{item}</span>
+                  <span className="text-emerald-500">OK</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-6 md:mt-0 p-3 rounded-lg bg-red-600 text-white">
+            <p className="text-[7px] font-black uppercase opacity-80 mb-0.5">State</p>
+            <p className="text-sm font-black italic uppercase leading-none">Operational</p>
+          </div>
+        </div>
+      </motion.div>
+    </div>
+  )}
+</AnimatePresence>
     </>
   );
 }
 
 function StatBox({ icon, label, value }: { icon: any; label: string; value: string }) {
   return (
-    <div className="p-8 rounded-[2.5rem] border border-zinc-200 dark:border-white/5 bg-white dark:bg-zinc-900/40 space-y-3 hover:border-red-600/30 transition-all group/stat relative overflow-hidden">
-      <div className="absolute inset-0 bg-red-600/0 group-hover/stat:bg-red-600/5 transition-colors" />
-      <div className="flex items-center gap-3 text-red-600">
-        <motion.div whileHover={{ rotate: 360 }} transition={{ duration: 0.5 }}>{icon}</motion.div>
-        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500">{label}</span>
+    <div className="p-4 rounded-xl border border-zinc-200 dark:border-white/5 bg-white dark:bg-zinc-900/20">
+      <div className="flex items-center gap-2 text-red-600 mb-2">
+        {icon}
+        <span className="text-[8px] font-black uppercase text-zinc-400 tracking-tighter">{label}</span>
       </div>
-      <div className="text-sm font-black text-zinc-900 dark:text-zinc-200 uppercase tracking-widest">{value}</div>
+      <div className="text-[10px] font-mono font-bold text-zinc-800 dark:text-zinc-200 uppercase truncate">{value}</div>
     </div>
   );
 }

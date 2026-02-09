@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 import { projects } from "../../data/projects";
 import ProjectPreviewCard from "../ProjectPreviewCard";
-
+import API_BASE from "../../config/api";
 
 type Message = {
   role: "user" | "assistant";
@@ -50,34 +50,45 @@ export default function AskPortfolioChat({ onClose }: { onClose: () => void }) {
   const sendMessage = async () => {
     if (!input.trim() || isTyping) return;
 
-    const userMessage = input;
+    const userMessage = input.trim();
     setInput("");
+
     setMessages((prev) => [...prev, { role: "user", text: userMessage }]);
     setIsTyping(true);
 
     try {
-      const res = await fetch("http://localhost:8000/ask", {
+      const res = await fetch(`${API_BASE}/ask`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ question: userMessage }),
       });
 
+      // ✅ UPDATED: handle non-200 properly
+      if (!res.ok) {
+        const err = await res.json().catch(() => null);
+        throw new Error(err?.detail || "AI backend error");
+      }
+
       const data = await res.json();
 
+      // ✅ UPDATED: defensive parsing
       setMessages((prev) => [
         ...prev,
         {
           role: "assistant",
-          text: data.answer,
-          entities: data.entities,
+          text: data?.answer || "I couldn’t generate a response.",
+          entities: data?.entities,
         },
       ]);
-    } catch {
+    } catch (err) {
       setMessages((prev) => [
         ...prev,
         {
           role: "assistant",
-          text: "⚠️ AI backend is offline. Please try again later.",
+          text:
+            err instanceof Error
+              ? `⚠️ ${err.message}`
+              : "⚠️ AI backend is offline. Please try again later.",
         },
       ]);
     } finally {
@@ -120,7 +131,6 @@ export default function AskPortfolioChat({ onClose }: { onClose: () => void }) {
         <AnimatePresence>
           {messages.map((m, i) => (
             <div key={i} className="space-y-4">
-              {/* MESSAGE BUBBLE */}
               <motion.div
                 initial={{ opacity: 0, x: m.role === "user" ? 10 : -10 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -144,22 +154,21 @@ export default function AskPortfolioChat({ onClose }: { onClose: () => void }) {
 
               {/* ================= PROJECT PREVIEWS ================= */}
               {(() => {
-                const projectTitles = m.entities?.projects;
-                if (!projectTitles || projectTitles.length === 0) return null;
+                const titles = m.entities?.projects;
+                if (!titles?.length) return null;
 
-                const relatedProjects = getProjectsByTitle(projectTitles);
-                if (relatedProjects.length === 0) return null;
+                const related = getProjectsByTitle(titles);
+                if (!related.length) return null;
 
                 return (
                   <div className="grid gap-3 pl-10">
-                    {relatedProjects.map((p) => (
+                    {related.map((p) => (
                       <div
                         key={p.id}
                         onClick={() => navigate(`/projects/${p.id}`)}
                         className="cursor-pointer hover:scale-[1.02] transition"
                       >
                         <ProjectPreviewCard p={p} />
-
                       </div>
                     ))}
                   </div>
