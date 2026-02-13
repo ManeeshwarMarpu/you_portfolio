@@ -210,12 +210,10 @@
 // }
 
 
-// components/AskPortfolioChat.tsx
-// ✅ FREE, CLOUD-READY RAG CHATBOT - Works with your exact data structure
 
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Send, X, Bot, User, Sparkles } from "lucide-react";
+import { Send, X, Bot, User } from "lucide-react";
 
 // Data Imports
 import { projects } from "../../data/projects";
