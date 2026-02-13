@@ -218,7 +218,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Send, X, Bot, User, Sparkles } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-// Import your existing data
+// Data Imports
 import { projects } from "../../data/projects";
 import { coreSkills } from "../../data/skills";
 import ProjectPreviewCard from "../ProjectPreviewCard";
@@ -250,11 +250,11 @@ class SimpleRAG {
   }
 
   private indexKnowledge() {
-    // Index Projects - Creating highly searchable strings
+    // Index Projects - Using repetitive keywords to boost search scores
     projects.forEach((proj) => {
       this.documents.push({
         id: `project-${proj.id}`,
-        content: `Project Title: ${proj.title}. Description: ${proj.description}. Technologies used: ${proj.tags?.join(', ')}. Category: ${proj.category}. Full Details: ${proj.title} is a ${proj.category} project focusing on ${proj.tags?.join(' and ')}.`,
+        content: `Project Title: ${proj.title}. Description: ${proj.description}. Technologies used: ${proj.tags?.join(', ')}. Category: ${proj.category}. Full Details: ${proj.title} is a ${proj.category} project focusing on ${proj.tags?.join(' and ')}. keywords: ${proj.tags?.join(' ')} ${proj.title}`,
         metadata: { type: 'project', title: proj.title, id: proj.id }
       });
     });
@@ -277,7 +277,7 @@ class SimpleRAG {
     });
   }
 
-  // REFINED SEARCH: Uses fuzzy matching to ensure data is found
+  // REFINED SEARCH: Uses fuzzy matching to ensure data is found even with partial matches
   search(query: string, topK: number = 4) {
     const queryLower = query.toLowerCase();
     const queryWords = queryLower.split(/\W+/).filter(w => w.length > 2);
@@ -286,12 +286,12 @@ class SimpleRAG {
       const docLower = doc.content.toLowerCase();
       let score = 0;
 
-      // Exact phrase match bonus
-      if (docLower.includes(queryLower)) score += 5;
+      // Exact phrase match bonus (huge boost for specific project names)
+      if (docLower.includes(queryLower)) score += 10;
 
       // Word match scoring
       queryWords.forEach(word => {
-        if (docLower.includes(word)) score += 1;
+        if (docLower.includes(word)) score += 2;
       });
 
       return { ...doc, score };
@@ -299,32 +299,31 @@ class SimpleRAG {
 
     return scoredDocs
       .sort((a, b) => b.score - a.score)
-      .filter(doc => doc.score > 0)
+      .filter(doc => doc.score > 1) // Only return relevant items
       .slice(0, topK);
   }
 
   extractProjects(query: string): string[] {
     const queryLower = query.toLowerCase();
-    return projects
-      .filter(p => 
-        queryLower.includes(p.title.toLowerCase()) || 
-        p.tags?.some(tag => queryLower.includes(tag.toLowerCase()))
-      )
-      .map(p => p.title);
+    const mentioned: string[] = [];
+
+    projects.forEach(p => {
+      const titleLower = p.title.toLowerCase();
+      // Match title OR specific tags (e.g., if user says "Kubernetes", show the SRE card)
+      if (queryLower.includes(titleLower) || 
+          p.tags?.some(tag => queryLower.includes(tag.toLowerCase()))) {
+        mentioned.push(p.title);
+      }
+    });
+    return [...new Set(mentioned)];
   }
 }
 
-// Initialize system
 const rag = new SimpleRAG();
-const getProjectsByTitle = (titles: string[]) => {
-  if (!titles || !Array.isArray(titles)) return [];
-  
-  return projects.filter((p) => 
-    titles.some(title => 
-      title.toLowerCase().trim() === p.title.toLowerCase().trim()
-    )
-  );
-};
+
+// ========================================
+// MAIN COMPONENT
+// ========================================
 export default function AskPortfolioChat({ onClose }: { onClose: () => void }) {
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -336,11 +335,9 @@ export default function AskPortfolioChat({ onClose }: { onClose: () => void }) {
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  // FIX: Helper function defined inside component to be available for JSX
-  const getProjectsByTitle = (titles: string[]) =>
-    projects.filter((p) => titles.includes(p.title));
+
 
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
@@ -367,13 +364,13 @@ export default function AskPortfolioChat({ onClose }: { onClose: () => void }) {
 IDENTITY: Maneeshwar is an AI/ML Engineer and Full Stack Developer.
       
 CONTEXT FROM PORTFOLIO:
-${context || "No specific matches found. Use your general knowledge of Maneeshwar as a developer."}
+${context || "No specific matches found. Respond as Maneeshwar based on his core tech stack: React, Python, and AI/ML."}
 
 INSTRUCTIONS:
-1. Speak in FIRST PERSON ("I developed", "In my project").
+1. Speak in FIRST PERSON ("I developed", "My project").
 2. Answer specifically using the provided context. 
-3. If asked about Kubernetes, refer to the "AI-Powered Kubernetes SRE" project.
-4. If no context is found, refer to Maneeshwar's core skills: React, Python, and AI/ML.
+3. If no specific project matches are found but the user asks about a skill, list your experience with that skill.
+4. Keep answers professional and under 4 sentences.
 
 USER QUESTION: ${userMessage}`;
 
@@ -387,6 +384,8 @@ USER QUESTION: ${userMessage}`;
         body: JSON.stringify({ systemPrompt, userMessage }),
       });
 
+      if (!response.ok) throw new Error('Network error');
+
       const data = await response.json();
       const aiResponse = data.content[0].text;
 
@@ -399,12 +398,18 @@ USER QUESTION: ${userMessage}`;
         },
       ]);
     } catch (err) {
-      setMessages(prev => [...prev, { role: "assistant", text: "I'm having trouble retrieving my project data right now. Please try again!" }]);
+      setMessages(prev => [...prev, { role: "assistant", text: "I'm having a bit of trouble connecting to my project database. Please try again!" }]);
     } finally {
       setIsTyping(false);
     }
   };
-
+// Define this INSIDE AskPortfolioChat right before 'return'
+const getProjectsByTitle = (titles: string[]) => {
+  if (!titles || !Array.isArray(titles)) return [];
+  return projects.filter((p) => 
+    titles.some(title => title.toLowerCase().trim() === p.title.toLowerCase().trim())
+  );
+};
   return (
     <motion.div
       initial={{ opacity: 0, y: 20, scale: 0.95 }}
@@ -430,7 +435,7 @@ USER QUESTION: ${userMessage}`;
         </button>
       </div>
 
-      {/* CHAT MESSAGES */}
+      {/* MESSAGES AREA */}
       <div ref={scrollRef} className="flex-1 px-6 py-6 overflow-y-auto space-y-6">
         <AnimatePresence>
           {messages.map((m, i) => (
@@ -448,20 +453,22 @@ USER QUESTION: ${userMessage}`;
                 </div>
               </motion.div>
 
-              {/* PROJECT CARDS */}
-              {m.role === "assistant" && m.entities?.projects && m.entities.projects.length > 0 && (
-                <div className="grid gap-3 pl-11">
-                  {getProjectsByTitle(m.entities.projects).map((p) => (
-                    <motion.div
-                      key={p.id}
-                      onClick={() => navigate(`/projects/${p.id}`)}
-                      className="cursor-pointer hover:scale-[1.02] transition-transform"
-                    >
-                      <ProjectPreviewCard p={p} />
-                    </motion.div>
-                  ))}
-                </div>
-              )}
+{/* PROJECT CARDS RENDERER */}
+{m.role === "assistant" && m.entities?.projects && m.entities.projects.length > 0 && (
+  <div className="grid gap-3 pl-11">
+    {getProjectsByTitle(m.entities.projects).map((p) => (
+      <motion.div
+        key={p.id}
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+      
+        className="hover:scale-[1.02] transition-all active:scale-95"
+      >
+        <ProjectPreviewCard p={p} />
+      </motion.div>
+    ))}
+  </div>
+)}
             </div>
           ))}
         </AnimatePresence>
@@ -476,12 +483,12 @@ USER QUESTION: ${userMessage}`;
         )}
       </div>
 
-      {/* INPUT */}
+      {/* INPUT SECTION */}
       <div className="p-5 border-t border-white/5 bg-zinc-950/50">
         <div className="flex gap-2">
           <input
-            className="flex-1 px-4 py-3 rounded-2xl bg-zinc-900 text-white text-sm outline-none focus:ring-2 focus:ring-red-600/20 placeholder:text-zinc-500 border border-white/5"
-            placeholder="Ask about my Kubernetes SRE project..."
+            className="flex-1 px-4 py-3 rounded-2xl bg-zinc-900 text-white text-sm outline-none focus:ring-2 focus:ring-red-600/20 transition-all placeholder:text-zinc-500 border border-white/5"
+            placeholder="Ask about my AI/ML work..."
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && !e.shiftKey && sendMessage()}
@@ -490,7 +497,7 @@ USER QUESTION: ${userMessage}`;
           <button
             onClick={sendMessage}
             disabled={isTyping || !input.trim()}
-            className="p-4 rounded-2xl bg-white text-black hover:bg-red-600 hover:text-white transition-all"
+            className="p-4 rounded-2xl bg-white text-black hover:bg-red-600 hover:text-white transition-all shadow-lg"
           >
             <Send size={16} />
           </button>
