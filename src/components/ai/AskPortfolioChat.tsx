@@ -213,7 +213,7 @@
 // components/AskPortfolioChat.tsx
 // ✅ FREE, CLOUD-READY RAG CHATBOT - Works with your exact data structure
 
-import { useState, useEffect, useRef, useMemo } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Send, X, Bot, User, Sparkles } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -316,7 +316,15 @@ class SimpleRAG {
 
 // Initialize system
 const rag = new SimpleRAG();
-
+const getProjectsByTitle = (titles: string[]) => {
+  if (!titles || !Array.isArray(titles)) return [];
+  
+  return projects.filter((p) => 
+    titles.some(title => 
+      title.toLowerCase().trim() === p.title.toLowerCase().trim()
+    )
+  );
+};
 export default function AskPortfolioChat({ onClose }: { onClose: () => void }) {
   const [messages, setMessages] = useState<Message[]>([
     {
