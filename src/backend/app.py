@@ -1,85 +1,61 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-import traceback
+from rag import PortfolioRAG
 
-from rag import ask_portfolio
+app = FastAPI()
 
-app = FastAPI(title="Portfolio AI")
-
-# =====================================================
-# CORS (dev + prod safe)
-# =====================================================
+# ✅ Update for maneeshwar.com deployment
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "http://localhost:5173",   # Vite dev
-        "http://localhost",        # Docker / nginx
-        "https://maneeshwar.com"  # ← replace later
+        "http://localhost:5173", 
+        "https://maneeshwar.com", 
+        "https://www.maneeshwar.com"
     ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# =====================================================
-# Models
-# =====================================================
-class Question(BaseModel):
+# Initialize the RAG logic
+rag_system = PortfolioRAG()
+
+class ChatInput(BaseModel):
     question: str
 
-
-# =====================================================
-# Health check (MANDATORY for prod)
-# =====================================================
-@app.get("/health")
-def health():
-    return {"status": "ok"}
-
-
-# =====================================================
-# Core RAG endpoint
-# =====================================================
 @app.post("/ask")
-def ask(q: Question):
+async def ask_portfolio(data: ChatInput):
     try:
-        return ask_portfolio(q.question)
+        # Get answer from Gemini-powered RAG
+        result = rag_system.ask(data.question)
+        
+        return {
+            "answer": result["answer"],
+            "entities": {"projects": result["projects"]}
+        }
     except Exception as e:
-        traceback.print_exc()
-        raise HTTPException(status_code=503, detail=str(e))
+        print(f"Error: {e}")
+        raise HTTPException(status_code=500, detail="The AI is currently napping. Try again later!")
 
+@app.get("/")
+async def root():
+    return {"message": "Maneeshwar's Portfolio AI API is live!"}
 
-# =====================================================
-# Optional AI endpoints (SAFE STUBS)
-# These WILL NOT crash prod even if unused
-# =====================================================
-@app.post("/api/sentiment")
-def sentiment_api(payload: dict):
-    return {
-        "status": "disabled",
-        "message": "Sentiment module not enabled in prod"
-    }
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
 
-
-@app.post("/api/anomaly")
-def anomaly_api(payload: dict):
-    return {
-        "status": "disabled",
-        "message": "Anomaly detection module not enabled in prod"
-    }
-
-
-@app.post("/api/forecast")
-def forecast_api(payload: dict):
-    return {
-        "status": "disabled",
-        "message": "Forecasting module not enabled in prod"
-    }
-
-
-@app.post("/api/prompt-lab")
-def prompt_lab_api(payload: dict):
-    return {
-        "status": "disabled",
-        "message": "Prompt lab not enabled in prod"
-    }
+# Inside app.py
+@app.post("/ask")
+async def ask_portfolio(data: ChatInput):
+    try:
+        result = rag_system.ask(data.question)
+        return {
+            "answer": result["answer"],
+            "entities": {"projects": result["projects"]}
+        }
+    except Exception as e:
+        # ✅ This will tell you exactly what's wrong (e.g., "API Key Expired")
+        print(f"CRITICAL ERROR: {e}")
+        raise HTTPException(status_code=500, detail=str(e))

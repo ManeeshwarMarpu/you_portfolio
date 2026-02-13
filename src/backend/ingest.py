@@ -1,49 +1,35 @@
 import os
-import faiss
 import json
-from sentence_transformers import SentenceTransformer
+from langchain_google_genai import GoogleGenerativeAIEmbeddings
+from langchain_community.vectorstores import Chroma
+from langchain_core.documents import Document
+from dotenv import load_dotenv
 
-CHUNK_SIZE = 300  # characters
+load_dotenv()
 
-model = SentenceTransformer("all-MiniLM-L6-v2")
+def run_ingestion():
+    # Path to your projects.json
+    data_path = os.path.join("..", "data", "projects.json")
+    
+    with open(data_path, "r") as f:
+        projects = json.load(f)
 
-chunks = []
-metadata = []
+    documents = [
+        Document(
+            page_content=f"Project: {p['title']}. Tech: {', '.join(p['tags'])}. Description: {p['description']}",
+            metadata={"title": p['title']}
+        ) for p in projects
+    ]
 
-def chunk_text(text, source):
-    start = 0
-    while start < len(text):
-        end = start + CHUNK_SIZE
-        chunk = text[start:end]
-        chunks.append(chunk)
-        metadata.append({
-            "source": source,
-            "start": start,
-            "end": end
-        })
-        start = end
-
-for file in os.listdir("data"):
-    with open(f"data/{file}", "r", encoding="utf-8") as f:
-        text = f.read()
-        chunk_text(text, source=file)
-
-embeddings = model.encode(
-    chunks,
-    normalize_embeddings=True,
-    show_progress_bar=True
-)
-
-index = faiss.IndexFlatIP(embeddings.shape[1])
-index.add(embeddings)
-
-faiss.write_index(index, "vectorstore/index.faiss")
-
-with open("vectorstore/chunks.json", "w", encoding="utf-8") as f:
-    json.dump(
-        [{"text": c, "meta": m} for c, m in zip(chunks, metadata)],
-        f,
-        indent=2
+    # ✅ FIX: Use the stable Gemini embedding model
+    embeddings = GoogleGenerativeAIEmbeddings(model="models/gemini-embedding-001")
+    
+    vector_db = Chroma.from_documents(
+        documents=documents,
+        embedding=embeddings,
+        persist_directory="./vectorstore"
     )
+    print("✅ Ingestion complete with gemini-embedding-001!")
 
-print(f"✅ Indexed {len(chunks)} chunks")
+if __name__ == "__main__":
+    run_ingestion()
