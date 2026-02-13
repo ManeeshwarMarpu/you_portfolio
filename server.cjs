@@ -23,7 +23,7 @@ app.use(express.json());
 // If you call /api/chat from frontend:
 // Nginx sends "/api/chat" to this server.
 // Therefore, the route below MUST match "/api/chat".
-app.post('/api/chat', async (req, res) => {
+app.post('/chat', async (req, res) => {
   try {
     const { systemPrompt, userMessage } = req.body;
 
