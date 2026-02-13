@@ -362,7 +362,7 @@ USER QUESTION: ${userMessage}`;
 
       const API_URL = window.location.hostname === "localhost" 
         ? "http://localhost:3001/api/chat" 
-        : "https://www.maneeshwar.com/api/chat";
+        : "/api/chat";
 
       const response = await fetch(API_URL, {
         method: 'POST',
