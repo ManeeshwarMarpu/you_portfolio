@@ -360,22 +360,49 @@ INSTRUCTIONS:
 
 USER QUESTION: ${userMessage}`;
 
-      const API_URL = window.location.hostname === "localhost" 
-        ? "http://localhost:3001/api/chat" 
-        : "/api/chat";
+      // FIXED: Always use localhost:3001 for local development
+// Smart URL detection
+const API_URL = window.location.hostname === 'localhost' 
+  ? 'http://localhost:3001/api/chat'  // Development
+  : '/api/chat';                       // Production (nginx proxies)
+console.log('🔵 API URL:', API_URL, '| Hostname:', window.location.hostname);
+      console.log('🔵 Sending request to:', API_URL);
+      console.log('📤 Request body:', { systemPrompt: systemPrompt.substring(0, 100) + '...', userMessage });
 
       const response = await fetch(API_URL, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify({ systemPrompt, userMessage }),
       });
 
+      console.log('📥 Response status:', response.status);
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('❌ API Error:', response.status, errorText);
+        throw new Error(`API request failed: ${response.status} - ${errorText}`);
+      }
+
       const data = await response.json();
+      console.log('✅ API Response:', data);
+      
+      if (!data.content || !data.content[0] || !data.content[0].text) {
+        console.error('❌ Unexpected API response structure:', data);
+        throw new Error('Invalid response from API');
+      }
+
       const aiResponse = data.content[0].text;
 
       setMessages(prev => [...prev, { role: "assistant", text: aiResponse }]);
     } catch (err) {
-      setMessages(prev => [...prev, { role: "assistant", text: "I'm having trouble retrieving my background data. Please try again!" }]);
+      console.error('❌ Chat error:', err);
+      const errorMessage = err instanceof Error ? err.message : 'Unknown error';
+      setMessages(prev => [...prev, { 
+        role: "assistant", 
+        text: `Error: ${errorMessage}. Make sure the backend server is running on http://localhost:3001` 
+      }]);
     } finally {
       setIsTyping(false);
     }
@@ -450,7 +477,7 @@ USER QUESTION: ${userMessage}`;
           <button
             onClick={sendMessage}
             disabled={isTyping || !input.trim()}
-            className="p-4 rounded-2xl bg-white text-black hover:bg-red-600 hover:text-white transition-all shadow-lg active:scale-95"
+            className="p-4 rounded-2xl bg-white text-black hover:bg-red-600 hover:text-white transition-all shadow-lg active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <Send size={16} />
           </button>
