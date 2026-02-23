@@ -76,9 +76,12 @@ export default function Home() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
-      className="space-y-6 w-full px-4 md:px-6 lg:px-8"
+      className="min-h-screen w-full px-4 md:px-6 lg:px-8 space-y-6 bg-white text-zinc-900 dark:bg-[#0f0f0f] dark:text-white transition-colors duration-300"
     >
-      <FilterChips items={allCategories} onChange={handleChipChange} initial={urlTag} />
+      {/* Sticky Chip Header to match Projects look */}
+      <header className="sticky top-0 z-10 py-2 bg-white/80 backdrop-blur-md dark:bg-[#0f0f0f]/80">
+        <FilterChips items={allCategories} onChange={handleChipChange} initial={urlTag} />
+      </header>
 
       {!q && <HeroAd />}
 
@@ -89,14 +92,25 @@ export default function Home() {
           ))}
         </div>
       ) : (
-        <SectionRow
-          title={q ? `Results for “${q}”` : cat === "All" ? "Recommended" : cat}
-          items={randomProjects}
-        />
+        <div className="pb-8">
+          <SectionRow
+            title={q ? `Results for “${q}”` : cat === "All" ? "Recommended" : cat}
+            items={randomProjects}
+          />
+          
+          {!q && randomExperiences.length > 0 && (
+            <div className="mt-10">
+               <SectionRow title="Experiences" items={randomExperiences} />
+            </div>
+          )}
+        </div>
       )}
 
-      {!q && !loading && randomExperiences.length > 0 && (
-        <SectionRow title="Experiences" items={randomExperiences} />
+      {/* No results state */}
+      {!loading && randomProjects.length === 0 && (
+        <div className="py-20 text-center text-zinc-500 dark:text-zinc-400">
+          No projects found matching your criteria.
+        </div>
       )}
     </motion.div>
   );
