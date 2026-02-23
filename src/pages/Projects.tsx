@@ -1,5 +1,4 @@
-
-import  { useMemo, useState, useEffect } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import VideoGrid from "../components/VideoGrid";
 import { videos } from "../data/videos";
@@ -10,7 +9,7 @@ export default function Projects() {
   // ------- URL params (q + tag) -------
   const [sp, setSp] = useSearchParams();
   const urlQ = (sp.get("q") ?? "").trim();
-  const urlTag = sp.get("tag") ?? "All";
+  const urlTag = sp.get("tag") ?? "All"; 
 
   // ------- Chips list -------
   const allChips = useMemo(() => {
@@ -19,13 +18,10 @@ export default function Projects() {
     return ["All", ...Array.from(set)];
   }, []);
 
-
   const [chip, setChip] = useState<string>(urlTag);
-
 
   useEffect(() => {
     if (urlTag !== chip) setChip(urlTag);
-
   }, [urlTag]);
 
   // ------- Filtering (tag AND query) -------
@@ -53,25 +49,33 @@ export default function Projects() {
   };
 
   return (
-    <main className="p-4">
+    <main className="min-h-screen p-4 bg-white text-zinc-900 transition-colors duration-300 dark:bg-[#0f0f0f] dark:text-white">
       {/* Chip strip with fade edges */}
-      <header className="mb-3">
+      <header className="mb-3 sticky top-0 z-10 bg-white/80 backdrop-blur-md dark:bg-[#0f0f0f]/80">
         <FilterChips items={allChips} initial={chip} onChange={handleChipClick} />
       </header>
 
       <section className="space-y-6">
-        {/* Optional title when searching */}
+        {/* Search Results Title */}
         {urlQ && (
-          <h2 className="text-base text-yt-muted">
-            Results for “<span className="text-yt">{urlQ}</span>”
-            {chip !== "All" && <span className="text-yt-muted"> • #{chip}</span>}
+          <h2 className="text-base text-zinc-600 dark:text-zinc-400">
+            Results for “<span className="font-medium text-zinc-900 dark:text-zinc-100">{urlQ}</span>”
+            {chip !== "All" && (
+              <span className="text-zinc-500 dark:text-zinc-500"> • #{chip}</span>
+            )}
           </h2>
         )}
 
-        {/* Results */}
+        {/* Results Grid */}
         <VideoGrid items={filtered} />
+
+        {/* Empty State */}
         {filtered.length === 0 && (
-          <div className="text-sm text-yt-muted">No matches for your search.</div>
+          <div className="flex flex-col items-center justify-center py-20 text-center">
+            <p className="text-sm text-zinc-500 dark:text-zinc-400">
+              No matches found for your current search or filters.
+            </p>
+          </div>
         )}
       </section>
     </main>
