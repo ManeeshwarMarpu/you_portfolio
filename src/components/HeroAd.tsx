@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState, useCallback } from "react";
 import { videos as allVideos } from "../data/videos";
-import type { Video } from "../data/videos";
 import FeaturedVideoPlayer from "./FeaturedVideoPlayer";
 
 function shuffle<T>(arr: T[]): T[] {
@@ -13,7 +12,6 @@ function shuffle<T>(arr: T[]): T[] {
 }
 
 export default function HeroAd({ items = allVideos }) {
-  // Select 7 random projects for the pagination
   const featuredItems = useMemo(() => shuffle(items).slice(0, 7), [items]);
   const [index, setIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
@@ -40,12 +38,12 @@ export default function HeroAd({ items = allVideos }) {
     >
       <FeaturedVideoPlayer 
         video={featuredItems[index]} 
-        onNext={nextVideo}
-        onPrev={prevVideo}
+        onNext={nextVideo} 
+        onPrev={prevVideo} 
       />
-      
-      {/* Pagination Dots at Bottom Right */}
-      <div className="absolute bottom-6 right-8 flex gap-2 z-30">
+
+      {/* Dotted Pagination at Bottom Right */}
+      <div className="absolute bottom-6 right-8 flex gap-2 z-50">
         {featuredItems.map((_, i) => (
           <button
             key={i}
@@ -53,7 +51,6 @@ export default function HeroAd({ items = allVideos }) {
             className={`h-1.5 transition-all duration-300 rounded-full ${
               i === index ? "w-8 bg-white" : "w-2 bg-white/40 hover:bg-white/60"
             }`}
-            aria-label={`Go to slide ${i + 1}`}
           />
         ))}
       </div>
