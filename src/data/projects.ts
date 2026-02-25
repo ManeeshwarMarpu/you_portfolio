@@ -1,181 +1,122 @@
-
 export const projects = [
   {
-    id: 5,
-    title: "Anomaly_Detection_for_Fraud",
-    date: "Mar 2025",
-    description:
-      "This project focuses on detecting anomalies in a highly imbalanced fraud dataset using unsupervised techniques. It involves thorough exploratory data analysis and visualization to understand data distributions and identify outlier behavior. Models such as Isolation Forest and Autoencoders are employed to flag potential fraudulent activities. Evaluation metrics like confusion matrices and classification reports are used to assess detection performance. The project demonstrates a complete pipeline from data preprocessing to model training and insightful visualization.",
-    image:
-      "https://firebasestorage.googleapis.com/v0/b/portfolio-84f15.firebasestorage.app/o/anamoly.png?alt=media&token=1cdce65c-d22f-488a-921b-b9e1a813a85e",
-    tags: [
-      "Pandas & NumPy",
-      "Matplotlib & Seaborn",
-      "Scikit-learn",
-      "Exploratory Data Analysis (EDA)",
-      "Anomaly Detection Models",
-      "Version Control & Collaboration",
-    ],
-    category: "Data Science",
-    github:
-      "https://github.com/ManeeshwarMarpu/Data-Science-Projects/tree/main/Anomaly_Detection_for_Fraud",
+    id: 'polyglot-compiler',
+    title: "Polyglot Compiler Workbench (C/Java/Python/JS)",
+    date: "May 2025",
+    description: "I built an interactive, step-by-step compiler workbench designed to make the complex process of compilation approachable and visually engaging. Supports MiniLang, Python, JavaScript, and C with deep visualization of the entire compilation pipeline.",
+    image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1200&auto=format&fit=crop",
+    tags: ["compiler", "python", "streamlit", "Graphviz"],
+    category: "Tools",
+    github: "https://github.com/ManeeshwarMarpu/compiler-workbench/tree/main/compliter",
   },
   {
-    id: 6,
-    title: "Weather Analysis",
-    date: "Feb 2025",
-    description:
-      "This project integrates data preprocessing, ARIMA model fitting, comprehensive diagnostic checks, and forecast evaluation to deliver a robust time series analysis framework. It serves as a practical example for anyone interested in learning time series forecasting, weather analysis, and model validation techniques.",
-    image:
-      "https://firebasestorage.googleapis.com/v0/b/portfolio-84f15.firebasestorage.app/o/weatherproject.png?alt=media&token=f8e6d69c-fe58-454a-a98c-c2fb981ca7b1",
-    tags: [
-      "Pandas & NumPy",
-      "Matplotlib & Seaborn",
-      "Scikit-learn",
-      "Exploratory Data Analysis (EDA)",
-      "ARIMA Model",
-      "Version Control & Collaboration",
-    ],
-    category: "Data Science",
-    github: "https://github.com/ManeeshwarMarpu/sdpproj3",
-  },
-  {
-    id: 3,
-    title: "Video Manager",
-    date: "Aug 2023 - Dec 2023",
-    description:
-      "This project is developed as part of my internship. The project is about storing the videos recorded by the body cams in the cloud. I worked on technologies called AWS and GitHub. My role in this project is deploying the code in GitHub using GitHub Actions and automating the AWS tasks using GitHub Actions.",
-    image:
-      "https://firebasestorage.googleapis.com/v0/b/portfolio-84f15.firebasestorage.app/o/vm.png?alt=media&token=3a911c51-a8cb-4b19-a1ee-acd04e4b3033",
-    tags: ["Docker", "AWS", "GitHub", "GitHub Actions", "CI/CD"],
-    category: "DevOps",
-  },
-  {
-    id: 4,
-    title: "My Portfolio",
-    date: "Jan 2025",
-    description:
-      "My portfolio showcases my work as a software engineer, featuring dynamic projects with interactive UI elements and seamless dark/light mode transitions. Each project card includes detailed descriptions, technologies used, and GitHub links, with a smart notification for unpublished code. The portfolio is built for responsiveness, accessibility, and smooth animations, offering an engaging user experience.",
-    image:
-      "https://firebasestorage.googleapis.com/v0/b/portfolio-84f15.firebasestorage.app/o/port.png?alt=media&token=c0608788-eff1-4b08-89ac-e49de810045e",
-    tags: ["React", "Java Script", "HTML", "CSS"],
-    category: "web app",
-    github: "https://github.com/ManeeshwarMarpu/sdpproj3",
-  },
-  {
-    id: 0,
-    title: "Construction Material Quality Inspection Using AI",
-    date: "Feb 2025 - Present",
-    description:
-      "Develop an AI-based system to inspect and classify construction materials and detect and categorize defects in bricks, cement, steel, and other materials.",
-    image:
-      "https://firebasestorage.googleapis.com/v0/b/portfolio-84f15.firebasestorage.app/o/cnst.png?alt=media&token=0379cf09-50d3-4ef2-a76f-fbb6466c430d",
-    tags: ["Data Science", "Data Analysis", "Jupyter", "Image Classification", "Anomaly Detection"],
-    category: "Data Science",
-  },
-  {
-    id: 2,
-    title: "MAC Management",
-    date: "Oct 2022 - Present",
-    description:
-      "The Project Management System is a web-based application developed to facilitate the management, tracking, and review of projects. The project is built using the Django Framework. Key Features include Project and Task Management, Work Status Tracking, Task Due Tracking, User roles and permissions, Reports and Analysis.",
-    image:
-      "https://firebasestorage.googleapis.com/v0/b/portfolio-84f15.firebasestorage.app/o/mac.png?alt=media&token=e74add68-6c28-4ed5-bea2-c4c714e6d264",
-    tags: ["Python", "Django", "MySQL", "HTML", "CSS"],
+    id: 'project-mgmt',
+    title: "Project Management System (Django + AWS)",
+    date: "Jun 2025",
+    description: "AgileFlow is your projects command center, a streamlined dashboard for tracking and managing every detail. Built on the robust Django framework, leveraging Celery for asynchronous tasks and PostgreSQL for reliable data storage.",
+    image: "https://firebasestorage.googleapis.com/v0/b/portfolio-84f15.firebasestorage.app/o/mac-management.png?alt=media&token=71be2320-1e51-473a-bf42-aa3c090daeb1",
+    tags: ["Python", "Django", "AWS", "PostgreSQL", "Celery"],
     category: "web app",
     github: "https://github.com/ManeeshwarMarpu/Project-management-system",
   },
   {
-    id: 1,
-    title: "Loan Tracking System",
-    date: "July 2022 - Dec 2022",
-    description:
-      "The Loan Application Tracking System allows applicants to apply for loans online and repay them in EMIs (Equated Monthly Installments). Managers can review and monitor the status of all loan applications, track repayment statuses, and manage different loan categories. Built with Spring Boot and JSP for a user-friendly experience.",
-    image:
-      "https://firebasestorage.googleapis.com/v0/b/portfolio-84f15.firebasestorage.app/o/loan.png?alt=media&token=6768498e-f157-4299-baf8-e4ffe1373942",
-    tags: ["Java", "Spring", "Springboot", "Hibernate", "JSP"],
+    id: 'loan-app',
+    title: "Loan Application Tracking (Spring Boot + MySQL)",
+    date: "Jul 2025",
+    description: "An all-in-one platform for both applicants and managers. It allows users to apply for various loans online and easily manage their repayments through EMIs. Managers can review, approve, and monitor statuses from a centralized dashboard.",
+    image: "https://firebasestorage.googleapis.com/v0/b/portfolio-84f15.firebasestorage.app/o/loan.png?alt=media&token=ec636a43-7161-43d9-b229-75e64e1271d7",
+    tags: ["Java", "Spring Boot", "MySQL", "JSP"],
     category: "web app",
     github: "https://github.com/ManeeshwarMarpu/sdpproj3",
   },
   {
-  id: 10,
-  title: "AI-Powered Excel Assistant",
-  date: "Mar 2025",
-  description:
-    "Built a ChatGPT-style AI assistant embedded inside Microsoft Excel that understands spreadsheets, PDFs, and user intent. Supports dynamic workbook analysis, streaming responses, persistent chat per workbook, formula generation, chart creation, and regression-based predictions with confidence scores. Designed with robust fallback logic, local embeddings, FAISS-based RAG, and portable deployment across machines.",
-  image:
-    "https://firebasestorage.googleapis.com/v0/b/portfolio-84f15.firebasestorage.app/o/excel-ai.png?alt=media",
-  tags: [
-    "LLM",
-    "RAG",
-    "Excel Automation",
-    "FastAPI",
-    "FAISS",
-    "Python",
-    "AI Systems Design"
-  ],
-  category: "AI Engineering",
-  github: "https://github.com/your-username/ai-excel-assistant",
-},
-{
-  id: 11,
-  title: "AI-Powered Log Drift Detection for SRE",
-  date: "Apr 2025",
-  description:
-    "Developed an AI-driven SRE system that detects semantic drift in application logs as a pre-incident signal. Ingests logs via Grafana Loki, converts logs into embeddings, correlates drift with error rates and HTTP 5xx metrics, auto-clusters incidents, and generates LLM-based incident summaries with severity classification (P0/P1/P2). Fully local and cloud-free.",
-  image:
-    "https://firebasestorage.googleapis.com/v0/b/portfolio-84f15.firebasestorage.app/o/log-drift.png?alt=media",
-  tags: [
-    "SRE",
-    "AIOps",
-    "Grafana",
-    "Loki",
-    "Machine Learning",
-    "Embeddings",
-    "Observability"
-  ],
-  category: "DevOps",
-  github: "https://github.com/your-username/ai-log-drift-sre",
-}
-,{
-  id: 12,
-  title: "AI-Powered Kubernetes SRE Incident Response System",
-  date: "May 2025",
-  description:
-    "Built a local, production-grade AI-assisted SRE platform for Kubernetes that detects real incidents, performs automated root-cause analysis, classifies severity, and safely triggers auto-remediation. Uses Kubernetes native signals (logs, events, deployment state) and a local LLM (Llama 3 via Ollama) with deterministic guardrails to ensure structured, safe, and reliable automation.",
-  image:
-    "https://firebasestorage.googleapis.com/v0/b/portfolio-84f15.firebasestorage.app/o/k8s-sre-ai.png?alt=media",
-  tags: [
-    "Kubernetes",
-    "SRE",
-    "LLM",
-    "Ollama",
-    "Python",
-    "Platform Engineering",
-    "Reliability Engineering"
-  ],
-  category: "DevOps",
-  github: "https://github.com/your-username/k8s-ai-sre",
-}
-,
-{
-  id: 13,
-  title: "Real-Time Stock Market Dashboard",
-  date: "Feb 2025",
-  description:
-    "Developed a real-time stock market dashboard with a modern React frontend and containerized cloud deployment. Supports live data visualization, responsive UI, Docker-based builds, and scalable frontend architecture using Tailwind CSS. Designed for extensibility and real-time financial analytics use cases.",
-  image:
-    "https://firebasestorage.googleapis.com/v0/b/portfolio-84f15.firebasestorage.app/o/stock-dashboard.png?alt=media",
-  tags: [
-    "React",
-    "Docker",
-    "Cloud Computing",
-    "Tailwind CSS",
-    "Frontend Engineering",
-    "Real-Time Data"
-  ],
-  category: "web app",
-  github: "https://github.com/ManeeshwarMarpu/cloud-projects/tree/main/real-time-stock-dashboard",
-}
-
-]
+    id: 'motorola-sre',
+    title: "Motorola Solutions — SRE & Cloud Automation",
+    date: "Aug 2025",
+    description: "Focuses on building a secure and scalable system for storing body cam videos in the cloud. Utilized GitHub Actions for CI/CD pipelines and automated AWS infrastructure tasks.",
+    image: "https://firebasestorage.googleapis.com/v0/b/portfolio-84f15.firebasestorage.app/o/Gemini_Generated_Image_cja4wucja4wucja4.png?alt=media&token=a5c4be89-f628-4e59-8ab0-004943333bc5",
+    tags: ["Docker", "AWS", "GitHub Actions", "CI/CD", "SRE"],
+    category: "DevOps",
+    
+  },
+  {
+    id: 'fraud-detection',
+    title: "Anomaly Detection for Fraud",
+    date: "Mar 2025",
+    description: "Detecting anomalies in a highly imbalanced fraud dataset using unsupervised techniques like Isolation Forest and Autoencoders. Demonstrates a complete pipeline from preprocessing to model training.",
+    image: "https://firebasestorage.googleapis.com/v0/b/portfolio-84f15.firebasestorage.app/o/anomoly.png?alt=media&token=746572f3-9b8c-4d1b-9911-39538cb46db5",
+    tags: ["Pandas", "Scikit-learn", "EDA", "Anomaly Detection"],
+    category: "Data Science",
+    github: "https://github.com/ManeeshwarMarpu/Data-Science-Projects/tree/main/Anomaly_Detection_for_Fraud",
+  },
+  {
+    id: 'weather-analysis',
+    title: "Weather Analysis — ARIMA Forecasting",
+    date: "Feb 2025",
+    description: "Integrates data preprocessing, ARIMA model fitting, and forecast evaluation to deliver a robust time series analysis framework for weather trend prediction.",
+    image: "https://firebasestorage.googleapis.com/v0/b/portfolio-84f15.firebasestorage.app/o/weather%20analysis.png?alt=media&token=4d7b6f4e-f7e6-483c-89b4-6a042bbde614",
+    tags: ["ARIMA", "Time-Series", "Pandas", "Matplotlib"],
+    category: "Data Science",
+    github: "https://github.com/ManeeshwarMarpu/Data-Science-Projects/tree/main/weather%20analysis",
+  },
+  {
+    id: 'you-portfolio',
+    title: "You-Portfolio (React + TypeScript)",
+    date: "Sep 2025",
+    description: "A YouTube-inspired portfolio platform that transforms the way projects are showcased using video-like cards, meta-data, and dedicated watch pages.",
+    image: "https://firebasestorage.googleapis.com/v0/b/portfolio-84f15.firebasestorage.app/o/youtube.png?alt=media&token=69eefe35-efc6-47b0-8b48-b906544feb0e",
+    tags: ["React", "TypeScript", "Tailwind CSS", "Frontend"],
+    category: "web app",
+    github: "https://github.com/ManeeshwarMarpu/you_portfolio",
+  },
+  {
+    id: 'portfolio-site',
+    title: "My Portfolio (React + Tailwind)",
+    date: "Jan 2025",
+    description: "Dynamic showcase featuring interactive UI elements and dark/light mode. Built for responsiveness, accessibility, and smooth animations.",
+    image: "https://firebasestorage.googleapis.com/v0/b/portfolio-84f15.firebasestorage.app/o/port.png?alt=media&token=c0608788-eff1-4b08-89ac-e49de810045e",
+    tags: ["React", "Tailwind CSS", "Frontend"],
+    category: "web app",
+    github: "https://github.com/ManeeshwarMarpu/My_Portfolio",
+  },
+  {
+    id: 'excel-ai-assistant',
+    title: "AI-Powered Excel Assistant",
+    date: "Mar 2025",
+    description: "ChatGPT-style AI assistant embedded inside Microsoft Excel. Supports dynamic workbook analysis, formula generation, and regression-based predictions.",
+    image: "https://firebasestorage.googleapis.com/v0/b/portfolio-84f15.firebasestorage.app/o/excel-ai.png?alt=media",
+    tags: ["LLM", "RAG", "FastAPI", "FAISS", "Python"],
+    category: "AI Engineering",
+    github: "https://github.com/ManeeshwarMarpu/ai-excel-assistant",
+  },
+  {
+    id: 'sre-log-drift',
+    title: "AI-Powered Log Drift Detection for SRE",
+    date: "Apr 2025",
+    description: "Detects semantic drift in application logs as a pre-incident signal. Ingests logs via Grafana Loki and correlates drift with error rates.",
+    image: "https://firebasestorage.googleapis.com/v0/b/portfolio-84f15.firebasestorage.app/o/log-drift.png?alt=media",
+    tags: ["SRE", "AIOps", "Grafana", "Loki", "Embeddings"],
+    category: "DevOps",
+    github: "https://github.com/ManeeshwarMarpu/ai-log-drift-sre",
+  },
+  {
+    id: 'k8s-ai-sre',
+    title: "AI-Powered Kubernetes SRE Incident Response",
+    date: "May 2025",
+    description: "Production-grade, AI-assisted SRE platform for Kubernetes. Detects incidents, performs root-cause analysis, and triggers auto-remediation.",
+    image: "https://firebasestorage.googleapis.com/v0/b/portfolio-84f15.firebasestorage.app/o/k8s-sre-ai.png?alt=media",
+    tags: ["Kubernetes", "SRE", "LLM", "Ollama", "Platform Engineering"],
+    category: "DevOps",
+    github: "https://github.com/ManeeshwarMarpu/k8s-ai-sre",
+  },
+  {
+    id: 'real-time-stock-dashboard',
+    title: "Real-Time Stock Market Dashboard",
+    date: "Feb 2025",
+    description: "React-based dashboard with live data visualization. Containerized with Docker for consistent builds and cloud deployment.",
+    image: "https://firebasestorage.googleapis.com/v0/b/portfolio-84f15.firebasestorage.app/o/stock-dashboard.png?alt=media",
+    tags: ["React", "Docker", "Cloud", "Tailwind CSS"],
+    category: "web app",
+    github: "https://github.com/ManeeshwarMarpu/cloud-projects/tree/main/real-time-stock-dashboard",
+  }
+];

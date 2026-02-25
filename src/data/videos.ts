@@ -164,7 +164,7 @@ export const videos: Video[] = [
   "Applied solution to real-world datasets, including weather trend prediction"
 ],
 
-      github: 'https://github.com/ManeeshwarMarpu/sdpproj3',
+      github: 'https://github.com/ManeeshwarMarpu/Data-Science-Projects/tree/main/weather%20analysis',
   },
 
   {
@@ -188,7 +188,7 @@ export const videos: Video[] = [
     "Built with React + TypeScript for type safety and maintainability",
     "Optimized with lazy loading, responsive grid layout, and smooth animations"
   ],
-  github: 'https://github.com/ManeeshwarMarpu/you-portfolio',
+  github: 'https://github.com/ManeeshwarMarpu/you_portfolio',
 },
 
   {
@@ -213,7 +213,7 @@ export const videos: Video[] = [
   "Showcases both frontend and backend capabilities through diverse projects"
 ],
 
-      github: 'https://github.com/ManeeshwarMarpu/sdpproj3',
+      github: 'https://github.com/ManeeshwarMarpu/My_Portfolio',
   },
 
   {
@@ -286,7 +286,7 @@ sources: { mp4: "https://firebasestorage.googleapis.com/v0/b/portfolio-84f15.fir
     'Correlation with error rates and HTTP 5xx signals',
     'Fully local, cloud-free AIOps design'
   ],
-  github: 'https://github.com/ManeeshwarMarpu/ai-log-drift-sre',
+  // github: 'https://github.com/ManeeshwarMarpu/ai-log-drift-sre',
 },
 
 {
@@ -310,7 +310,7 @@ sources: { mp4: "https://firebasestorage.googleapis.com/v0/b/portfolio-84f15.fir
     'Local LLM (Ollama + Llama 3), zero cloud cost',
     'Interview-defensible SRE architecture'
   ],
-  github: 'https://github.com/ManeeshwarMarpu/k8s-ai-sre',
+  github: 'https://github.com/ManeeshwarMarpu/ai-k8s-troubleshooter',
 },
 
 {
