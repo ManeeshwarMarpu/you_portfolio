@@ -3,7 +3,7 @@
 export const aboutData = {
   name: "Maneeshwar Marpu",
   title: "Cloud/DevOps & AI/ML Engineer",
-  location: "India",
+  location: "Housto, Texas, United States",
   bio: "I'm a passionate full-stack developer with expertise in building scalable applications, AI/ML systems, and cloud infrastructure. I specialize in React, Python, Kubernetes, and modern web technologies.",
   
   education: [
@@ -12,6 +12,12 @@ export const aboutData = {
       institution: "University of Houston",
       year: "2024 - 2026",
       details: "Focused on Computer Science, Cloud, SRE, Data Structures, and AI/ML algorithms."
+    },
+        {
+      degree: "Bachelor's in Computer Science and Engineering",
+      institution: "KL University",
+      year: "2019 - 2023",
+      details: "Focused on Computer Science, Full-stack development, Cyber security, Data Structures, and AI/ML algorithms, Databse Management"
     }
   ],
 
