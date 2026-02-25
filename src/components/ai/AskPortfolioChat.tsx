@@ -288,8 +288,8 @@ INSTRUCTIONS:
               Portfolio AI
             </h3>
             <p className="text-[10px] text-zinc-400 flex items-center gap-1">
-              <Sparkles size={10} className="text-red-600" /> Career & Education
-              Ready
+              <Sparkles size={10} className="text-red-600" /> Hello !!!😊😊
+              
             </p>
           </div>
         </div>

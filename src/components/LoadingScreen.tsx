@@ -610,8 +610,8 @@ const CHARS = "アイウエオカキクケコ0123456789ABCDEFGHIJKLMNOPQRSTUVWXY
 
 // ─── Local Assets ─────────────────────────────────────────────────────────────
 import bootSoundSrc    from '../assets/sounds/boot.wav';
-import glitchSoundSrc  from '../assets/sounds/key-click.wav';
-import typingSoundSrc  from '../assets/sounds/key-click.wav';      // exact file, used directly
+import glitchSoundSrc  from '../assets/sounds/key-click.mp3';
+import typingSoundSrc  from '../assets/sounds/key-click.mp3';      // exact file, used directly
 import enterSoundSrc   from '../assets/sounds/enter.wav';           // plays on "Click to Enter"
 import accessSoundSrc  from '../assets/sounds/aceess-granted.wav';  // plays when ACCESS GRANTED text appears
 // import exitSoundSrc    from '../assets/sounds/aceess-granted.wav';
@@ -1083,7 +1083,7 @@ export default function CinematicIntro({
               </div>
 
               <div style={{ display: "flex", flexDirection: "column", gap: 9 }}>
-                <TypingLine text="whoami"               delay={100}  color="#ef4444" typingSoundSrc={typingSoundSrc} audioRegistry={audioRegistry} />
+                <TypingLine text="whoami"               delay={400}  color="#ef4444" typingSoundSrc={typingSoundSrc} audioRegistry={audioRegistry} />
                 <TypingLine text={brand.toLowerCase()}  delay={700}  color="#fca5a5" typingSoundSrc={typingSoundSrc} audioRegistry={audioRegistry} />
                 <TypingLine text="cat skills.txt"       delay={1200} color="#ef4444" typingSoundSrc={typingSoundSrc} audioRegistry={audioRegistry} />
                 <TypingLine text={role}                 delay={1800} color="#fca5a5" typingSoundSrc={typingSoundSrc} audioRegistry={audioRegistry} />
