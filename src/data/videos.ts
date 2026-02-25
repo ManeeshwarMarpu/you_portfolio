@@ -238,7 +238,7 @@ sources: { mp4: "https://firebasestorage.googleapis.com/v0/b/portfolio-84f15.fir
   "Enhanced construction safety and durability through rigorous, automated QA",
   "Delivered a scalable solution adaptable to multiple construction materials (bricks, cement, steel)"
 ],
-
+github: 'https://github.com/ManeeshwarMarpu/construction_quality_by_ai',
     },
     {
   id: 'excel-ai-assistant',
