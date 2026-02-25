@@ -1,4 +1,3 @@
-import React from 'react';
 import { Play, Info, ChevronLeft, ChevronRight, Lock } from 'lucide-react';
 import type { Video } from "../data/videos";
 
