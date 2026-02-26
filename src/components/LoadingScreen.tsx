@@ -508,17 +508,36 @@
 // }
 
 
-
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
+import enterSound from "../assets/sounds/enter.wav"
+// Update the interface so App.tsx stops showing red errors
+interface IntroProps {
+  onFinish: () => void;
+  brand?: string;
+  subtitle?: string;
+}
 
-export default function YouTubeHorizonIntro({ onFinish }: { onFinish: () => void }) {
+export default function VectorHorizonIntro({ 
+  onFinish, 
+  brand = "MANEESHWAR", 
+  subtitle = "CREATIVE ENGINEERING" 
+}: IntroProps) {
   const [phase, setPhase] = useState("initial");
 
   useEffect(() => {
     const timer = setTimeout(() => setPhase("reveal"), 500);
-    const endTimer = setTimeout(() => setPhase("exit"), 3500);
-    const finishTimer = setTimeout(onFinish, 4500);
+
+    const endTimer = setTimeout(() => {
+      setPhase("exit");
+      
+      // Fixed the path to match your actual filename 'aceess-granted.wav'
+      const audio = new Audio(enterSound);
+      audio.volume = 0.4;
+      audio.play().catch(err => console.log("Autoplay blocked:", err));
+    }, 3500);
+
+    const finishTimer = setTimeout(onFinish, 4800);
 
     return () => {
       clearTimeout(timer);
@@ -528,64 +547,57 @@ export default function YouTubeHorizonIntro({ onFinish }: { onFinish: () => void
   }, [onFinish]);
 
   return (
-    <div className="fixed inset-0 z-[9999] bg-[#0f0f0f] flex items-center justify-center overflow-hidden">
-      {/* 1. BACKGROUND LAYER: Subtle Red Ambient Glow */}
+    <div className="fixed inset-0 z-[9999] bg-[#050505] flex items-center justify-center overflow-hidden">
+      {/* Background Red Glow */}
       <motion.div 
         initial={{ opacity: 0 }}
-        animate={{ opacity: 0.15 }}
-        transition={{ duration: 2 }}
-        className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_center,_#ff0000_0%,_transparent_70%)]"
+        animate={{ opacity: 0.2 }}
+        className="absolute inset-0 bg-[radial-gradient(circle_at_center,_#ff0000_0%,_transparent_70%)]"
       />
 
-      {/* 2. THE GEOMETRIC SPLIT (MASK) - Red Accented */}
-      <motion.div
-        initial={{ width: "0%" }}
-        animate={phase === "reveal" ? { width: "100%" } : {}}
-        transition={{ duration: 1.5, ease: [0.77, 0, 0.175, 1] }}
-        className="absolute h-[1px] bg-red-600 z-20 shadow-[0_0_15px_#ff0000]"
-      />
-
-      {/* 3. CONTENT LAYER */}
+      {/* Content Layer */}
       <AnimatePresence>
         {phase === "reveal" && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            exit={{ scale: 0.8, opacity: 0, filter: "blur(10px)" }}
-            transition={{ duration: 0.8 }}
+            exit={{ scale: 0.9, opacity: 0, filter: "blur(10px)" }}
             className="relative z-10 flex flex-col items-center"
           >
-            {/* Minimalist Tech Branding */}
+            {/* Subtitle / Header Tag */}
             <motion.span 
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
               className="text-red-500 text-[10px] font-mono mb-4 tracking-[0.8em] uppercase"
             >
-              Stream.Initialize(User)
+              {subtitle}
             </motion.span>
 
             <div className="overflow-hidden">
               <motion.h1
                 initial={{ y: 100 }}
                 animate={{ y: 0 }}
-                transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                 className="text-white text-6xl md:text-9xl font-black italic tracking-tighter uppercase"
+                style={{ textShadow: "4px 4px 0px rgba(255,0,0,0.5)" }}
               >
-                MANEESHWAR
+                {brand}
               </motion.h1>
             </div>
 
+            {/* Red Underline Decor */}
             <motion.div 
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}
-              transition={{ delay: 0.8, duration: 1.5 }}
-              className="w-48 h-[2px] bg-red-600 mt-4 shadow-[0_0_10px_#ff0000]"
+              transition={{ delay: 0.8, duration: 1 }}
+              className="w-32 h-[2px] bg-red-600 mt-6 shadow-[0_0_15px_#ff0000]"
             />
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* 4. THE RED LIQUID EXIT (YouTube Style) */}
+      {/* The Red "Welcome" Exit */}
       <AnimatePresence>
         {phase === "exit" && (
           <motion.div
@@ -595,9 +607,8 @@ export default function YouTubeHorizonIntro({ onFinish }: { onFinish: () => void
             className="absolute inset-0 bg-[#ff0000] z-[10000] flex items-center justify-center"
           >
              <motion.span 
-              initial={{ opacity: 0, scale: 0.5 }}
+              initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.3, duration: 0.5 }}
               className="text-black font-black text-6xl md:text-8xl italic uppercase tracking-tighter"
             >
               Welcome

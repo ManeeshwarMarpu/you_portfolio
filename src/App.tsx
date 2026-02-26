@@ -2,11 +2,13 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence } from "framer-motion";
 
+// Components
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 import MobileBottomNav from "./components/MobileBottomNav";
-import CinematicIntro from "./components/LoadingScreen";
+import VectorHorizonIntro from "./components/LoadingScreen"; // Ensure this matches the export in LoadingScreen.tsx
 
+// Pages
 import Home from "./pages/Home";
 import Watch from "./pages/Watch";
 import Channel from "./pages/Channel";
@@ -21,16 +23,15 @@ import Snake from "./pages/play/snake";
 import Memory from "./pages/play/Memory";
 import SkillCard from "./pages/Skills";
 import ScrollToTop from "./pages/ScrollToTop";
-// import CinematicSkillSection from "./components/CinematicSkillSection";
 
-
+// AI Assistant
 import AskPortfolioButton from "./components/ai/AskPortfolioButton";
 
 export default function App() {
   const [showIntro, setShowIntro] = useState(false);
   const introPlayingRef = useRef(false);
 
-  // ✅ First visit only
+  // ✅ First visit only (Session Storage check)
   useEffect(() => {
     if (sessionStorage.getItem("introShown") !== "true") {
       introPlayingRef.current = true;
@@ -38,7 +39,7 @@ export default function App() {
     }
   }, []);
 
-  // ✅ Logo-triggered intro (once per click)
+  // ✅ Logo-triggered intro (Global event listener)
   useEffect(() => {
     const handlePlayIntro = () => {
       if (introPlayingRef.current) return;
@@ -61,23 +62,25 @@ export default function App() {
       {/* ✅ INTRO OVERLAY */}
       <AnimatePresence>
         {showIntro && (
-          <CinematicIntro
-            onFinish={onIntroFinish}
-            brand="MANEESHWAR"
-            subtitle="Original Production"
+          <VectorHorizonIntro 
+            onFinish={onIntroFinish} 
+            // Note: If your VectorHorizonIntro doesn't use 'brand' or 'subtitle' props, 
+            // you don't need to pass them here.
           />
         )}
       </AnimatePresence>
 
-      {/* ✅ APP LAYOUT */}
+      {/* ✅ APP LAYOUT - YouTube Style */}
       <div className="min-h-dvh bg-ytbg text-white flex flex-col relative overflow-x-hidden">
         <Header />
 
         <div className="flex grow w-full">
-          <aside className="hidden md:block md:w-64 lg:w-72 shrink-0">
+          {/* Desktop Sidebar */}
+          <aside className="hidden md:block md:w-64 lg:w-72 shrink-0 border-r border-white/5">
             <Sidebar />
           </aside>
 
+          {/* Main Content Area */}
           <main className="min-w-0 grow px-3 sm:px-4 md:px-6 xl:px-8 py-4 pb-20">
             <ScrollToTop />
             <Routes>
@@ -93,21 +96,21 @@ export default function App() {
               <Route path="/contact" element={<Contact />} />
               <Route path="/skills" element={<SkillCard />} />
 
-
-
-              {/* 🎮 Games */}
+              {/* 🎮 Play/Games Section */}
               <Route path="/play/tictactoe" element={<TicTacToe />} />
               <Route path="/play/snake" element={<Snake />} />
               <Route path="/play/memory" element={<Memory />} />
 
-              <Route path="*" element={<div className="p-6">Not found</div>} />
+              {/* 404 Fallback */}
+              <Route path="*" element={<div className="p-6 text-zinc-500">404 | Content not found</div>} />
             </Routes>
           </main>
         </div>
 
-        {/* ✅ GLOBAL AI ASSISTANT */}
+        {/* ✅ GLOBAL AI ASSISTANT (RAG Chatbot) */}
         <AskPortfolioButton />
 
+        {/* Mobile Navigation */}
         <div className="md:hidden">
           <MobileBottomNav />
         </div>
