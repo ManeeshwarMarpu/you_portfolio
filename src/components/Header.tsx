@@ -82,9 +82,9 @@ export default function Header() {
             className="h-8 w-8 rounded-[6px]"
             loading="eager"
           />
-          <span className="font-semibold text-xl tracking-tight text-yt whitespace-nowrap">
-            You<span className="text-red-500">Portfolio</span>
-          </span>
+<span className="font-bold text-2xl italic tracking-tighter text-white whitespace-nowrap">
+    Por<span className="text-red-500">tube</span>
+  </span>
         </button>
 
         {/* Center: search (desktop) */}

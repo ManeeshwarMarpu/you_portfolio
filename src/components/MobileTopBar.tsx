@@ -4,7 +4,7 @@ export default function MobileTopBar() {
       <button>
         <img src="/hamburger.svg" className="w-6 h-6" />
       </button>
-      <h1 className="text-xl font-bold">YouPortfolio</h1>
+      <h1 className="text-xl font-bold">Portube</h1>
       <button>
         <img src="/search.svg" className="w-6 h-6" />
       </button>
