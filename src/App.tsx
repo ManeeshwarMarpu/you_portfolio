@@ -6,7 +6,7 @@ import { AnimatePresence } from "framer-motion";
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 import MobileBottomNav from "./components/MobileBottomNav";
-import VectorHorizonIntro from "./components/LoadingScreen"; // Ensure this matches the export in LoadingScreen.tsx
+import LoadingScreen from "./components/LoadingScreen";
 
 // Pages
 import Home from "./pages/Home";
@@ -31,18 +31,19 @@ export default function App() {
   const [showIntro, setShowIntro] = useState(false);
   const introPlayingRef = useRef(false);
 
-  // ✅ First visit only (Session Storage check)
+  // ✅ Show only on first visit per session (not on every route change)
   useEffect(() => {
-    if (sessionStorage.getItem("introShown") !== "true") {
+    const alreadyShown = sessionStorage.getItem("introShown") === "true";
+    if (!alreadyShown) {
       introPlayingRef.current = true;
       setShowIntro(true);
     }
   }, []);
 
-  // ✅ Logo-triggered intro (Global event listener)
+  // ✅ Logo click in navbar dispatches "play-intro" → replays the animation
   useEffect(() => {
     const handlePlayIntro = () => {
-      if (introPlayingRef.current) return;
+      if (introPlayingRef.current) return; // don't replay if already playing
       introPlayingRef.current = true;
       setShowIntro(true);
     };
@@ -51,26 +52,23 @@ export default function App() {
     return () => window.removeEventListener("play-intro", handlePlayIntro);
   }, []);
 
-  const onIntroFinish = () => {
-    sessionStorage.setItem("introShown", "true");
+  // ✅ Called by LoadingScreen when animation finishes
+  const onIntroComplete = () => {
+    sessionStorage.setItem("introShown", "true"); // mark as shown for this session
     introPlayingRef.current = false;
     setShowIntro(false);
   };
 
   return (
     <>
-      {/* ✅ INTRO OVERLAY */}
+      {/* ✅ LOADING SCREEN OVERLAY — only renders when showIntro is true */}
       <AnimatePresence>
         {showIntro && (
-          <VectorHorizonIntro 
-            onFinish={onIntroFinish} 
-            // Note: If your VectorHorizonIntro doesn't use 'brand' or 'subtitle' props, 
-            // you don't need to pass them here.
-          />
+          <LoadingScreen onComplete={onIntroComplete} />
         )}
       </AnimatePresence>
 
-      {/* ✅ APP LAYOUT - YouTube Style */}
+      {/* ✅ APP LAYOUT */}
       <div className="min-h-dvh bg-ytbg text-white flex flex-col relative overflow-x-hidden">
         <Header />
 
@@ -96,21 +94,19 @@ export default function App() {
               <Route path="/contact" element={<Contact />} />
               <Route path="/skills" element={<SkillCard />} />
 
-              {/* 🎮 Play/Games Section */}
+              {/* 🎮 Games */}
               <Route path="/play/tictactoe" element={<TicTacToe />} />
               <Route path="/play/snake" element={<Snake />} />
               <Route path="/play/memory" element={<Memory />} />
 
-              {/* 404 Fallback */}
+              {/* 404 */}
               <Route path="*" element={<div className="p-6 text-zinc-500">404 | Content not found</div>} />
             </Routes>
           </main>
         </div>
 
-        {/* ✅ GLOBAL AI ASSISTANT (RAG Chatbot) */}
         <AskPortfolioButton />
 
-        {/* Mobile Navigation */}
         <div className="md:hidden">
           <MobileBottomNav />
         </div>

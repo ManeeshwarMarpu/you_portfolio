@@ -508,114 +508,503 @@
 // }
 
 
-import { motion, AnimatePresence } from "framer-motion";
-import { useEffect, useState } from "react";
-import enterSound from "../assets/sounds/enter.wav"
-// Update the interface so App.tsx stops showing red errors
-interface IntroProps {
-  onFinish: () => void;
-  brand?: string;
-  subtitle?: string;
-}
+// import { motion, AnimatePresence } from "framer-motion";
+// import { useEffect, useState } from "react";
+// import enterSound from "../assets/sounds/enter.wav"
+// // Update the interface so App.tsx stops showing red errors
+// interface IntroProps {
+//   onFinish: () => void;
+//   brand?: string;
+//   subtitle?: string;
+// }
 
-export default function VectorHorizonIntro({ 
-  onFinish, 
-  brand = "MANEESHWAR", 
-  subtitle = "CREATIVE ENGINEERING" 
-}: IntroProps) {
-  const [phase, setPhase] = useState("initial");
+// export default function VectorHorizonIntro({ 
+//   onFinish, 
+//   brand = "MANEESHWAR", 
+//   subtitle = "CREATIVE ENGINEERING" 
+// }: IntroProps) {
+//   const [phase, setPhase] = useState("initial");
+
+//   useEffect(() => {
+//     const timer = setTimeout(() => setPhase("reveal"), 500);
+
+//     const endTimer = setTimeout(() => {
+//       setPhase("exit");
+      
+//       // Fixed the path to match your actual filename 'aceess-granted.wav'
+//       const audio = new Audio(enterSound);
+//       audio.volume = 0.4;
+//       audio.play().catch(err => console.log("Autoplay blocked:", err));
+//     }, 3500);
+
+//     const finishTimer = setTimeout(onFinish, 4800);
+
+//     return () => {
+//       clearTimeout(timer);
+//       clearTimeout(endTimer);
+//       clearTimeout(finishTimer);
+//     };
+//   }, [onFinish]);
+
+//   return (
+//     <div className="fixed inset-0 z-[9999] bg-[#050505] flex items-center justify-center overflow-hidden">
+//       {/* Background Red Glow */}
+//       <motion.div 
+//         initial={{ opacity: 0 }}
+//         animate={{ opacity: 0.2 }}
+//         className="absolute inset-0 bg-[radial-gradient(circle_at_center,_#ff0000_0%,_transparent_70%)]"
+//       />
+
+//       {/* Content Layer */}
+//       <AnimatePresence>
+//         {phase === "reveal" && (
+//           <motion.div
+//             initial={{ opacity: 0 }}
+//             animate={{ opacity: 1 }}
+//             exit={{ scale: 0.9, opacity: 0, filter: "blur(10px)" }}
+//             className="relative z-10 flex flex-col items-center"
+//           >
+//             {/* Subtitle / Header Tag */}
+//             <motion.span 
+//               initial={{ opacity: 0, y: 10 }}
+//               animate={{ opacity: 1, y: 0 }}
+//               transition={{ delay: 0.5 }}
+//               className="text-red-500 text-[10px] font-mono mb-4 tracking-[0.8em] uppercase"
+//             >
+//               {subtitle}
+//             </motion.span>
+
+//             <div className="overflow-hidden">
+//               <motion.h1
+//                 initial={{ y: 100 }}
+//                 animate={{ y: 0 }}
+//                 transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+//                 className="text-white text-6xl md:text-9xl font-black italic tracking-tighter uppercase"
+//                 style={{ textShadow: "4px 4px 0px rgba(255,0,0,0.5)" }}
+//               >
+//                 {brand}
+//               </motion.h1>
+//             </div>
+
+//             {/* Red Underline Decor */}
+//             <motion.div 
+//               initial={{ scaleX: 0 }}
+//               animate={{ scaleX: 1 }}
+//               transition={{ delay: 0.8, duration: 1 }}
+//               className="w-32 h-[2px] bg-red-600 mt-6 shadow-[0_0_15px_#ff0000]"
+//             />
+//           </motion.div>
+//         )}
+//       </AnimatePresence>
+
+//       {/* The Red "Welcome" Exit */}
+//       <AnimatePresence>
+//         {phase === "exit" && (
+//           <motion.div
+//             initial={{ clipPath: 'circle(0% at 50% 50%)' }}
+//             animate={{ clipPath: 'circle(150% at 50% 50%)' }}
+//             transition={{ duration: 1, ease: [0.4, 0, 0.2, 1] }}
+//             className="absolute inset-0 bg-[#ff0000] z-[10000] flex items-center justify-center"
+//           >
+//              <motion.span 
+//               initial={{ opacity: 0, scale: 0.8 }}
+//               animate={{ opacity: 1, scale: 1 }}
+//               className="text-black font-black text-6xl md:text-8xl italic uppercase tracking-tighter"
+//             >
+//               Welcome
+//             </motion.span>
+//           </motion.div>
+//         )}
+//       </AnimatePresence>
+//     </div>
+//   );
+// }
+
+"use client";
+import { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
+
+const LETTERS = ["P", "r", "o", "f", "i", "l", "i", "o"];
+const N = LETTERS.length;
+
+const ICONS = [
+  <svg key={0} viewBox="0 0 44 44" fill="none" style={{ width: "100%", height: "100%" }}>
+    <polyline points="15,9 5,22 15,35" stroke="white" strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round" />
+    <polyline points="29,9 39,22 29,35" stroke="white" strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round" />
+    <line x1="24" y1="7" x2="18" y2="37" stroke="white" strokeWidth="2.6" strokeLinecap="round" />
+  </svg>,
+  <svg key={1} viewBox="0 0 44 44" fill="none" style={{ width: "100%", height: "100%" }}>
+    <circle cx="13" cy="10" r="5" stroke="white" strokeWidth="2.4" fill="none" />
+    <circle cx="13" cy="34" r="5" stroke="white" strokeWidth="2.4" fill="none" />
+    <circle cx="33" cy="19" r="5" stroke="white" strokeWidth="2.4" fill="none" />
+    <line x1="13" y1="15" x2="13" y2="29" stroke="white" strokeWidth="2.4" strokeLinecap="round" />
+    <path d="M13 16 C13 19 33 19 33 19" stroke="white" strokeWidth="2.4" strokeLinecap="round" fill="none" />
+  </svg>,
+  <svg key={2} viewBox="0 0 44 44" fill="none" style={{ width: "100%", height: "100%" }}>
+    <rect x="4" y="7" width="36" height="30" rx="4" stroke="white" strokeWidth="2.4" />
+    <polyline points="11,16 19,22 11,28" stroke="white" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" />
+    <line x1="21" y1="28" x2="33" y2="28" stroke="white" strokeWidth="2.4" strokeLinecap="round" />
+  </svg>,
+  <svg key={3} viewBox="0 0 44 44" fill="none" style={{ width: "100%", height: "100%" }}>
+    <polyline points="22,4 38,13 22,22 6,13 22,4" stroke="white" strokeWidth="2.4" strokeLinejoin="round" />
+    <polyline points="6,22 22,31 38,22" stroke="white" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
+    <polyline points="6,30 22,39 38,30" stroke="white" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>,
+  <svg key={4} viewBox="0 0 44 44" fill="none" style={{ width: "100%", height: "100%" }}>
+    <rect x="13" y="13" width="18" height="18" rx="2" stroke="white" strokeWidth="2.4" />
+    {[17,22,27].map(x=><g key={x}><line x1={x} y1="13" x2={x} y2="7" stroke="white" strokeWidth="2" strokeLinecap="round"/><line x1={x} y1="31" x2={x} y2="37" stroke="white" strokeWidth="2" strokeLinecap="round"/></g>)}
+    {[17,22,27].map(y=><g key={y}><line x1="13" y1={y} x2="7" y2={y} stroke="white" strokeWidth="2" strokeLinecap="round"/><line x1="31" y1={y} x2="37" y2={y} stroke="white" strokeWidth="2" strokeLinecap="round"/></g>)}
+  </svg>,
+  <svg key={5} viewBox="0 0 44 44" fill="none" style={{ width: "100%", height: "100%" }}>
+    <path d="M25,4 Q32,4 32,9 L32,17 Q32,22 36,22 Q32,22 32,27 L32,35 Q32,40 25,40" stroke="white" strokeWidth="2.6" strokeLinecap="round" fill="none" />
+    <path d="M19,4 Q12,4 12,9 L12,17 Q12,22 8,22 Q12,22 12,27 L12,35 Q12,40 19,40" stroke="white" strokeWidth="2.6" strokeLinecap="round" fill="none" />
+  </svg>,
+  <svg key={6} viewBox="0 0 44 44" fill="none" style={{ width: "100%", height: "100%" }}>
+    <path d="M12,28 Q4,28 4,21 Q4,14 13,14 Q14,7 22,7 Q30,7 32,14 Q39,14 40,21 Q40,28 32,28 Z" stroke="white" strokeWidth="2.4" fill="none" strokeLinejoin="round" />
+    <line x1="22" y1="22" x2="22" y2="37" stroke="white" strokeWidth="2.4" strokeLinecap="round" />
+    <polyline points="15,31 22,38 29,31" stroke="white" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>,
+  <svg key={7} viewBox="0 0 44 44" fill="none" style={{ width: "100%", height: "100%" }}>
+    <circle cx="22" cy="15" r="8" stroke="white" strokeWidth="2.4" fill="none" />
+    <path d="M5,40 C5,30 13,25 22,25 C31,25 39,30 39,40" stroke="white" strokeWidth="2.4" strokeLinecap="round" fill="none" />
+  </svg>,
+];
+
+const SLOT_W = 48;
+const ROW_H  = 80;
+const CIRC_D = 50;
+const RECT_W = 64;
+const RECT_H = 46;
+
+type Phase = "idle"|"sweep"|"leftwall"|"rollback"|"approach"|"impact"|"morph"|"done";
+
+// ── Dispatch helper so your navbar logo can trigger the intro ──
+// In your Header/Navbar component, call: window.dispatchEvent(new Event("play-intro"))
+
+export default function LoadingScreen({ onComplete }: { onComplete?: () => void }) {
+  const rowW = N * SLOT_W;
+
+  const [iconsIn,    setIconsIn]    = useState(false);
+  const [phase,      setPhase]      = useState<Phase>("idle");
+  const [revealed,   setRevealed]   = useState<boolean[]>(new Array(N).fill(false));
+  const [morphed,    setMorphed]    = useState(false);
+  const [exiting,    setExiting]    = useState(false); // triggers framer exit
+  const [pulse,      setPulse]      = useState(false);
+  const [wallFlashL, setWallFlashL] = useState(false);
+  const [pBend,      setPBend]      = useState(0);
+  const [sx, setSx] = useState(1);
+  const [sy, setSy] = useState(1);
+  const [boxCx, setBoxCx] = useState(rowW + 80);
+
+  const rafRef      = useRef<number>(0);
+  const revealedRef = useRef<boolean[]>(new Array(N).fill(false));
+  const stop        = () => cancelAnimationFrame(rafRef.current);
 
   useEffect(() => {
-    const timer = setTimeout(() => setPhase("reveal"), 500);
+    const t = setTimeout(() => setIconsIn(true), 150);
+    return () => clearTimeout(t);
+  }, []);
 
-    const endTimer = setTimeout(() => {
-      setPhase("exit");
-      
-      // Fixed the path to match your actual filename 'aceess-granted.wav'
-      const audio = new Audio(enterSound);
-      audio.volume = 0.4;
-      audio.play().catch(err => console.log("Autoplay blocked:", err));
-    }, 3500);
+  useEffect(() => {
+    const t = setTimeout(() => setPhase("sweep"), 800);
+    return () => clearTimeout(t);
+  }, []);
 
-    const finishTimer = setTimeout(onFinish, 4800);
+  /* ── SWEEP ── */
+  useEffect(() => {
+    if (phase !== "sweep") return;
+    revealedRef.current = new Array(N).fill(false);
+    const startCx = rowW + 80;
+    const endCx   = -CIRC_D - 40;
+    const DUR     = 1400;
+    const t0      = performance.now();
 
-    return () => {
-      clearTimeout(timer);
-      clearTimeout(endTimer);
-      clearTimeout(finishTimer);
+    const tick = (now: number) => {
+      const t    = Math.min((now - t0) / DUR, 1);
+      const ease = t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2, 3)/2;
+      const cx   = startCx + (endCx - startCx) * ease;
+      setBoxCx(cx);
+
+      for (let i = 0; i < N; i++) {
+        if (!revealedRef.current[i]) {
+          const slotCx     = i * SLOT_W + SLOT_W / 2;
+          const circleLeft = cx - CIRC_D / 2;
+          if (circleLeft < slotCx) {
+            revealedRef.current[i] = true;
+            setRevealed(prev => { const a=[...prev]; a[i]=true; return a; });
+            setPulse(true);
+            setTimeout(() => setPulse(false), 150);
+          }
+        }
+      }
+
+      if (t < 1) { rafRef.current = requestAnimationFrame(tick); }
+      else { setBoxCx(endCx); setPhase("leftwall"); }
     };
-  }, [onFinish]);
+    rafRef.current = requestAnimationFrame(tick);
+    return stop;
+  }, [phase]);
+
+  /* ── LEFT WALL ── */
+  useEffect(() => {
+    if (phase !== "leftwall") return;
+    setWallFlashL(true);
+    setSx(1.7); setSy(0.55);
+    const t1 = setTimeout(() => { setSx(0.75); setSy(1.4); }, 90);
+    const t2 = setTimeout(() => { setSx(1.05); setSy(0.97); }, 190);
+    const t3 = setTimeout(() => { setSx(1); setSy(1); setWallFlashL(false); setPhase("rollback"); }, 300);
+    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
+  }, [phase]);
+
+  /* ── ROLLBACK ── */
+  useEffect(() => {
+    if (phase !== "rollback") return;
+    const startCx = -CIRC_D - 40;
+    const stopCx  = SLOT_W / 2 - CIRC_D / 2 - 40;
+    const DUR     = 300;
+    const t0      = performance.now();
+    setSx(1.5); setSy(0.72);
+    const tick = (now: number) => {
+      const t = Math.min((now - t0) / DUR, 1);
+      setBoxCx(startCx + (stopCx - startCx) * (t*t));
+      if (t < 1) { rafRef.current = requestAnimationFrame(tick); }
+      else { setSx(1); setSy(1); setBoxCx(stopCx); setPhase("approach"); }
+    };
+    rafRef.current = requestAnimationFrame(tick);
+    return stop;
+  }, [phase]);
+
+  /* ── APPROACH ── */
+  useEffect(() => {
+    if (phase !== "approach") return;
+    const startCx = SLOT_W / 2 - CIRC_D / 2 - 40;
+    const endCx   = -CIRC_D / 2 + 1;
+    const DUR     = 220;
+    const t0      = performance.now();
+    const tick = (now: number) => {
+      const t    = Math.min((now - t0) / DUR, 1);
+      const ease = 1 - Math.pow(1-t, 2);
+      setBoxCx(startCx + (endCx - startCx) * ease);
+      if (t < 1) { rafRef.current = requestAnimationFrame(tick); }
+      else { setBoxCx(endCx); setPhase("impact"); }
+    };
+    rafRef.current = requestAnimationFrame(tick);
+    return stop;
+  }, [phase]);
+
+  /* ── IMPACT: circle hits P, P bends ── */
+  useEffect(() => {
+    if (phase !== "impact") return;
+    setSx(1.35); setSy(0.72); setPBend(1);
+    const t1 = setTimeout(() => { setSx(1.5); setSy(0.6); }, 80);
+    const t2 = setTimeout(() => { setSx(1.1); setSy(0.92); setPBend(2); }, 160);
+    const t3 = setTimeout(() => { setSx(1); setSy(1); setPBend(0); }, 260);
+    const t4 = setTimeout(() => setPhase("morph"), 320);
+    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4); };
+  }, [phase]);
+
+  /* ── MORPH + settle + exit ── */
+  useEffect(() => {
+    if (phase !== "morph") return;
+    setMorphed(true);
+    const finalCx = -RECT_W / 2 - 2;
+    const startCx = -CIRC_D / 2 + 1;
+    const DUR     = 480;
+    const t0      = performance.now();
+
+    const tick = (now: number) => {
+      const t    = Math.min((now - t0) / DUR, 1);
+      const ease = 1 - Math.pow(1-t, 3);
+      setBoxCx(startCx + (finalCx - startCx) * ease);
+      if (t < 1) {
+        rafRef.current = requestAnimationFrame(tick);
+      } else {
+        setBoxCx(finalCx);
+        // Hold logo visible for 900ms, then fade out
+        setTimeout(() => {
+          setExiting(true);          // triggers framer-motion exit animation
+          setTimeout(() => {
+            setPhase("done");
+            onComplete?.();          // ← unmounts loading screen in App.tsx
+          }, 600);
+        }, 900);
+      }
+    };
+    rafRef.current = requestAnimationFrame(tick);
+    return stop;
+  }, [phase]);
+
+  const boxW = morphed ? RECT_W : CIRC_D;
+  const boxH = morphed ? RECT_H : CIRC_D;
+
+  const pStyle: React.CSSProperties = {
+    color: "white", fontSize: "54px", fontWeight: 900,
+    fontFamily: "'Arial Black','Helvetica Neue',Arial,sans-serif",
+    lineHeight: 1, letterSpacing: "-1px", display: "block",
+    transformOrigin: "bottom center",
+    transition: "transform 0.08s ease",
+    transform:
+      pBend === 1 ? "skewX(-14deg) scaleX(0.88) translateX(4px)" :
+      pBend === 2 ? "skewX(5deg) scaleX(1.04) translateX(-2px)" :
+                   "skewX(0deg) scaleX(1) translateX(0px)",
+  };
+
+  if (phase === "done") return null;
 
   return (
-    <div className="fixed inset-0 z-[9999] bg-[#050505] flex items-center justify-center overflow-hidden">
-      {/* Background Red Glow */}
-      <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.2 }}
-        className="absolute inset-0 bg-[radial-gradient(circle_at_center,_#ff0000_0%,_transparent_70%)]"
-      />
+    <motion.div
+      key="loading-screen"
+      initial={{ opacity: 1 }}
+      animate={{ opacity: exiting ? 0 : 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      style={{
+        position: "fixed", inset: 0,
+        background: "#0d0d0d",
+        display: "flex", flexDirection: "column",
+        alignItems: "center", justifyContent: "center",
+        overflow: "hidden",
+        zIndex: 9999,
+        pointerEvents: exiting ? "none" : "auto",
+      }}
+    >
+      {/* vignette */}
+      <div style={{
+        position: "absolute", inset: 0,
+        background: "radial-gradient(ellipse 85% 75% at 50% 55%, transparent 35%, rgba(0,0,0,0.82) 100%)",
+        pointerEvents: "none",
+      }} />
 
-      {/* Content Layer */}
-      <AnimatePresence>
-        {phase === "reveal" && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ scale: 0.9, opacity: 0, filter: "blur(10px)" }}
-            className="relative z-10 flex flex-col items-center"
-          >
-            {/* Subtitle / Header Tag */}
-            <motion.span 
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-              className="text-red-500 text-[10px] font-mono mb-4 tracking-[0.8em] uppercase"
-            >
-              {subtitle}
-            </motion.span>
+      {/* left wall glow */}
+      {wallFlashL && (
+        <div style={{
+          position: "absolute", inset: 0,
+          background: "radial-gradient(ellipse 28% 70% at 2% 50%, rgba(255,50,50,0.22) 0%, transparent 55%)",
+          animation: "lsFadeOut 0.35s ease-out forwards",
+          pointerEvents: "none",
+        }} />
+      )}
 
-            <div className="overflow-hidden">
-              <motion.h1
-                initial={{ y: 100 }}
-                animate={{ y: 0 }}
-                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                className="text-white text-6xl md:text-9xl font-black italic tracking-tighter uppercase"
-                style={{ textShadow: "4px 4px 0px rgba(255,0,0,0.5)" }}
-              >
-                {brand}
-              </motion.h1>
+      {/* red glow following circle */}
+      <div style={{
+        position: "absolute",
+        top: "50%",
+        left: `calc(50% + ${boxCx - rowW / 2}px)`,
+        width: "120px", height: "120px",
+        transform: "translate(-50%,-50%)",
+        background: "radial-gradient(circle, rgba(200,0,0,0.2) 0%, transparent 70%)",
+        filter: "blur(20px)",
+        pointerEvents: "none",
+        transition: phase === "morph" ? "left 0.48s cubic-bezier(0.33,1,0.68,1)" : "none",
+      }} />
+
+      {/* ── ROW ── */}
+      <div style={{ position: "relative", width: `${rowW}px`, height: `${ROW_H}px` }}>
+        <div style={{ display: "flex", width: "100%", height: "100%", alignItems: "center" }}>
+          {LETTERS.map((letter, i) => (
+            <div key={i} style={{
+              width: `${SLOT_W}px`, height: "100%", flexShrink: 0,
+              display: "flex", alignItems: "center", justifyContent: "center",
+            }}>
+              {revealed[i] ? (
+                i === 0 ? (
+                  <span style={pStyle}>{letter}</span>
+                ) : (
+                  <span style={{
+                    color: "white", fontSize: "54px", fontWeight: 900,
+                    fontFamily: "'Arial Black','Helvetica Neue',Arial,sans-serif",
+                    lineHeight: 1, letterSpacing: "-1px", display: "block",
+                    animation: "lsPop 0.25s cubic-bezier(0.34,1.56,0.64,1) forwards",
+                    opacity: 0, transformOrigin: "center center",
+                  }}>{letter}</span>
+                )
+              ) : (
+                <div style={{
+                  width: "36px", height: "36px",
+                  opacity: iconsIn ? 1 : 0,
+                  transition: `opacity 0.25s ${i * 0.04}s`,
+                  animation: iconsIn ? `lsSpin 1.5s linear ${i * 0.1}s infinite` : "none",
+                  transformOrigin: "center center",
+                }}>
+                  {ICONS[i]}
+                </div>
+              )}
             </div>
+          ))}
+        </div>
 
-            {/* Red Underline Decor */}
-            <motion.div 
-              initial={{ scaleX: 0 }}
-              animate={{ scaleX: 1 }}
-              transition={{ delay: 0.8, duration: 1 }}
-              className="w-32 h-[2px] bg-red-600 mt-6 shadow-[0_0_15px_#ff0000]"
-            />
-          </motion.div>
+        {/* sweep ring */}
+        {pulse && (
+          <div style={{
+            position: "absolute", top: "50%", left: `${boxCx}px`,
+            width: "48px", height: "48px",
+            transform: "translate(-50%,-50%)",
+            borderRadius: "50%",
+            border: "1.5px solid rgba(255,110,110,0.7)",
+            animation: "lsRing 0.28s ease-out forwards",
+            pointerEvents: "none", zIndex: 25,
+          }} />
         )}
-      </AnimatePresence>
 
-      {/* The Red "Welcome" Exit */}
-      <AnimatePresence>
-        {phase === "exit" && (
-          <motion.div
-            initial={{ clipPath: 'circle(0% at 50% 50%)' }}
-            animate={{ clipPath: 'circle(150% at 50% 50%)' }}
-            transition={{ duration: 1, ease: [0.4, 0, 0.2, 1] }}
-            className="absolute inset-0 bg-[#ff0000] z-[10000] flex items-center justify-center"
-          >
-             <motion.span 
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="text-black font-black text-6xl md:text-8xl italic uppercase tracking-tighter"
-            >
-              Welcome
-            </motion.span>
-          </motion.div>
+        {/* ── RED CIRCLE / BOX ── */}
+        {phase !== "idle" && (
+          <div style={{
+            position: "absolute",
+            top: "50%",
+            left: `${boxCx - boxW / 2}px`,
+            transform: `translateY(-50%) scaleX(${sx}) scaleY(${sy})`,
+            width: `${boxW}px`,
+            height: `${boxH}px`,
+            zIndex: 20,
+            transition: "width 0.42s ease, height 0.42s ease, transform 0.07s ease",
+            filter: `drop-shadow(0 0 ${phase==="impact"?16:pulse?14:9}px rgba(255,30,30,${phase==="impact"?0.85:pulse?0.75:0.45}))`,
+          }}>
+            <div style={{
+              width: "100%", height: "100%",
+              background: "linear-gradient(145deg,#ff2a2a 0%,#cc0000 50%,#880000 100%)",
+              borderRadius: morphed ? "16%" : "50%",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              position: "relative", overflow: "hidden",
+              boxShadow: "inset 0 2px 8px rgba(255,255,255,0.22),inset 0 -2px 6px rgba(0,0,0,0.4),0 8px 28px rgba(0,0,0,0.6)",
+              transition: "border-radius 0.44s cubic-bezier(0.34,1.56,0.64,1)",
+            }}>
+              <div style={{
+                position: "absolute", top: 0, left: 0, right: 0, height: "44%",
+                background: "linear-gradient(180deg,rgba(255,255,255,0.18) 0%,transparent 100%)",
+                borderRadius: "inherit",
+              }} />
+              <div style={{
+                width: 0, height: 0,
+                borderTop: "10px solid transparent",
+                borderBottom: "10px solid transparent",
+                borderLeft: "17px solid rgba(255,255,255,0.95)",
+                marginLeft: "4px",
+                filter: "drop-shadow(1px 1px 2px rgba(0,0,0,0.5))",
+              }} />
+            </div>
+          </div>
         )}
-      </AnimatePresence>
-    </div>
+      </div>
+
+      <style>{`
+        @keyframes lsPop {
+          0%   { opacity:0; transform:scale(0.2) rotate(-10deg); }
+          65%  { opacity:1; transform:scale(1.15) rotate(3deg);  }
+          100% { opacity:1; transform:scale(1) rotate(0deg);     }
+        }
+        @keyframes lsSpin {
+          from { transform:rotate(0deg); }
+          to   { transform:rotate(360deg); }
+        }
+        @keyframes lsRing {
+          0%   { opacity:1; transform:translate(-50%,-50%) scale(1);   }
+          100% { opacity:0; transform:translate(-50%,-50%) scale(2.5); }
+        }
+        @keyframes lsFadeOut {
+          0%   { opacity:1; }
+          100% { opacity:0; }
+        }
+      `}</style>
+    </motion.div>
   );
 }

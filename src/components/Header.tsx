@@ -83,7 +83,7 @@ export default function Header() {
             loading="eager"
           />
 <span className="font-bold text-2xl italic tracking-tighter text-black dark:text-white whitespace-nowrap">
-  Por<span className="text-red-500">tube</span>
+  Pro<span className="text-red-500">filio</span>
 </span>
         </button>
 
