@@ -96,7 +96,7 @@ const data: Experience[] = [
 const allChips = ["All", ...Array.from(new Set(data.flatMap((x) => x.tags)))];
 
 const RESUME_URL =
-  "https://firebasestorage.googleapis.com/v0/b/portfolio-84f15.firebasestorage.app/o/Maneeshwar_Marpu.pdf?alt=media&token=faf9f705-50bb-49b3-8a34-7868f39ad486";
+  "https://firebasestorage.googleapis.com/v0/b/portfolio-84f15.firebasestorage.app/o/Maneeshwar.pdf?alt=media&token=83d58cbb-e01b-4b8e-8d74-bb67f3adc809";
 
 export default function Experiences() {
   const [chip, setChip] = useState("All");
