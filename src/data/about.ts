@@ -93,7 +93,7 @@ export const aboutData = {
   contact: {
     email: "maneeshwar.m@mycvhire.com",
     github: "https://github.com/ManeeshwarM",
-    linkedin: "https://www.linkedin.com/in/maneeshwarmarpu"
+    linkedin: "https://www.linkedin.com/in/maneeshwar11/"
   },
   workAuthorization: {
     status: "F1 Visa (International Student)",

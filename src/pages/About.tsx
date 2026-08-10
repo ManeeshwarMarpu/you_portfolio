@@ -3,7 +3,7 @@ import { motion, type Variants,  useTransform, useMotionValue } from "framer-mot
 import { Briefcase, Download, MapPin, Rocket, Star, Wrench, Sparkles } from "lucide-react";
 
 
-const RESUME_URL =  "https://firebasestorage.googleapis.com/v0/b/portfolio-84f15.firebasestorage.app/o/Maneeshwar%20Marpu_Devops.pdf?alt=media&token=ecdaa27b-c309-42df-98f5-78da0004a82a";
+const RESUME_URL =  "https://firebasestorage.googleapis.com/v0/b/portfolio-84f15.firebasestorage.app/o/Maneeshwar%20Marpu_DevOps%20%26%20Cloud%20Engineer.pdf?alt=media&token=ae481e64-473f-414e-8327-c25f558d20b8";
 const PROFILE_IMAGE = "https://firebasestorage.googleapis.com/v0/b/portfolio-84f15.firebasestorage.app/o/po-about.png?alt=media&token=bd7a3d9e-b004-40a8-bf9b-9e71c1e54217";
 
 const stack = [
